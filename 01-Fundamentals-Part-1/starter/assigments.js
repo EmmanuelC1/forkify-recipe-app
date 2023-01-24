@@ -37,12 +37,17 @@ console.log(description);
 
 //Lecture: STRINGS AND TEMPLATE LITERALS
 /*
-
+const newDescription = `${country} is in ${continent}, and its ${population} million people speak ${language}.`;
+console.log(newDescription);
 */
 
 //Lecture: IF/ELSE STATEMENTS
 /*
-//CODE HERE
+if(population > 33) {
+    console.log(`${country} population is above the average.`);
+} else {
+    console.log(`${country}'s population is ${33-population} below the average.`);
+}
 */
 
 //Lecture: TYPE CONVERSIONS AND COERCION

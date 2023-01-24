@@ -142,7 +142,23 @@ lines`);
 ////////////////////////////////////
 // If/Else Statements
 /*
-//CODE HERE
+const age = 18;
+
+if(age >= 18) {
+    console.log("Sarah can start getting her driver's license. 🚗"); //emoji CMD+CTRL+SPACE
+} else {
+    const yearsLeft = 18-age;
+    console.log(`Sarah is too young, wait ${yearsLeft} years until eligible.`);
+}
+
+const birthYear = 1991;
+let century;
+if(birthYear <= 2000) {
+    century = 20;
+} else {
+    century = 21;
+}
+console.log(century);
 */
 
 ////////////////////////////////////
