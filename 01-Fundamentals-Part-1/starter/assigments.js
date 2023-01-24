@@ -37,7 +37,7 @@ console.log(description);
 
 //Lecture: STRINGS AND TEMPLATE LITERALS
 /*
-//CODE HERE
+
 */
 
 //Lecture: IF/ELSE STATEMENTS
