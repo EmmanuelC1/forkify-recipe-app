@@ -1,6 +1,7 @@
 ////////////////////////////////////
 // Linking a JavaScript File
 /*
+
 let js = "amazing";
 console.log(40 + 8 + 23 - 10);
 
@@ -29,6 +30,7 @@ let job1 = "programmer";
 let job2 = "teacher";
 
 console.log(myFirstJob);
+
 */
 
 //variable name rules:
@@ -43,6 +45,7 @@ console.log(myFirstJob);
 ////////////////////////////////////
 // Data Types
 /*
+
 let javascriptIsFun = true;
 console.log(javascriptIsFun);
 
@@ -61,11 +64,13 @@ console.log(typeof year); //undefined
 year = 1991;
 console.log(year); //1991
 console.log(typeof year); //number
+
 */
 
 ////////////////////////////////////
 // let, const, and var
 /*
+
 let age = 30;
 age = 31;
 
@@ -79,6 +84,7 @@ const job; //error: missing initilizer in const declaration. (variable will alwa
 ////////////////////////////////////
 // Basic Operators
 /*
+
 // Math Operators
 const now = 2037;
 const ageJonas = now - 1991;
@@ -101,22 +107,26 @@ console.log(x); //26
 console.log(ageJonas > ageSarah); //true
 console.log(ageSarah >= 18); //true
 // const isFullAge = ageSarah >= 18; //isFullAge = true (boolean)
+
 */
 
 ////////////////////////////////////
 // Operator Precedence
 /*
+
 let x, y;
 x = y = 25 - 10 - 5;
 console.log(x, y);
 
 const averageAge = (ageJonas + ageSarah) / 2;
 console.log(averageAge);
+
 */
 
 ////////////////////////////////////
 // Strings and Template Literals
 /*
+
 const firstName = 'Jonas';
 const job = 'teacher';
 const birthYear = 1991;
@@ -137,11 +147,13 @@ lines');
 console.log(`String
 with multiple
 lines`);
+
 */
 
 ////////////////////////////////////
 // If/Else Statements
 /*
+
 const age = 18;
 
 if(age >= 18) {
@@ -159,24 +171,79 @@ if(birthYear <= 2000) {
     century = 21;
 }
 console.log(century);
+
 */
 
 ////////////////////////////////////
 // Type Conversion and Coercion
 /*
-//CODE HERE
+
+//Type Conversion: manually convert from one type to another
+const inputYear = '1991';
+console.log(Number(inputYear)); //returns inputYear as Number, but doesn't actually change the original data type.
+console.log(inputYear + 18); //199118 –– doesn't really work since 1991 is still a string
+console.log(Number(inputYear) + 18); //2009 –– correct calculation now
+
+console.log(Number('Jonas')); //NaN (Not a Number), invalid number
+console.log(String(23), 23); //'23' 23
+
+//Type Coercion: when JS automatically comverts types behimd the scenes. happens implicitly 
+console.log('I am ' + 23 + ' years old.'); //'I am 23 years old.'
+console.log('23' - '10' - 3); //10 –– minus operator triggered the opposite  conversion (Strings to Number)
+console.log('23' + '10' + 3); //'23103' –– addition operator converts Numbers to Strings. (concatenation)
+console.log('23' * '2'); //46 –– thats the only way the * and / operator can work and makes sense.
+
+let n = '1' + 1; //'11'
+n = n - 1; //10
+console.log(n); //10
+
 */
 
 ////////////////////////////////////
 // Truthy and Falsy Values
 /*
-//CODE HERE
+
+//In JS there are only 5 falsy values –– 0, '', undefined, null, NaN
+console.log(Boolean(0)); //false
+console.log(Boolean(undefined)); //false
+console.log(Boolean('Jonas')); //true
+console.log(Boolean({})); //true –– empty object
+
+//Type Coercion in if/else statement
+const money = 0;
+if(money) {
+    console.log("Buy yourself something nice.");
+} else {
+    console.log('You should get a job.');
+}
+
 */
 
 ////////////////////////////////////
 // Equality Operators: == vs ===
 /*
-//CODE HERE
+
+const age = 18;
+
+// Strict Equlaity Operator (=== and !==) will return a true or false (boolean) value. Does NOT perform Type Coercion
+if(age === 18) console.log('You are now considered an adult. (strict)'); //true
+if(age === '18') console.log('You are now considered an adult. (strict)'); //false
+
+// Loose Equality Operator (== and !=) Does perform Typer Coercion.
+if(age == 18) console.log("You're now an adult. (loose)"); //true
+if(age == '18') console.log("You're now an adult. (loose)"); //true through type coercion
+
+//General Rule: Always try to use Strict Equality Operator (=== or !==)
+
+//getting input from users
+const favoriteNumber = prompt("What's your favorite number?");
+console.log(favoriteNumber); //'8' –– string
+
+if(favoriteNumber === 8) { //'8' === 8 ––> false
+    console.log('Cool! 8 is an amazing number');
+}
+//So change line 239 to: const favoriteNumber = Number(prompt("What's your favorite number?"));
+
 */
 
 ////////////////////////////////////
