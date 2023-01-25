@@ -52,18 +52,26 @@ if(population > 33) {
 
 //Lecture: TYPE CONVERSIONS AND COERCION
 /*
-//CODE HERE
+console.log('9' - '5'); //4
+console.log('19' - '13' + '17'); //'617'
+console.log('19' - '13' + 17); //23
+console.log('123' < 57); //false
+console.log(5 + 6 + '4' + 9 - 4 - 2); //1143
 */
 
 //Lecture: EQUALITY OPERATORS: == VS ===
 /*
-//CODE HERE
+const numNeighbors = Number(prompt('How many neighbor countries does your country have?'));
+
+if(numNeighbors === 1) console.log('Only one border!');
+else if(numNeighbors > 1) console.log('More than 1 border');
+else console.log('No borders');
 */
 
 //Lecture: LOGICAL OPERATORS
-/*
-//CODE HERE
-*/
+// /*
+
+// */
 
 //Lecture: SWITCH STATEMENTS
 /*
