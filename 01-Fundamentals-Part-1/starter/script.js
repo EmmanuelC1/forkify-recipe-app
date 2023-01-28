@@ -1,6 +1,6 @@
 ////////////////////////////////////
 // Linking a JavaScript File
-/*
+// /*
 
 let js = "amazing";
 console.log(40 + 8 + 23 - 10);
@@ -10,11 +10,9 @@ console.log(40 + 8 + 23 - 10);
 console.log("Jonas");
 console.log(23);
 
-let firstName = "Matilda";
+let nameFirst = "Matilda";
 
-console.log(firstName);
-console.log(firstName);
-console.log(firstName);
+console.log(nameFirst);
 
 // Variable name conventions
 let jonas_matilda = "JM";
@@ -31,7 +29,7 @@ let job2 = "teacher";
 
 console.log(myFirstJob);
 
-*/
+// */
 
 //variable name rules:
 /*
@@ -44,7 +42,7 @@ console.log(myFirstJob);
 
 ////////////////////////////////////
 // Data Types
-/*
+// /*
 
 let javascriptIsFun = true;
 console.log(javascriptIsFun);
@@ -65,25 +63,26 @@ year = 1991;
 console.log(year); //1991
 console.log(typeof year); //number
 
-*/
+// */
 
 ////////////////////////////////////
 // let, const, and var
-/*
+// /*
 
-let age = 30;
-age = 31;
+let myAge = 30;
+myAge = 31;
 
-const birthYear = 1991;
-birthYear = 1990; //error: assigment to constant variable
+const yearBorn = 1991;
 
-const job; //error: missing initilizer in const declaration. (variable will always be undefined because const is immutable)
+//ERRORS –– things you can't do with 'const'
+//yearBorn = 1990; //error: assigment to constant variable, yearBorn was declared already and cannot be changed
+//const job; //error: missing initilizer in const declaration. (variable will always be undefined because const is immutable)
 
-*/
+// */
 
 ////////////////////////////////////
 // Basic Operators
-/*
+// /*
 
 // Math Operators
 const now = 2037;
@@ -108,34 +107,34 @@ console.log(ageJonas > ageSarah); //true
 console.log(ageSarah >= 18); //true
 // const isFullAge = ageSarah >= 18; //isFullAge = true (boolean)
 
-*/
+// */
 
 ////////////////////////////////////
 // Operator Precedence
-/*
+// /*
 
-let x, y;
-x = y = 25 - 10 - 5;
-console.log(x, y);
+let a, b;
+a = b = 25 - 10 - 5;
+console.log(a, b);
 
 const averageAge = (ageJonas + ageSarah) / 2;
 console.log(averageAge);
 
-*/
+// */
 
 ////////////////////////////////////
 // Strings and Template Literals
-/*
+// /*
 
-const firstName = 'Jonas';
+const myFirstName = 'Jonas';
 const job = 'teacher';
-const birthYear = 1991;
+const myBirthYear = 1991;
 const currentYear = 2023;
 
-const jonas = "I'm " + firstName + ', a ' + (currentYear - birthYear) + ' year old ' + job + '.';
+const jonas = "I'm " + myFirstName + ', a ' + (currentYear - myBirthYear) + ' year old ' + job + '.';
 console.log(jonas);
 
-const jonasNew = `I'm ${firstName}, a ${currentYear - birthYear} year old ${job}.`;
+const jonasNew = `I'm ${myFirstName}, a ${currentYear - myBirthYear} year old ${job}.`;
 console.log(jonasNew);
 
 console.log(`template literals can be used for strings...`);
@@ -148,18 +147,18 @@ console.log(`String
 with multiple
 lines`);
 
-*/
+// */
 
 ////////////////////////////////////
 // If/Else Statements
-/*
+// /*
 
-const age = 18;
+const ageSarahSarah = 18;
 
-if(age >= 18) {
+if(ageSarah >= 18) {
     console.log("Sarah can start getting her driver's license. 🚗"); //emoji CMD+CTRL+SPACE
 } else {
-    const yearsLeft = 18-age;
+    const yearsLeft = 18-ageSarah;
     console.log(`Sarah is too young, wait ${yearsLeft} years until eligible.`);
 }
 
@@ -172,11 +171,11 @@ if(birthYear <= 2000) {
 }
 console.log(century);
 
-*/
+// */
 
 ////////////////////////////////////
 // Type Conversion and Coercion
-/*
+// /*
 
 //Type Conversion: manually convert from one type to another
 const inputYear = '1991';
@@ -197,11 +196,11 @@ let n = '1' + 1; //'11'
 n = n - 1; //10
 console.log(n); //10
 
-*/
+// */
 
 ////////////////////////////////////
 // Truthy and Falsy Values
-/*
+// /*
 
 //In JS there are only 5 falsy values –– 0, '', undefined, null, NaN
 console.log(Boolean(0)); //false
@@ -217,11 +216,11 @@ if(money) {
     console.log('You should get a job.');
 }
 
-*/
+// */
 
 ////////////////////////////////////
 // Equality Operators: == vs ===
-/*
+// /*
 
 const age = 18;
 
@@ -244,11 +243,11 @@ if(favoriteNumber === 8) { //'8' === 8 ––> false
 }
 //So change line 239 to: const favoriteNumber = Number(prompt("What's your favorite number?"));
 
-*/
+// */
 
 ////////////////////////////////////
 // Logical Operators
-/*
+// /*
 
 const hasDriversLicense = true;
 const hasGoodVision = true;
@@ -270,11 +269,11 @@ if(shouldDrive) {
     console.log('Someone else should drive...');
 }
 
-*/
+// */
 
 ////////////////////////////////////
 // Switch Statement
-/*
+// /*
 
 const day = 'Monday';
 
@@ -301,25 +300,25 @@ switch(day) {
         console.log('Not valid day.');
 }
 
-*/
+// */
 
 ////////////////////////////////////
 // Conditional (Ternary) Operator
-/*
+// /*
 
 // '?' called a ternary operator since it has 3 parts. Can be used as an if else statment in one line.
 
-const age = 23;
+const drinkingAge = 23;
 //condition ? runs code if condition is true : runs code if condition is false;
-age >= 21 ? console.log('I am old enough to drink wine 🍷'): console.log('I cannot drink alcohol so I will drink water 💧');
+drinkingAge >= 21 ? console.log('I am old enough to drink wine 🍷'): console.log('I cannot drink alcohol so I will drink water 💧');
 
 // Most commonly used to define variables conditionally
-const drink = age >= 21 ? 'wine 🍷' : 'water 💧';
+const drink = drinkingAge >= 21 ? 'wine 🍷' : 'water 💧';
 console.log(drink); 
 
 // if/else would require us to define the variable outside the {} and Condtional Ternary Operator allows us to define it in one line.
 let drink2;
-if(age >= 21) {
+if(drinkingAge >= 21) {
     drink2 = 'wine 🍷';
 } else {
     drink2 = 'water 💧';
@@ -327,29 +326,29 @@ if(age >= 21) {
 console.log(drink2);
 
 // Ternary Operators can be used in Template Literals
-console.log(`I like to drink ${age >= 21 ? 'wine 🍷' : 'water 💧'}`);
+console.log(`I like to drink ${drinkingAge >= 21 ? 'wine 🍷' : 'water 💧'}`);
 
-*/
+// */
 
 ////////////////////////////////////
 // JavaScript Releases: ES5, ES6+ and ESNext
-// /*
+/*
 
-//New relases have backwards compatability all the way to ES1
-//Old features are never removed in order or keep websites working forever. 
-//Code written 25+ years ago will still be accepted by teh Modern JavaScript Engine.
+New relases have backwards compatability all the way to ES1
+Old features are never removed in order or keep websites working forever. 
+Code written 25+ years ago will still be accepted by teh Modern JavaScript Engine.
 
-//JavaScript is not forwards compatible however. Meaning if a user is using an outdated or old browser that does not 
-// support ES6 JavaScript, the code wont work. To solve this problem since we cannot control what browser and version user use
-// is to convert modern JavaScript versions back to ES5 using a process called 'transpilling' and also 'polyfilling'.
-//We can use a tool called 'Babel' to transpile our code. Transpilling back to ES5 should be done after development stage, and
-// and during the production stage where you are gettign ready to ship it to users.
+JavaScript is NOT forwards compatible however. Meaning if a user is using an outdated or old browser that does not 
+ support ES6 JavaScript, the code wont work. To solve this problem since we cannot control what browser and version user use
+ is to convert modern JavaScript versions back to ES5 using a process called 'transpilling' and also 'polyfilling'.
+We can use a tool called 'Babel' to transpile our code. Transpilling back to ES5 should be done after development stage, and
+ and during the production stage where you are gettign ready to ship it to users.
 
-//ES5 is fully supported in all browsers  down to IE9 (Internet Explorer) from 2011.
-//ES6+ –– (ES6 to ES2020): well supported in all modern browser, but no support in older browsers.
-// can use (MOST) features in production with transpilling and polyfilling (check ES6 Compatibility Table).
+ES5 is fully supported in all browsers  down to IE9 (Internet Explorer) from 2011.
+ES6+ –– (ES6 to ES2020): well supported in all modern browser, but no support in older browsers.
+ can use (MOST) features in production with transpilling and polyfilling (check ES6 Compatibility Table).
 
-//ESNext –– (ES2021, ES2022, ... and all future releases) can already use (SOME) features in production with transpilling and
-// pollyfilling. Features have to pass a four stage process to be able to be transpiled and polyfiled before using in production.
+ESNext –– (ES2021, ES2022, ... and all future releases) can already use (SOME) features in production with transpilling and
+ pollyfilling. Features have to pass a four stage process to be able to be transpiled and polyfiled before using in production.
 
-// */
+*/
