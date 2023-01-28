@@ -247,37 +247,109 @@ if(favoriteNumber === 8) { //'8' === 8 ––> false
 */
 
 ////////////////////////////////////
-// Boolean Logic
-/*
-//CODE HERE
-*/
-
-////////////////////////////////////
 // Logical Operators
 /*
-//CODE HERE
+
+const hasDriversLicense = true;
+const hasGoodVision = true;
+
+console.log(hasDriversLicense && hasGoodVision);
+console.log(hasDriversLicense || hasGoodVision);
+console.log(!hasDriversLicense);
+
+const isTired =  false; //Sarah is not tired.
+
+console.log(hasDriversLicense || hasGoodVision || isTired);
+console.log(hasDriversLicense && hasGoodVision && isTired);
+
+const shouldDrive = hasDriversLicense && hasGoodVision && !isTired;
+
+if(shouldDrive) {
+    console.log('Sarah is able drive.');
+} else {
+    console.log('Someone else should drive...');
+}
+
 */
 
 ////////////////////////////////////
 // Switch Statement
 /*
-//CODE HERE
-*/
 
-////////////////////////////////////
-// Statements and Expressions
-/*
-//CODE HERE
+const day = 'Monday';
+
+switch(day) {
+    case 'Monday': // day === 'Monday' does a Strict Comparison
+        console.log('Plan course structure');
+        console.log('Go to coding meetup');
+        break;
+    case 'Tuesday':
+        console.log('Prepare theory videos');
+        break;
+    case 'Wednesday':
+    case 'Thursday':
+        console.log('Write code examples');
+        break;
+    case 'Friday':
+        console.log('Record videos');
+        break;
+    case 'Saturday':
+    case 'Sunday':
+        console.log('Enjoy the weekend 😎');
+        break;
+    default:
+        console.log('Not valid day.');
+}
+
 */
 
 ////////////////////////////////////
 // Conditional (Ternary) Operator
 /*
-//CODE HERE
+
+// '?' called a ternary operator since it has 3 parts. Can be used as an if else statment in one line.
+
+const age = 23;
+//condition ? runs code if condition is true : runs code if condition is false;
+age >= 21 ? console.log('I am old enough to drink wine 🍷'): console.log('I cannot drink alcohol so I will drink water 💧');
+
+// Most commonly used to define variables conditionally
+const drink = age >= 21 ? 'wine 🍷' : 'water 💧';
+console.log(drink); 
+
+// if/else would require us to define the variable outside the {} and Condtional Ternary Operator allows us to define it in one line.
+let drink2;
+if(age >= 21) {
+    drink2 = 'wine 🍷';
+} else {
+    drink2 = 'water 💧';
+}
+console.log(drink2);
+
+// Ternary Operators can be used in Template Literals
+console.log(`I like to drink ${age >= 21 ? 'wine 🍷' : 'water 💧'}`);
+
 */
 
 ////////////////////////////////////
 // JavaScript Releases: ES5, ES6+ and ESNext
-/*
-//CODE HERE
-*/
+// /*
+
+//New relases have backwards compatability all the way to ES1
+//Old features are never removed in order or keep websites working forever. 
+//Code written 25+ years ago will still be accepted by teh Modern JavaScript Engine.
+
+//JavaScript is not forwards compatible however. Meaning if a user is using an outdated or old browser that does not 
+// support ES6 JavaScript, the code wont work. To solve this problem since we cannot control what browser and version user use
+// is to convert modern JavaScript versions back to ES5 using a process called 'transpilling' and also 'polyfilling'.
+//We can use a tool called 'Babel' to transpile our code. Transpilling back to ES5 should be done after development stage, and
+// and during the production stage where you are gettign ready to ship it to users.
+
+//ES5 is fully supported in all browsers  down to IE9 (Internet Explorer) from 2011.
+//ES6+ –– (ES6 to ES2020): well supported in all modern browser, but no support in older browsers.
+// can use (MOST) features in production with transpilling and polyfilling (check ES6 Compatibility Table).
+
+//ESNext –– (ES2021, ES2022, ... and all future releases) can already use (SOME) features in production with transpilling and
+// pollyfilling. Features have to pass a four stage process to be able to be transpiled and polyfiled before using in production.
+
+// */
