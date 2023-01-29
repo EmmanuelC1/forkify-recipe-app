@@ -111,9 +111,9 @@ console.log(friends);
 
 //friends = ['Bob', 'Alice']; // CANNOT change the whole array –– TypeError: assignment to constant variable
 
-const firstName = 'Emmanuel';
-const emmanuel = [firstName, 'Castillo', 2023-1997, 'teacher', friends];
-console.log(emmanuel);
+const nameFirst = 'Emmanuel';
+const manny = [nameFirst, 'Castillo', 2023-1997, 'teacher', friends];
+console.log(manny);
 
 */
 
@@ -153,5 +153,94 @@ if(team.includes('Scottie')) {
 } else {
     console.log('Scottie is not on the team');
 }
+
+*/
+
+///////////////////////////////////////
+// Intro to Objects
+/*
+
+//Literal Syntax
+const emmanuel = {
+    firstName: 'Emmanuel', //each of these are called properties
+    lastName: 'Castillo',
+    age: 2023 - 1997,
+    job: 'Teacher',
+    hobbies: ['gaming', 'coding', 'basketball']
+}; //order of these properties do not matter when retriving them... unlike arrays
+console.log(emmanuel);
+
+//We should:
+// use ARRAYS –– for more ordered data
+// use OBJECTS –– for more unstructured data, and data that we want to name and retrieve based on that name
+
+// Dot vs Bracket Notation
+console.log(emmanuel.lastName); //Dot Notation –– can only use property names. If it doesn't exist returns undefined
+console.log(emmanuel['lastNameee']); //Bracket Notation –– we can put any expression. If it doesn't exist, returns undefined
+
+//Using expressions in Bracket Notation
+const nameKey = 'Name';
+console.log(emmanuel['first' + nameKey]);
+console.log(emmanuel['last' + nameKey]);
+
+// const interestedIn = prompt('Wat do you want to know Emmanuel? Choose between firstName, lastName, age, job, and hobbies.');
+// if (emmanuel[interestedIn]) {
+//     console.log(emmanuel[interestedIn]);
+// } else { //interestedIn returns undefined
+//     console.log('Wrong request! Choose between the explicit values.');
+// }
+
+//Adding new properties using both Dot and Bracket Notation
+emmanuel.location = 'California';
+emmanuel['favoriteTeam'] = 'Golden State Warriors';
+console.log(emmanuel);
+
+//Quick Challenge
+//Write 'Emmanuel has 3 hobbies, but his favorite is gaming.' w/o hard coding values and only using the object
+console.log(`${emmanuel.firstName} has ${emmanuel.hobbies.length} hobbies, but his favorite is ${emmanuel.hobbies[0]}.`);
+
+*/
+
+///////////////////////////////////////
+// Object Methods
+/*
+
+const castillo = {
+    //Properties
+    firstName: 'Emmanuel',
+    lastName: 'Castillo',
+    birthYear: 1997,
+    job: 'teacher',
+    hobbies: ['gaming', 'coding', 'basketball'],
+    hasDriversLicense: true,
+
+    //Methods –– methods can also be considered properties but it just happens to holds a function value
+    // calcAge: function(birthYear) {
+    //     return 2023 - birthYear;
+    // }
+
+    //new version of same method above
+    // calcAge: function() { 
+    //     return 2023 - this.birthYear; //'this' is equal to the object on which the method is called.
+    // }
+
+    //even newer version of the method above
+    calcAge: function() {
+        this.age = 2023 - this.birthYear; //creates a property 'age' and stores it in the object
+        return this.age;
+    },
+
+    getSummary: function() {
+        return `${this.firstName} is a ${this.calcAge()}-year old ${this.job}, and he has ${this.hasDriversLicense ? 'a' : 'no'} driver's license.`;
+    }
+};
+
+// console.log(castillo.calcAge(castillo.birthYear)); //Dot Notation
+// console.log(castillo['calcAge'](castillo['birthYear'])); //Bracket Notation
+
+//Using 'this'
+console.log(castillo.calcAge()); //the object calling the method 'calcAge()' is 'castillo' so 'this' refers to 'castillo'
+console.log(castillo.age); //retrieved age from the newely created 'age' property after calling 'calcAge()'
+console.log(castillo.getSummary());
 
 */
