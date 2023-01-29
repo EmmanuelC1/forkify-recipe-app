@@ -244,3 +244,77 @@ console.log(castillo.age); //retrieved age from the newely created 'age' propert
 console.log(castillo.getSummary());
 
 */
+
+///////////////////////////////////////
+// For Loop
+// Looping Arrays, Breaking, and Continuing
+/*
+
+const myArray = [
+    'Emmanuel', 
+    'Castillo', 
+    2023-1997, 
+    'teacher', 
+    ['Michael', 'Peter', 'Steven']
+];
+
+const types = []
+
+for(let i = 0; i < myArray.length; i++) {
+    // only print string elements
+    if(typeof myArray[i] !== 'string') continue; 
+
+    // Reading from 'myArray'
+    console.log(myArray[i]);
+
+    // Filling the 'types' array
+    types.push(typeof myArray[i]); // 'types' stores the type of each element in 'myArray'
+}
+console.log(types);
+
+for(let i = 0; i < myArray.length; i++) {
+    //break after 'myArray' reaches a number
+    if(typeof myArray[i] === 'number') break;
+    console.log(myArray[i]);
+}
+
+*/
+
+///////////////////////////////////////
+// Looping Backwards & Nested Loops
+/*
+
+// Looping Backwards
+for(let i = myArray.length - 1; i >= 0; i--) {
+    console.log(i, myArray[i]);
+}
+
+// Nested Loops
+for(let exercise = 1; exercise < 4; exercise++) {
+    console.log(`----Staring exercise ${exercise}----`);
+    for(let rep = 1; rep < 4; rep++) {
+        console.log(`Lifting rep ${rep} 🏋🏻‍♂️`);
+    }
+}
+*/
+
+///////////////////////////////////////
+// While Loops
+/*
+
+let counter = 1;
+while(counter <= 3) {
+    console.log(`We are looooooping! ${counter}`);
+    counter++;
+}
+
+let dice = Math.trunc(Math.random() * 6) + 1; //random number from 1 - 6
+
+while(dice !== 6) {
+    console.log(`You rolled a ${dice}`);
+    dice = Math.trunc(Math.random() * 6) + 1; //random number from 1 - 6
+
+    if(dice === 6) console.log(`You rolled a ${dice} and loop is completed.`)
+}
+
+*/
