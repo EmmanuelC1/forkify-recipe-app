@@ -27,7 +27,7 @@ Test data:
 § Data 2: Dolphins score 85, 54 and 41. Koalas score 23, 34 and 27
 */
 
-/*
+// /*
 // Task 1:
 const calcAverage = (a, b, c) => (a + b + c) / 3;
 
@@ -53,7 +53,7 @@ const koalasAvg2 = calcAverage(23, 34, 27);
 // Task 4:
 const winner = checkWinner(dolphinsAvg, koalasAvg);
 const winner2 = checkWinner(dolphinsAvg2, koalasAvg2);
-*/
+// */
 
 ////////////////////////////////////
 // Coding Challenge #2
@@ -77,7 +77,7 @@ Your tasks:
 Test data: 125, 555 and 44
 */
 
-/*
+// /*
 // Task 1:
 const calcTip = (bill) => bill >= 50 && bill <= 300 ? bill * .15 : bill * .20;
 
@@ -90,10 +90,10 @@ console.log(bills, tips);
 // Bonus:
 const totals = [(bills[0] + tips[0]), (bills[1] + tips[1]), (bills[2] + tips[2])];
 console.log(totals);
-*/
+// */
 
 ////////////////////////////////////
-// Coding Challenge #1
+// Coding Challenge #3
 /*
 Let's go back to Mark and John comparing their BMIs! This time, let's use objects to
     implement the calculations! Remember: 
@@ -113,7 +113,7 @@ Your tasks:
 Test data: Marks weights 78 kg and is 1.69 m tall. John weights 92 kg and is 1.95 m tall.   
 */
 
-/*
+// /*
 // Task 1:
 const mark = {
     //properties
@@ -150,4 +150,65 @@ if(mark.calcBMI() > john.calcBMI()) {
 } else {
     console.log(`Both ${mark.fullName} and ${john.fullName} have the same BMI of (${mark.bmi}).`);
 }
+// */
+
+////////////////////////////////////
+// Coding Challenge #4
+/*
+Let's improve Steven's tip calculator even more, this time using loops!
+
+Your tasks:
+1. Create an array 'bills2' containing all 10 test bill values
+
+2. Create empty arrays for the tips and the totals ('tips2' and 'totals2')
+
+3. Use the 'calcTip' function we wrote before (no need to repeat) to calculate
+    tips and total values (bill + tip) for every bill value in the bills array. Use a for
+    loop to perform the 10 calculations!
+
+Test data: 22, 295, 176, 440, 37, 105, 10, 1100, 86 and 52
+
+Hints: Call ‘calcTip ‘in the loop and use the push method to add values to the
+tips and totals arrays 😉
+
+Bonus:
+4. Bonus: Write a function 'calcAverageTotals' which takes an array called 'arr' as
+    an argument. This function calculates the average of all numbers in the given
+    array. This is a difficult challenge (we haven't done this before)! Here is how to
+    solve it:
+
+4.1. First, you will need to add up all values in the array. To do the addition,
+    start by creating a variable 'sum' that starts at 0. Then loop over the
+    array using a for loop. In each iteration, add the current value to the
+    'sum' variable. This way, by the end of the loop, you have all values
+    added together
+
+4.2. To calculate the average, divide the sum you calculated before by the
+    length of the array (because that's the number of elements)
+
+4.3. Call the function with the 'totals' array
 */
+//Task 1:
+const bills2 = [22, 295, 176, 440, 37, 105, 10, 1100, 86, 52];
+//Task 2:
+const tips2 = [];
+const totals2 = [];
+
+//Task 3:
+for(let i = 0; i < bills2.length; i++) {
+    tips2.push(calcTip(bills2[i]));
+    totals2.push(bills2[i] + tips2[i]);
+}
+console.log(bills2, tips2, totals2);
+
+//Bonus:
+const calcAverageTotals = function(arr) {
+    let sum = 0;
+    for(let i = 0; i < arr.length; i++) {
+        sum += arr[i];
+    }
+
+    const avg = sum / arr.length;
+    return avg;
+}
+console.log('Average totals2: ', calcAverageTotals(totals2));

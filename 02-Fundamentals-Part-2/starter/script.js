@@ -5,7 +5,7 @@
 
 ///////////////////////////////////////
 // Function Declarations vs. Expressions
-/*
+// /*
 
 //we can call a Funciton Declaration before defining it. We CANNOT do this for Function Expressions
 const age1 =calcAge1(1997);
@@ -23,11 +23,11 @@ const calAge2 = function (birthYear) {
 const age2 = calAge2(1997);
 console.log(age1, age2);
 
-*/
+// */
 
 ///////////////////////////////////////
 // Arrow Functions
-/*
+// /*
 
 //variable to store arrow func = parameters => return;
 const calcAge3 = birthYear => 2037 - birthYear;
@@ -42,11 +42,11 @@ const yearsUntilRetirement = (birthYear, firstName) => {
 console.log(yearsUntilRetirement(1997, 'Emmanuel'));
 console.log(yearsUntilRetirement(1980, 'Jonas'));
 
-*/
+// */
 
 ///////////////////////////////////////
 // Nested Functions
-/*
+// /*
 
 const cutFruitPieces = (fruit) => fruit * 4;
 
@@ -60,7 +60,7 @@ function fruitProcessor (apples, oranges) {
 
 console.log(fruitProcessor(2, 3));
 
-*/
+// */
 
 ///////////////////////////////////////
 // Reviewing Functions
@@ -69,12 +69,12 @@ console.log(fruitProcessor(2, 3));
     Functions Expressions –– essentially a function value store in a variable
     Arrow Functions –– great for quick one-line functions. Has no 'this' keyword (more on this later...)
 */
-/*
+// /*
 const calcAge =  function(birthyear) {
     return 2037 - birthyear;
 }
 
-const yearsUntilRetirement = function(birthyear, firstName) {
+const yearsUntilRetirement2 = function(birthyear, firstName) {
     const age = calcAge(birthyear);
     const retirementAge = 65 - age;
 
@@ -86,14 +86,14 @@ const yearsUntilRetirement = function(birthyear, firstName) {
     //return `${firstName} retires in ${retirementAge}.`;
 }
 
-console.log(yearsUntilRetirement(1997, 'Emmanuel'));
-console.log(yearsUntilRetirement(1970, 'Mike'));
+console.log(yearsUntilRetirement2(1997, 'Emmanuel'));
+console.log(yearsUntilRetirement2(1970, 'Mike'));
 
-*/
+// */
 
 ///////////////////////////////////////
 // Intro to Arrays
-/*
+// /*
 
 const dubsChipYears = new Array(2015, 2017, 2018, 2022);
 
@@ -115,11 +115,11 @@ const nameFirst = 'Emmanuel';
 const manny = [nameFirst, 'Castillo', 2023-1997, 'teacher', friends];
 console.log(manny);
 
-*/
+// */
 
 ///////////////////////////////////////
 // Basic Array Operation Methods
-/*
+// /*
 
 //Append at the END of array
 const team = ['Mike', 'Steve', 'Scottie'];
@@ -154,11 +154,11 @@ if(team.includes('Scottie')) {
     console.log('Scottie is not on the team');
 }
 
-*/
+// */
 
 ///////////////////////////////////////
 // Intro to Objects
-/*
+// /*
 
 //Literal Syntax
 const emmanuel = {
@@ -199,11 +199,11 @@ console.log(emmanuel);
 //Write 'Emmanuel has 3 hobbies, but his favorite is gaming.' w/o hard coding values and only using the object
 console.log(`${emmanuel.firstName} has ${emmanuel.hobbies.length} hobbies, but his favorite is ${emmanuel.hobbies[0]}.`);
 
-*/
+// */
 
 ///////////////////////////////////////
 // Object Methods
-/*
+// /*
 
 const castillo = {
     //Properties
@@ -243,12 +243,12 @@ console.log(castillo.calcAge()); //the object calling the method 'calcAge()' is 
 console.log(castillo.age); //retrieved age from the newely created 'age' property after calling 'calcAge()'
 console.log(castillo.getSummary());
 
-*/
+// */
 
 ///////////////////////////////////////
 // For Loop
 // Looping Arrays, Breaking, and Continuing
-/*
+// /*
 
 const myArray = [
     'Emmanuel', 
@@ -278,11 +278,11 @@ for(let i = 0; i < myArray.length; i++) {
     console.log(myArray[i]);
 }
 
-*/
+// */
 
 ///////////////////////////////////////
 // Looping Backwards & Nested Loops
-/*
+// /*
 
 // Looping Backwards
 for(let i = myArray.length - 1; i >= 0; i--) {
@@ -296,11 +296,11 @@ for(let exercise = 1; exercise < 4; exercise++) {
         console.log(`Lifting rep ${rep} 🏋🏻‍♂️`);
     }
 }
-*/
+// */
 
 ///////////////////////////////////////
 // While Loops
-/*
+// /*
 
 let counter = 1;
 while(counter <= 3) {
@@ -316,5 +316,4 @@ while(dice !== 6) {
 
     if(dice === 6) console.log(`You rolled a ${dice} and loop is completed.`)
 }
-
-*/
+// */

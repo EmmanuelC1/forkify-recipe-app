@@ -125,11 +125,11 @@ for(let i = 0; i < listOfNeighbors.length; i++) {
 
 //Lecture: WHILE LOOP
 const percentages3 = [];
-let counter = 0;
-while(counter < populations.length) {
-    const pct = percentageOfWorld1(populations[counter]);
+let count = 0;
+while(count < populations.length) {
+    const pct = percentageOfWorld1(populations[count]);
     percentages3.push(pct);
-    counter++;
+    count++;
 }
 
 console.log('percentages3', percentages3);
