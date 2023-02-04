@@ -58,8 +58,14 @@ const higherOrLower = guess => {
 
 const setHighscrore = currScore => {
   if (currScore > highscore) {
-    document.querySelector('.highscore').textContent = currScore;
+    highscore = currScore;
+    document.querySelector('.highscore').textContent = highscore;
   }
+};
+
+const updateScore = () => {
+  score--;
+  document.querySelector('.score').textContent = score;
 };
 
 const changeBackgroudColor = color => {
@@ -67,7 +73,7 @@ const changeBackgroudColor = color => {
 };
 
 const setSecretNumber = () => {
-  return Math.floor(Math.random() * 20 + 1); //FIX ME try avoiding same number being secretNumber
+  return Math.floor(Math.random() * 20 + 1);
 };
 
 let secretNumber = setSecretNumber();
@@ -95,13 +101,11 @@ checkBtn.addEventListener('click', () => {
       //wrong guess
       changeMessage('wrong');
       higherOrLower(guess);
-      score--;
-      document.querySelector('.score').textContent = score;
+      updateScore();
     }
   } else {
     //score reaches 0... game over!
-    score--;
-    document.querySelector('.score').textContent = score;
+    updateScore();
     gameOver();
   }
 });
