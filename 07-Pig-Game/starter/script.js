@@ -1,12 +1,19 @@
 'use strict';
 
 const newGame = () => {
-  //Reset scoreXEl
-  //Reset scoreCounter
-  //Reset playerXEl
-  //Reset currentXEl
-  //Enable buttons
-  //Hide dice image
+  score0Element.textContent = 0;
+  score1Element.textContent = 0;
+  current0El.textContent = 0;
+  current1El.textContent = 0;
+  scoreCounter = 0;
+  activePlayer = 0;
+
+  player0El.classList.add('player--active');
+  player1El.classList.remove('player--active');
+
+  diceImg.classList.add('hidden');
+  btnRoll.disabled = false;
+  btnHold.disabled = false;
 };
 
 const handleRoll = diceRoll => {};
@@ -52,12 +59,9 @@ const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
 
 //Starting Condition Global Variables
-score0Element.textContent = 0;
-score1Element.textContent = 0;
-diceImg.classList.add('hidden');
-
-let scoreCounter = 0;
-let activePlayer = 0;
+let scoreCounter;
+let activePlayer;
+newGame();
 
 //Event Listeners
 btnNewGame.addEventListener('click', newGame);
@@ -91,6 +95,7 @@ btnHold.addEventListener('click', () => {
     winner(player1El); //FIX ME figure out what to send as a parameter
     console.log('Player 1 wins');
   } else {
-    changeActivePlayer();
+    changeActivePlayer(); //BUG not changing avtive player after hold button is pressed
+    console.log('hold'); // Maybe it is working as intended.
   }
 });
