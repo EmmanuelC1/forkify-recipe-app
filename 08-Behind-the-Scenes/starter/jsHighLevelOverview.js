@@ -40,6 +40,50 @@
                – What if there is a long runnning task? (like fetching data from a remote server)
                     Sounds like it would block the single thread. However, we want a non-blocking behavior.
                – How do we achieve that? 
-                    By using an 'event loop'. Takes long running tasks, executes them in the background, and puts them back
-                    in the main thread once they are finished.
+                    By using an 'event loop'. Takes long running tasks, executes them in the background, and puts them 
+                    back in the main thread once they are finished.
+
+
+    What is a JavaScript Engine?
+        Program that executes js code. Very browser has its own js engine but the most well known engine is Google's 
+        V8 Engine. This engine powers Google Chrome and Node.js
+
+    • Components of a JS Engine and How it Works
+        –– Every JS Engine contains a Call Stack and a Heap
+            – Call Stack is where our code is executed using something called Execution Context.
+            – Heap is an unstructured memory pool which stores every object that our application needs.
+        –– How is our code compiled to machine code?
+            – Compilation vs Interpretation
+                • Compilation: entire code is converted into machine code at once, and written to a binary file that can be 
+                    executed by a computer. 
+                  Source code ––> (step 1) Compilation ––> Portable File: machine code ––> (step 2) Execution ––> Program Running
+                  // step 2 can happen way after compilation
+
+                • Interpretation: interpreter runs through the source code and executes it line by line.
+                  Souce code ––> (step 1) Execution Line by Line ––> Program running
+                  // code still needs to be converted to machine code
+
+                • Just-in-time (JIT) Compilation: entire code is converted into machine code at once, then executed immediately.
+                  Source code ––> (step 1) Compilation ––> Machine code ––> (step 2) Execution ––> Program Running
+                  // Machine code NOT a portable file, (step 2) happens immediately after compilation
+
+        –– Modern Just-in-time Compilation of JS
+            – As a piece of code enter the JS engine, the first step is to parse (read) the code. During the parsing process, 
+                the code is parsed into a data structure called the Abstract Syntax Tree (AST). AST saves meaningful keywords 
+                like 'const' and 'function' into the tree in a srtuctured way. This step also checks for syntax errors.
+            – Next step is Compilation, which takes the generated AST and compiles it into machine code. (JIT compilation)
+            – This machine code gets executed right away (execution happens in Call Stack)
+            – JS compiles AST into machine code without worrying about optimization, just to get started with the execution
+                process as soon as possible. In the background, the machine code is getting optimized and re-compiled in the
+                already running execution multiple times. The new optimized machine code overwrites the previous machine code
+                without ever stopping the running execution. This process is what makes modern engines such as V8 so fast.
+
+                // all of this parsing, compilation, execution and optimization happens in a special thread that we can't access
+                // from our code.
+
+    • JS Runtime in the Browser
+        –– We can think of the JS Runtime as a container that includes all the things that we need to use JS. (in this case in 
+            the browser).
+            – Inside this container (JS Runtime) we have a JS Engine (Heap and Call Stack)
+
 */
