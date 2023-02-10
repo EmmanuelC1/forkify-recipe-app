@@ -85,5 +85,48 @@
         –– We can think of the JS Runtime as a container that includes all the things that we need to use JS. (in this case in 
             the browser).
             – Inside this container (JS Runtime) we have a JS Engine (Heap and Call Stack)
+            – We also need access to the Web APIs (DOM, Timers, Fetch API, etc).
+                Web APIs are functionalities provided to the engine, accessible on window object.
+            – JS Runtime also includes a Callback Queue.
+                – A data structure that contains all the callback functions that are ready to be executed. 
+                    (click, timer, data, etc.) ex. Callback function from DOM event listerners.
+                – As an event happens (onClick), the callback function will be called.
+                    • the callback function is placed in the callback queue.
+                    • when the call stack is empty the callback function is then passed to the stack, so that it can be executed.
+                    // This happens by something called the event loop.
 
+    • JS Runtime in Node.js 
+            –– The Node.js Runtime is really similar as the JS Runtime in the browser.
+                – The difference being that no Web APIs are available since those are provided by the browser.
+                    Instead we have multiple C++ Bindings and a Thread Pool
+    
+            
+    • How is JS Code Executed in the Call Stack
+            –– Let's suppose our code just finished compiling and ready to be executed.
+                – A global execution context (for top-level code) is created. 
+                    Top-level code being code not in a function. Function body only executed when called. An execution context is 
+                    an environment in which a piece of JS is executed. Stores all the necessary information for some code to be 
+                    executed. There is exactly ONE global execution context (EC) for top level code.
+                – Then top level code actually executes inside global EC. (Computer CPU processes machine code that it received).
+                – Next, execution of functions and waiting for callbacks. 
+                    For non top level code such as functions, one execution context per fucntion is created. Once all functions 
+                    are executed, the engine will keep waiting for callback functions to arrive to be executed. Ex. waiting for 
+                    onClick event callback. It is the event loop that provides these new callback function for the call stack.
+            
+            –– Execution Context in Detail:
+                – Inside the EC there is a Variable Environment: 
+                    Where all our variables, functions, and a special arguments objects. The argument objects contains all the 
+                    arguments that were passed into the function that the current EC belongs to.
+                – Also inside is a Scope Chain: 
+                    Consists of references to variables that are located outside of the current function. To keep track of the 
+                    scope chain, it is stored in each EC.
+                – Each EC contains a special variable called the 'this' keyword
+                    More on 'this' later in this section
+
+                // All of these are generated in the creation phase, right before execution.
+                // EC's belonging to Arrow Functions do not contain argument objects or the 'this' keyword. Instead they can use
+                    the arguments object and 'this' from their closest regular function parent. (more on this later).
+
+            –– The Call Stack
+                – Place where execution contexts (EC) get stcked on top of each other, to keep track of where we are in the execution.
 */
