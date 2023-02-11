@@ -147,4 +147,54 @@
                 - however, this only applies to 'let' and 'const' variables. If variable is declared using 'var', then it can be 
                     accessed outside the block (if/else, for loop, etc)
                 - functions are also block scoped (only in 'strict' mode)
+    
+    Hoisting and The TDZ (Temporal Dead Zone):
+        • Hoisting: makes some types of variables accessible/usable in the code before they are actually declared. "Variables 
+            lifted to the top of their scope". Before execution (during creating phase), code is scanned for variable declarations,
+            and for each variable, a new property is called in the variable environment object.
+
+            –– Function Declarations: 
+                - Hoisted? Yes
+                - Intial Value: actual function
+                – Scope: block
+
+            –– var Variables:
+                - Hoisted? Yes
+                - Intial Value: undefined
+                – Scope: function
+
+            –– let, const Variables:
+                - Hoisted? No       //technically yes, but not in practice
+                - Intial Value: <uninitialized>, TDZ (Temporal Dead Zone)
+                – Scope: block
+
+            –– Function Expression & Arrow Functions:
+                - Depends if using var or let/const
+                - These functions are simply variables, so they behave the same wat as variables in regard to hoisting.
+                    Arrow function created with var is hoisted to undefined, but one created with let or const is not usable
+                    before it is declared in code because of the Temporal Dead Zone.
+        
+        • TDZ: Temporal Dead Zone
+            //focusing on the 'job' variable in line 187. TDZ for 'job' is lines 183-185  
+        
+            const myName = 'Emmanuel';
+
+            if(myName === 'Emmanuel) {
+                console.log(`Emmanuel is a ${job}); //ReferenceError: Cannot access 'job' before initialization //TDZ for 'job'
+                const age = 2023 - 1997; //TDZ for 'job'
+                console.log(age); //TDZ for 'job'
+
+                const job =  'developer';
+                console.log(x); //ReferenceError: x is not defined
+            }
+
+            –– Why do we need TDZ?
+                - Makes it easier to avoid and catch errors: accessing variables before decalration is bad  practive and should
+                    be avoided.
+                – Make const variables actually work. const should never be re-assigned. Cannot set const variable to undefined
+                    first and then re-assign them to the actual value when we declare them.
+
+            –– Why Does Hoisting Exist?
+                - Using functions before actual declarations (function declarations).
+                – var hoisting is just a byproduct of hoisting function declarations.
 */

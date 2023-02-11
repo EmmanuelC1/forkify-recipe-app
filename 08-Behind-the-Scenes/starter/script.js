@@ -1,5 +1,10 @@
 'use strict';
 
+///////////////////////////////////////
+// Scoping in Practice
+
+/*
+
 function calcAge(birthYear) {
   const age = 2023 - birthYear;
 
@@ -36,3 +41,56 @@ function calcAge(birthYear) {
 
 const firstName = 'Emmanuel';
 calcAge(1996);
+
+*/
+
+///////////////////////////////////////
+// Hoisting and TDZ in Practice
+
+// Hoisting with Variables
+
+console.log(me); //undefined
+// console.log(job); //ReferenceError: Cannot access 'job' before initialization
+// console.log(year); //ReferenceError: Cannot access 'job' before initialization
+
+var me = 'Emmanuel';
+let job = 'Developer';
+const year = 1997;
+
+// Hoisting with Functions
+
+console.log(addDeclaration(2, 3));
+// console.log(addExpression(2, 3)); //ReferenceError: Cannot access 'addExpression' before initialization
+// console.log(addArrow(2, 3)); //ReferenceError: Cannot access 'addArrow' before initialization
+
+function addDeclaration(a, b) {
+  return a + b;
+}
+
+const addExpression = function (a, b) {
+  return a + b;
+};
+
+const addArrow = (a, b) => a + b;
+
+// Pitfall of Hoisting Example
+
+console.log(numProducts); //undefined so if statement meets condition even though, we then declare numProducts = 10
+if (!numProducts) deleteShoppingCart();
+
+var numProducts = 10;
+
+function deleteShoppingCart() {
+  console.log('All products deleted.');
+}
+
+//Best practice is to NOT use var and use const and let instead. Always declare variables at the top of the scope
+//Always declare all your functions first and use them after the declaration
+
+var x = 1;
+let y = 2;
+const z = 3;
+
+console.log(x === window.x); //variables declared with var will create a property on the global window object
+console.log(y === window.y);
+console.log(z === window.z);
