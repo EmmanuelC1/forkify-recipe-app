@@ -15,7 +15,7 @@
     • Interepreted or Just-in-time Compiled: important step in every programming language that compiles or interprets
         code to 1's and 0's (machine code) for the computer to read and run your program. (happens inside JS engine).
 
-    • Multi-Paradigm: An approach and midset of structuring code, which will direct your codeing style and technique.
+    • Multi-Paradigm: An approach and mindset of structuring code, which will direct your coding style and technique.
         –– 3 popular paradigms:
             – 1. Procedural Programming     //what we've been doing up to this point.
             – 2. Object-Oriented Programming (OOP)
@@ -29,7 +29,7 @@
     • First-Class Functions: functions are simply treated as variables. We can pass them into other functions as arguments,
         and return them from functions. Not all languages have First-Class Functions.
 
-    • Dynamically-Typed: no data type defintions. Types become known at runtime. Data type of variable can be 
+    • Dynamically-Typed: no data type defintions. Types become known at runtime. Data type of variables can be 
         automatically changed when we re-assign variables. (TypeScript is basically JS with types).
 
     • Single-Thread and Non-Blocking Event Loop: complex topics that we will go over later in course, not going into
@@ -45,7 +45,7 @@
 
 
     What is a JavaScript Engine?
-        Program that executes js code. Very browser has its own js engine but the most well known engine is Google's 
+        Program that executes js code. Every browser has its own js engine but the most well known engine is Google's 
         V8 Engine. This engine powers Google Chrome and Node.js
 
     • Components of a JS Engine and How it Works
@@ -70,7 +70,7 @@
         –– Modern Just-in-time Compilation of JS
             – As a piece of code enter the JS engine, the first step is to parse (read) the code. During the parsing process, 
                 the code is parsed into a data structure called the Abstract Syntax Tree (AST). AST saves meaningful keywords 
-                like 'const' and 'function' into the tree in a srtuctured way. This step also checks for syntax errors.
+                like 'const' and 'function' into the tree in a structured way. This step also checks for syntax errors.
             – Next step is Compilation, which takes the generated AST and compiles it into machine code. (JIT compilation)
             – This machine code gets executed right away (execution happens in Call Stack)
             – JS compiles AST into machine code without worrying about optimization, just to get started with the execution
@@ -79,7 +79,7 @@
                 without ever stopping the running execution. This process is what makes modern engines such as V8 so fast.
 
                 // all of this parsing, compilation, execution and optimization happens in a special thread that we can't access
-                // from our code.
+                    from our code.
 
     • JS Runtime in the Browser
         –– We can think of the JS Runtime as a container that includes all the things that we need to use JS. (in this case in 
@@ -89,7 +89,7 @@
                 Web APIs are functionalities provided to the engine, accessible on window object.
             – JS Runtime also includes a Callback Queue.
                 – A data structure that contains all the callback functions that are ready to be executed. 
-                    (click, timer, data, etc.) ex. Callback function from DOM event listerners.
+                    (click, timer, data, etc.) ex. Callback function from DOM event listeners.
                 – As an event happens (onClick), the callback function will be called.
                     • the callback function is placed in the callback queue.
                     • when the call stack is empty the callback function is then passed to the stack, so that it can be executed.
@@ -128,5 +128,23 @@
                     the arguments object and 'this' from their closest regular function parent. (more on this later).
 
             –– The Call Stack
-                – Place where execution contexts (EC) get stcked on top of each other, to keep track of where we are in the execution.
+                – Place where execution contexts (EC) get stacked on top of each other, to keep track of where we are in the execution.
+
+    Scope and Scope Chain
+        • Scoping: how our program's variables are organized and accessed. 
+        • Lexical Scoping: scoping is controlled by placement of functions and blocks in the code.
+        • Scope: space environment in which a certain variable is declared. There is global scope, function scope and block scope.
+        • Scope of a Variable: region of our code where a certain variable can be accessed.
+
+            –– Global Scope: 
+                - outside of any function or block
+                – variables declared in global scope are accessible everywhere
+            –– Function Scope: 
+                - variables are accessible only inside function, NOT outside
+                - Also called local scope
+            –– Block Scope (ES6)
+                - variables are accessible only inside block (block scoped)
+                - however, this only applies to 'let' and 'const' variables. If variable is declared using 'var', then it can be 
+                    accessed outside the block (if/else, for loop, etc)
+                - functions are also block scoped (only in 'strict' mode)
 */
