@@ -114,13 +114,13 @@
                     onClick event callback. It is the event loop that provides these new callback function for the call stack.
             
             –– Execution Context in Detail:
-                – Inside the EC there is a Variable Environment: 
+                – Variable Environment: 
                     Where all our variables, functions, and a special arguments objects. The argument objects contains all the 
                     arguments that were passed into the function that the current EC belongs to.
-                – Also inside is a Scope Chain: 
+                – Scope Chain: 
                     Consists of references to variables that are located outside of the current function. To keep track of the 
                     scope chain, it is stored in each EC.
-                – Each EC contains a special variable called the 'this' keyword
+                – 'this' Keyword:
                     More on 'this' later in this section
 
                 // All of these are generated in the creation phase, right before execution.
@@ -197,4 +197,29 @@
             –– Why Does Hoisting Exist?
                 - Using functions before actual declarations (function declarations).
                 – var hoisting is just a byproduct of hoisting function declarations.
+
+    'this' Keyword:
+        • Special variable that is created for every execution context (every function). Takes the value of (points to) the 'owner'
+            of the function in which the 'this' keyword is used.
+        • 'this' is NOT static. It depends on how the function is called, and its value is only assigned when the function is
+            actually called.
+
+            –– Method: 
+                - this = <Object that is calling the method>
+
+            –– Simple Function Call:
+                - this = undefined               //in strict mode
+                - this = global window object   //not in strict mode
+
+            –– Arrow Functions:
+                - this = <this of surrounding function (lexical this)>
+                - arrow functions don't get their own this keyword
+
+            –– Event Listener:
+                - this = <DOM element that the handler is attached to>
+
+            –– new, call, apply, bind Methods:
+                - covered later in this course...
+
+        • 'this' does NOT point to the function itself or its variable environment.
 */

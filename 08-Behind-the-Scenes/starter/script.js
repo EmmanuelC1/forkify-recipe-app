@@ -47,6 +47,7 @@ calcAge(1996);
 ///////////////////////////////////////
 // Hoisting and TDZ in Practice
 
+/*
 // Hoisting with Variables
 
 console.log(me); //undefined
@@ -94,3 +95,52 @@ const z = 3;
 console.log(x === window.x); //variables declared with var will create a property on the global window object
 console.log(y === window.y);
 console.log(z === window.z);
+
+*/
+
+///////////////////////////////////////
+// 'this' Keyword in Practice
+
+console.log(this); //global window object
+
+const calcAvg = function (a, b) {
+  console.log(a + b / 3);
+  console.log(this); //undefined (strict mode)
+};
+
+calcAvg(5, 15);
+
+const calcAvgArrow = (a, b) => {
+  console.log(a + b / 3);
+  console.log(this); //global window object (arrow function does not get this keyword)
+};
+
+calcAvgArrow(5, 15);
+
+const emmanuel = {
+  firstName: 'Emmanuel',
+  year: 1997,
+
+  calcAge: function () {
+    console.log(2023 - this.year);
+    console.log(this); //object calling the function (emmanuel object in this case)
+  },
+  greet: () => console.log(`Hey ${this.firstName}`),
+};
+
+emmanuel.calcAge(); //this = emmanuel obj
+
+const matilda = {
+  year: 2017,
+};
+
+//method borrowing
+matilda.calcAge = emmanuel.calcAge; //copy calcAge method from emmanuel obj to matilda obj
+matilda.calcAge(); //this = matilda obj
+
+//copy method into f variable, so f becomes a function
+const f = emmanuel.calcAge;
+// f(); // this = undefined
+
+emmanuel.greet(); // 'Hey undefined' (this used in arrow function)
+emmanuel.calcAge();
