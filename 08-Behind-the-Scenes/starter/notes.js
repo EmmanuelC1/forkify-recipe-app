@@ -222,4 +222,23 @@
                 - covered later in this course...
 
         • 'this' does NOT point to the function itself or its variable environment.
+
+    Primitives vs Objects:
+        • Primitives (primitive types):
+            –– Stored in the Call Stack (stored in the EC in which they are declared)
+                - Number
+                - String
+                – Boolean
+                – Undefined
+                – Null
+                – Symbol
+                – BigInt
+        
+        • Objects (reference types):
+            –– Stored in the Heap
+                - Object Literal
+                - Arrays
+                - Functions
+                – Many more...
+
 */

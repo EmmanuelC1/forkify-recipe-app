@@ -3,7 +3,7 @@
 ///////////////////////////////////////
 // Scoping in Practice
 
-/*
+// /*
 
 function calcAge(birthYear) {
   const age = 2023 - birthYear;
@@ -42,12 +42,12 @@ function calcAge(birthYear) {
 const firstName = 'Emmanuel';
 calcAge(1996);
 
-*/
+// */
 
 ///////////////////////////////////////
 // Hoisting and TDZ in Practice
 
-/*
+// /*
 // Hoisting with Variables
 
 console.log(me); //undefined
@@ -96,12 +96,12 @@ console.log(x === window.x); //variables declared with var will create a propert
 console.log(y === window.y);
 console.log(z === window.z);
 
-*/
+// */
 
 ///////////////////////////////////////
 // 'this' Keyword in Practice
 
-/*
+// /*
 console.log(this); //global window object
 
 const calcAvg = function (a, b) {
@@ -162,18 +162,44 @@ var addArrowFunc = (a, b) => {
 
 addArrowFunc(2, 5);
 
-*/
+// */
 
 ///////////////////////////////////////
 // Primitives vs Objects (Primitive vs Reference Types)
 
-const me = {
-  name: 'Emmanuel',
-  age: 25,
+const jessica = {
+  firstName: 'Jessica',
+  lastName: 'Williams',
+  age: 27,
 };
 
-const friend = me; //copy object
-friend.age = 26; //change friend's age
+const marriedJessica = jessica; //copy object
+marriedJessica.lastName = 'Davis'; //change last name on new object
 
-console.log('Me:', me); //both ages are changed to 26
-console.log('Friend:', friend);
+//lastName was changed on both because Objects (reference types) are saved in Heap,
+// therefore both object point to the same place in memory. so changing one changes the other
+
+console.log('Before marriage:', jessica); //{firstName: Jessica, lastName: Davis, age: 27}
+console.log('After marriage:', marriedJessica); //{firstName: Jessica, lastName: Davis, age: 27}
+
+//Copying Objects
+const jessica2 = {
+  firstName: 'Jessica',
+  lastName: 'Williams',
+  age: 27,
+  family: ['Alice', 'Bob'],
+};
+
+const jessicaCopy = Object.assign({}, jessica2); //creates a shallow copy
+
+jessicaCopy.lastName = 'Davis';
+
+console.log('Before marriage:', jessica2); //{firstName: Jessica, lastName: Williams, age: 27}
+console.log('After marriage:', jessicaCopy); //{firstName: Jessica, lastName: Davis, age: 27}
+
+//Both objects get new array elements (beacuse of shallow copy)
+jessicaCopy.family.push('Mary');
+jessicaCopy.family.push('John');
+
+console.log('jessica', jessica2); //same family members as jessicaCopy
+console.log('jessicaCopy', jessicaCopy);
