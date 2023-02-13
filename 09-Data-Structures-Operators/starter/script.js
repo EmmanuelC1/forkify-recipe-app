@@ -32,11 +32,18 @@ const restaurant = {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
 
-  //Objects as arguments for functions (destructuring w/ default values)
+  //Objects as Arguments for functions (destructuring w/ default values)
   //prettier-ignore
   orderDelivery: function ({ starterIndex = 1, mainIndex = 0, time = '20:00', address }) { 
     console.log(
       `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}.`
+    );
+  },
+
+  //Spread Operator as Argument for function
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(
+      `Here is your delicious pasta with ${ing1}, ${ing2}, and ${ing3}.`
     );
   },
 };
@@ -146,6 +153,9 @@ restaurant.orderDelivery({
 
 ///////////////////////////////////////
 // The Spread Operator (...)
+// Iterables: arrays, strings, maps, sets. NOT objects (Spread Operator works on all Iterables)
+// can only use Spread Operator when building an array or passing values into function
+/*
 
 const arr2 = [7, 8, 9];
 
@@ -156,3 +166,41 @@ console.log(badNewArr); // [1, 2, 7, 8, 9]
 // Spread Operator (...)
 const newArr = [1, 2, ...arr2];
 console.log(newArr); // [1, 2, 7, 8, 9]
+
+console.log(...newArr); // 1, 2, 7, 8, 9 (logs each element in newArr individually 🤯)
+
+// Add new item to restaurant's mainMenu (creates a new variable array, not manipulating existing mainMenu in restaurant obj)
+const newMenu = [...restaurant.mainMenu, 'Gnocci'];
+console.log(newMenu); // ['Pizza', 'Pasta', 'Risotto', 'Gnocci']
+
+// Copy array (shallow)
+const mainMenuCopy = [...restaurant.mainMenu];
+
+// Join 2 (or more) Arrays
+const fullMenuCopy = [...restaurant.starterMenu, ...restaurant.mainMenu];
+console.log(fullMenuCopy);
+
+const str = 'Emmanuel';
+const letters = [...str, ' ', 'C.'];
+console.log(...letters);
+
+// Functions w/ Spread Operator
+// const ingredients = [
+//   prompt('Pasta ingredient 1:'),
+//   prompt('Pasta ingredient 2:'),
+//   prompt('Pasta ingredient 3:'),
+// ];
+const ingredients = ['chicken', 'parmesan', 'basil'];
+
+restaurant.orderPasta(...ingredients);
+
+// Objects
+const newRestaurant = { foundedIn: 1998, ...restaurant, founder: 'Guiseppe' };
+console.log(newRestaurant); // copy of object w/ new properties
+
+const restaurantCopy = { ...restaurant };
+restaurantCopy.name = 'Ristorante Roma';
+console.log(restaurantCopy.name); // Ristorante Roma
+console.log(restaurant.name); // Classico Italiano
+
+*/
