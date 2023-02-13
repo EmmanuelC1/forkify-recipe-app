@@ -199,10 +199,10 @@
                 – var hoisting is just a byproduct of hoisting function declarations.
 
     'this' Keyword:
-        • Special variable that is created for every execution context (every function). Takes the value of (points to) the 'owner'
-            of the function in which the 'this' keyword is used.
-        • 'this' is NOT static. It depends on how the function is called, and its value is only assigned when the function is
-            actually called.
+        • Special variable that is created for every execution context (every function). Takes the value of (points to) the 
+            'owner' of the function in which the 'this' keyword is used.
+        • 'this' is NOT static. It depends on how the function is called, and its value is only assigned when the function 
+            is actually called.
 
             –– Method: 
                 - this = <Object that is calling the method>

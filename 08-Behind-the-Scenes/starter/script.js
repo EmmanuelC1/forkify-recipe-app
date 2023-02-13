@@ -101,6 +101,7 @@ console.log(z === window.z);
 ///////////////////////////////////////
 // 'this' Keyword in Practice
 
+/*
 console.log(this); //global window object
 
 const calcAvg = function (a, b) {
@@ -144,3 +145,35 @@ const f = emmanuel.calcAge;
 
 emmanuel.greet(); // 'Hey undefined' (this used in arrow function)
 emmanuel.calcAge();
+
+// Arguments keyword
+const addExpr = function (a, b) {
+  console.log(arguments); //returns array wit arguments passed in function
+  return a + b;
+};
+
+addExpr(2, 5);
+addExpr(2, 5, 8, 12); //can pass more arguments than expected in function.. arguments keyword lets us use them
+
+var addArrowFunc = (a, b) => {
+  // console.log(arguments); //error, arrow functions do NOT have arguments keyword
+  return a + b;
+};
+
+addArrowFunc(2, 5);
+
+*/
+
+///////////////////////////////////////
+// Primitives vs Objects (Primitive vs Reference Types)
+
+const me = {
+  name: 'Emmanuel',
+  age: 25,
+};
+
+const friend = me; //copy object
+friend.age = 26; //change friend's age
+
+console.log('Me:', me); //both ages are changed to 26
+console.log('Friend:', friend);
