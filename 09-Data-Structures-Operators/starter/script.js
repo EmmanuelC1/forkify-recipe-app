@@ -40,11 +40,25 @@ const restaurant = {
     );
   },
 
-  //Spread Operator as Argument for function
+  // Spread Operator as Argument for function (spread operator in function call)
   orderPasta: function (ing1, ing2, ing3) {
     console.log(
       `Here is your delicious pasta with ${ing1}, ${ing2}, and ${ing3}.`
     );
+  },
+
+  //Rest Parameters
+  orderPizza: function (mainIngredient, ...otherIngredients) {
+    // otherIngredients is an array
+    let str = `Pizza has been ordered with main ingredient of ${mainIngredient}`;
+
+    if (otherIngredients.length !== 0) {
+      for (let i = 0; i < otherIngredients.length; i++) {
+        str += `, ${otherIngredients[i]}`;
+      }
+    }
+
+    console.log(str);
   },
 };
 
@@ -155,6 +169,7 @@ restaurant.orderDelivery({
 // The Spread Operator (...)
 // Iterables: arrays, strings, maps, sets. NOT objects (Spread Operator works on all Iterables)
 // can only use Spread Operator when building an array or passing values into function
+// (unpacks an array without manually iterating through it)
 /*
 
 const arr2 = [7, 8, 9];
@@ -202,5 +217,85 @@ const restaurantCopy = { ...restaurant };
 restaurantCopy.name = 'Ristorante Roma';
 console.log(restaurantCopy.name); // Ristorante Roma
 console.log(restaurant.name); // Classico Italiano
+
+*/
+
+///////////////////////////////////////
+// Rest Patterns & Parameters
+/*
+
+// 1) Destructuring
+
+// SPREAD, beacuse of RIGHT side of '='
+const anotherArr = [1, 2, ...[3, 4]];
+
+// REST PATTERN, beacuse of LEFT side of '='
+const [a, b, ...others] = [1, 2, 3, 4, 5];
+console.log(a, b, others); // a = 1,  b = 2, others = [3, 4, 5]
+
+const [pizza, , risotto, ...otherFood] = [
+  ...restaurant.mainMenu,
+  ...restaurant.starterMenu,
+];
+console.log(pizza, risotto, otherFood); //'Pizza Risotto ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad']
+
+// Objects
+const { sat: satHours, ...weekdayHours } = restaurant.openingHours;
+console.log(satHours);
+console.log(weekdayHours); //thurs and fri opening hours objects
+
+// 2) Functions (rest parameters)
+
+// rest parameters get packed into an array called 'numbers'
+const add = function (...numbers) {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+  }
+
+  console.log(sum);
+};
+
+add(2, 3);
+add(5, 3, 7, 2);
+add(8, 2, 5, 3, 2, 1, 4);
+
+const x = [23, 5, 7];
+add(...x); //Spread unpacks array
+
+restaurant.orderPizza('chicken', 'bacon', 'spinach', 'peppers');
+restaurant.orderPizza('pepperoni'); //otherIngredients argument in function will be an empty array
+
+*/
+
+///////////////////////////////////////
+// Short Circuiting (&& and ||)
+/*
+
+// Use ANY data type, return ANY data type, short-circuiting
+console.log('--------- OR ---------');
+console.log(0 || 'Emmanuel');
+console.log(true || 0);
+console.log(undefined || null);
+console.log(undefined || 0 || '' || 'Hello' || null);
+
+const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
+console.log(guests1);
+
+const guests2 = restaurant.numGuests || 10;
+console.log(guests2);
+
+console.log('--------- AND ---------');
+console.log(0 && 'Emmanuel');
+console.log(7 && 'Emmanuel');
+console.log('Hello' && 23 && null && 'Emmanuel');
+
+// Practical Example (if checks if orderPizza property (method) exists)
+if (restaurant.orderPizza) {
+  restaurant.orderPizza('mushrooms', 'spinach');
+}
+
+// (same as above) using short-circuiting to check if orderPizza property (method) exists
+restaurant.orderPizza && restaurant.orderPizza('chicken', 'bacon');
 
 */
