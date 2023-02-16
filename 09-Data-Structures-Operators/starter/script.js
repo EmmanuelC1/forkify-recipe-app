@@ -73,8 +73,8 @@ const arr = [2, 3, 4];
 // const b = arr[1];
 // const c = arr[2];
 
-// Destructuring Array
-const [x, y, z] = arr; // [] on the left = destructuring. right side not affected
+// Destructuring Array ([] on the left = destructuring. right side not affected)
+const [x, y, z] = arr; 
 console.log(x, y, z);
 console.log(arr);
 
@@ -279,12 +279,6 @@ console.log(true || 0);
 console.log(undefined || null);
 console.log(undefined || 0 || '' || 'Hello' || null);
 
-const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
-console.log(guests1);
-
-const guests2 = restaurant.numGuests || 10;
-console.log(guests2);
-
 console.log('--------- AND ---------');
 console.log(0 && 'Emmanuel');
 console.log(7 && 'Emmanuel');
@@ -297,5 +291,76 @@ if (restaurant.orderPizza) {
 
 // (same as above) using short-circuiting to check if orderPizza property (method) exists
 restaurant.orderPizza && restaurant.orderPizza('chicken', 'bacon');
+
+restaurant.numGuests = 0;
+
+// if numGuests = 0, it treats it as a falsy value and returns 10 when it should return 0
+const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
+console.log(guests1);
+
+// if numGuests = 0, it treats it as a falsy value and returns 10 when it should return 0
+const guests2 = restaurant.numGuests || 10;
+console.log(guests2);
+
+///////////////////////////////////////
+// Nullish Coalescing (??) (ES2020)
+// Nullish values: null and undefined (NOT 0 or '')
+
+// if numGuests = 0, it treats it as 0 now and not falsy anymore. (correct way) only returns 10 if null or undefined
+const guests3 = restaurant.numGuests ?? 10;
+console.log(guests3);
+
+*/
+
+///////////////////////////////////////
+// Logical Assignment Operators
+/*
+
+const rest1 = {
+  name: 'Capri',
+  // numGuests: 20,
+  numGuests: 0,
+};
+
+const rest2 = {
+  name: 'La Piazza',
+  owner: 'Giovanni Rossi',
+};
+
+// set a dafault numGuests for restaurant objects that do not have that property (short circuiting)
+// rest1.numGuests = rest1.numGuests || 10;
+// rest2.numGuests = rest2.numGuests || 10;
+
+// console.log(rest1);
+// console.log(rest2);
+
+// using logical assignments (OR Assignment Operator) does same thing as above
+// What if numGuest = 0? it treats it as falsy... again (change in rest1 object)
+// rest1.numGuests ||= 10;
+// rest2.numGuests ||= 10;
+
+// console.log(rest1);
+// console.log(rest2);
+
+// Correct Solution (Nullish Assignment Operator) if numGuests = 0 (change in rest1 object)
+rest1.numGuests ??= 10;
+rest2.numGuests ??= 10;
+
+console.log(rest1); //numGuests = 0
+console.log(rest2); //numGuests = 10
+
+// if rest obj has owner, set to <ANONYMOUS>, if owner does not exist, do nothing
+// rest1.owner = rest1.owner && '<ANONYMOUS>';
+// rest2.owner = rest2.owner && '<ANONYMOUS>';
+
+// console.log(rest1); // owner: undefined (not what we want)
+// console.log(rest2); // owner: <ANONYMOUS>
+
+// (And Assigment Operator) if rest obj has owner, set to <ANONYMOUS>, if owner does not exist, do nothing
+rest1.owner &&= '<ANONYMOUS>';
+rest2.owner &&= '<ANONYMOUS>';
+
+console.log(rest1); // no owner property (correct)
+console.log(rest2); // owner: <ANONYMOUS> (correct)
 
 */
