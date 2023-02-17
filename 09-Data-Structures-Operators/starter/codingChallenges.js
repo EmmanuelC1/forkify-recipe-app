@@ -79,6 +79,7 @@ const game = {
     team2: 6.5,
   },
 };
+/*
 
 //Task 6: function ('printGoals') that receives an arbitrary number of player names (not an array). Prints each player and goals scored
 const printGoals = function (...players) {
@@ -114,3 +115,5 @@ printGoals(...game.scored);
 // Task 7: log which team is more likely to win, without using an if/else statement or the ternary operator. (smaller odds = likely winner)
 team1 < team2 && console.log('Team 1 is more likely to win.'); //when condition is true (&&) will continue and execute console.log()
 team1 > team2 && console.log('Team 2 is more likely to win.');
+
+*/
