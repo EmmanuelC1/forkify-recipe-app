@@ -519,3 +519,46 @@ for (const [key, { open, close }] of entries) {
   console.log(`On ${key} we open at ${open} and close at ${close}.`);
 }
 */
+
+///////////////////////////////////////
+// Sets (collection of UNIQUE values)
+/*
+
+// Sets are iterables, but elements are unique (no duplicates), and order of elements is irrelevant
+const ordersSet = new Set([
+  'Pasta',
+  'Pizza',
+  'Pizza',
+  'Risotto',
+  'Pasta',
+  'Pizza',
+]);
+console.log(ordersSet); // {'Pasta', 'Pizza', 'Risotto'}
+console.log(ordersSet.size); // 3
+
+console.log(ordersSet.has('Pizza')); // has method returns true
+console.log(ordersSet.has('Bread')); // has method returns false
+
+ordersSet.add('Garlic Bread'); // add new element
+ordersSet.add('Garlic Bread'); // duplicate so does not add
+
+ordersSet.delete('Risotto'); // remove element
+
+console.log(ordersSet); // {'Pasta', 'Pizza', 'Garlic Bread'}
+
+// ordersSet.clear(); //clears entire set
+
+// Strings are iterable too
+console.log(new Set('Jonas')); // {'J', 'o', 'n', 'a', 's'}
+
+for (const order of ordersSet) console.log(order); // iterate through set
+
+// Example
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+const staffUnique = [...new Set(staff)]; // spread the unique set and store in array
+console.log(staffUnique); // so, staffUnique becomes a unique array of staff
+
+// counting how many different letters are in a string
+console.log(new Set('emmanuel').size); // 6 uniqe letters
+console.log(new Set('Emmanuel').size); // 7 uniqe letters ('E' != 'e')
+*/
