@@ -28,27 +28,27 @@ const restaurant = {
   },
 
   //return array of starterMenu order and mainMenu order (2 items)
-  order: function (starterIndex, mainIndex) {
+  order(starterIndex, mainIndex) {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
 
   //Objects as Arguments for functions (destructuring w/ default values)
   //prettier-ignore
-  orderDelivery: function ({ starterIndex = 1, mainIndex = 0, time = '20:00', address }) { 
+  orderDelivery({ starterIndex = 1, mainIndex = 0, time = '20:00', address }) { 
     console.log(
       `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}.`
     );
   },
 
   // Spread Operator as Argument for function (spread operator in function call)
-  orderPasta: function (ing1, ing2, ing3) {
+  orderPasta(ing1, ing2, ing3) {
     console.log(
       `Here is your delicious pasta with ${ing1}, ${ing2}, and ${ing3}.`
     );
   },
 
   //Rest Parameters
-  orderPizza: function (mainIngredient, ...otherIngredients) {
+  orderPizza(mainIngredient, ...otherIngredients) {
     // otherIngredients is an array
     let str = `Pizza has been ordered with main ingredient of ${mainIngredient}`;
 
@@ -363,4 +363,159 @@ rest2.owner &&= '<ANONYMOUS>';
 console.log(rest1); // no owner property (correct)
 console.log(rest2); // owner: <ANONYMOUS> (correct)
 
+*/
+
+///////////////////////////////////////
+// for-of Loop
+/*
+
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+
+// looping arrays with for of
+for (const item of menu) console.log(item);
+
+console.log('----- menu.entries() -----');
+
+// item = array of index of current item index and item itself
+for (const item of menu.entries()) {
+  console.log(`${item[0] + 1}: ${item[1]}`);
+}
+
+console.log('----- Destructered for-of -----');
+
+// Destructuring array of menu.entries() to idx = index, el = element (same as above, just better)
+for (const [idx, el] of menu.entries()) {
+  console.log(`${idx + 1}: ${el}`);
+}
+
+*/
+
+///////////////////////////////////////
+// Enhanced Object Literals
+/*
+
+// we can now compute object property names
+const weekdays = ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
+const facilityHours = {
+  [weekdays[0]]: {
+    open: 12,
+    close: 22,
+  },
+  [weekdays[2]]: {
+    open: 11,
+    close: 22,
+  },
+  [weekdays[5]]: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+  //we can also put expressions
+  [`day-${4 - 2}`]: {
+    open: 0,
+    close: 0,
+  },
+};
+console.log(facilityHours);
+
+// we can have nested objects by just defining them by its object name while defining them separately
+const accomplishments = {
+  degrees: ['Associate of Science', 'Bachelor of Science'],
+  certifications: ['IT certifcation by Google'],
+};
+
+const me = {
+  firstName: 'Emmanuel',
+  lastName: 'Castillo',
+  dob: '07/24/1997',
+  occupation: 'developer',
+  // ES6 Enhanced Object Literal (just use the SAME name as object defined previously)
+  accomplishments,
+
+  greet: function () {
+    console.log(`Hello my name is ${this.firstName} ${this.lastName}!`);
+  },
+
+  // ES6 Enhanced Object Literal (dont need to define property and use function word, just define function name itself)
+  greetES6() {
+    console.log(`Hello ES6 my name is ${this.firstName} ${this.lastName}!`);
+  },
+};
+
+const { degrees, certifications: certs } = me.accomplishments;
+console.log(...degrees, ...certs);
+me.greet();
+me.greetES6();
+
+*/
+
+///////////////////////////////////////
+// Optional Chaining (?.)
+/*
+
+// try to get Monday openingHours for restaurant object
+// console.log(restaurant.openingHours.mon); //undefined, beacuse it does not exist
+// console.log(restaurant.openingHours.mon.open); //Error there is no 'open' since there is no 'mon' either
+
+// check if property exist then log them (work-around) can get really messy and unreadable
+if (restaurant.openingHours && restaurant.openingHours.mon)
+  console.log(restaurant.openingHours.mon.open);
+
+// Solution: Optional Chaining (only if property before '?' then the property after will be read)
+
+console.log(restaurant.openingHours.mon?.open); //only if 'mon' exists then 'open' will be read, if not undefined will return
+console.log(restaurant.openingHours.fri?.open); //'fri' does exist, so 'open' gets read
+
+// we can have multiple optional chaining (same as 'if statement' above)
+console.log(restaurant.openingHours?.mon?.open); // if openingHours exist then read mon, if mon exists read open
+
+// Example
+const days = ['mon', 'tues', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+for (const day of days) {
+  const open = restaurant.openingHours[day]?.open ?? 'closed'; // ?? sets default value if .open is undefined
+  //we use ?? (nullish) instead of || beacuse sat opens at 0 and it would return undefined; 0 = falsy value
+  console.log(`On ${day}, we open at ${open}.`);
+}
+
+// Methods
+console.log(restaurant.order?.(0, 1) ?? 'Method does not exist.'); //checks to see if order method exists first
+console.log(restaurant.orderRisotto?.(0, 1) ?? 'Method does not exist.');
+
+// Arrays
+const users = [
+  {
+    name: 'Emmanuel',
+    email: 'hello@emmanuel.io',
+  },
+];
+
+console.log(users[0]?.name ?? 'Users array empty');
+*/
+
+///////////////////////////////////////
+// Looping Objects: Object Keys, Values, and Entries
+/*
+
+// Property NAMES
+const properties = Object.keys(restaurant.openingHours);
+console.log('Properties', properties); // array containing openingHours property names ['thu', 'fri', 'sat']
+
+let openStr = `We are open ${properties.length} days: `;
+
+for (const day of properties) {
+  openStr += `${day} `;
+}
+console.log(openStr);
+
+// Property VALUES
+const values = Object.values(restaurant.openingHours);
+console.log('Values', values); // array containing openingHours values (they are objects) [{...}, {...}, {...}]
+
+// Entries (entire object)
+const entries = Object.entries(restaurant.openingHours);
+console.log('Entries', entries); // array containing entire obj [[key, {value}], ... , [key, {value}]] (value is an object in this case)
+
+for (const [key, { open, close }] of entries) {
+  console.log(`On ${key} we open at ${open} and close at ${close}.`);
+}
 */
