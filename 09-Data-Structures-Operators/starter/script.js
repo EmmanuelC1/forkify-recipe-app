@@ -513,8 +513,10 @@ console.log('Values', values); // array containing openingHours values (they are
 
 // Entries (entire object)
 const entries = Object.entries(restaurant.openingHours);
-console.log('Entries', entries); // array containing entire obj [[key, {value}], ... , [key, {value}]] (value is an object in this case)
+console.log('Object Entries', entries); // array containing entire obj [[key, {value}], ... , [key, {value}]] (value is an object in this case)
 
+
+// because objects are NOT iterable we first use Object.entries() to get array of arrays
 for (const [key, { open, close }] of entries) {
   console.log(`On ${key} we open at ${open} and close at ${close}.`);
 }
@@ -534,19 +536,25 @@ const ordersSet = new Set([
   'Pizza',
 ]);
 console.log(ordersSet); // {'Pasta', 'Pizza', 'Risotto'}
+
+// size property
 console.log(ordersSet.size); // 3
 
-console.log(ordersSet.has('Pizza')); // has method returns true
-console.log(ordersSet.has('Bread')); // has method returns false
+// has method (returns true/false if element is in set)
+console.log(ordersSet.has('Pizza')); // 'has' method returns true
+console.log(ordersSet.has('Bread')); // 'has' method returns false
 
-ordersSet.add('Garlic Bread'); // add new element
+// add method
+ordersSet.add('Garlic Bread'); 
 ordersSet.add('Garlic Bread'); // duplicate so does not add
 
-ordersSet.delete('Risotto'); // remove element
+// delete method
+ordersSet.delete('Risotto'); 
 
 console.log(ordersSet); // {'Pasta', 'Pizza', 'Garlic Bread'}
 
-// ordersSet.clear(); //clears entire set
+// clear method (clears entire set)
+// ordersSet.clear();
 
 // Strings are iterable too
 console.log(new Set('Jonas')); // {'J', 'o', 'n', 'a', 's'}
@@ -561,4 +569,107 @@ console.log(staffUnique); // so, staffUnique becomes a unique array of staff
 // counting how many different letters are in a string
 console.log(new Set('emmanuel').size); // 6 uniqe letters
 console.log(new Set('Emmanuel').size); // 7 uniqe letters ('E' != 'e')
+*/
+
+///////////////////////////////////////
+// Maps: Fundamentals
+/*
+
+// data is stored in key, value pairs. (keys can have any type)
+const rest = new Map();
+rest.set('name', 'Classico Italiano');
+rest.set(1, 'Firenze, Italy');
+console.log(rest.set(2, 'Lisbon, Portugal'));
+
+// size property
+console.log(rest.size);
+
+// set method returns the map, so we can chain set methods
+rest
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open.')
+  .set(false, 'We are closed.');
+
+console.log(rest);
+
+// get method by key name (must be the exact name)
+console.log(rest.get('name'));
+console.log(rest.get(true));
+console.log(rest.get(1));
+
+const time = 21; //9pm
+console.log(rest.get(time > rest.get('open') && time < rest.get('close')));
+
+// has method (returns true/false if key is in map)
+console.log(rest.has('categories'));
+
+// delete method (by key name)
+rest.delete(2);
+console.log(rest);
+
+// clear method, removed all elements
+// rest.clear();
+
+// arrays/objects as map keys
+const arr = [1, 2];
+rest.set(arr, 'Test');
+console.log(rest);
+
+// retrieving array as key
+console.log(rest.get(arr));
+
+// DOM elements as key
+rest.set(document.querySelector('h1'), 'Heading');
+console.log(rest);
+
+*/
+
+///////////////////////////////////////
+// Maps: Iteration
+/*
+
+// another way of populating maps is using an array of arrays [[key, value]]
+const question = new Map([
+  ['question', 'What is the best programming language in the world?'],
+  [1, 'C'], //1 = key, 'C' = value
+  [2, 'Java'],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [true, 'Correct! 🎉'],
+  [false, 'Try again! 🚫'],
+]);
+console.log(question);
+
+// above populating is similar to Object.entries() from before (returns array of arrays [[key, value]]
+console.log(Object.entries(restaurant.openingHours));
+
+// convert objects to map
+const hoursMap = new Map(Object.entries(restaurant.openingHours));
+console.log(hoursMap);
+
+// Iteration (maps are iterable and objects are not, so converting an obj to map is useful)
+// small quiz app suing 'question' Map
+console.log(question.get('question'));
+
+for (const [key, value] of question) {
+  if (typeof key === 'number') {
+    console.log(`${key}: ${value}`);
+  }
+}
+// const answer = Number(prompt('Your answer (1, 2, or 3)'));
+const answer = 3; // hard code answer so prompt wont show everytime
+console.log(answer);
+
+const isCorrect = answer === question.get('correct');
+console.log(question.get(isCorrect));
+
+// convert Map back to Array [[key, value]... [key, value]]
+console.log([...question]);
+
+// we get the same methods we had on arrays on Maps (we should spread them into an array first)
+console.log('Map Entries', [...question.entries()]); //this is the same as line 668
+console.log('Map Keys', [...question.keys()]);
+console.log('Map Values', [...question.values()]);
 */
