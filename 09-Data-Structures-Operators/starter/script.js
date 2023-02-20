@@ -673,3 +673,6 @@ console.log('Map Entries', [...question.entries()]); //this is the same as line 
 console.log('Map Keys', [...question.keys()]);
 console.log('Map Values', [...question.values()]);
 */
+
+///////////////////////////////////////
+// Working With Stings: Part 1
