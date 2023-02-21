@@ -172,7 +172,7 @@ for (const [team, odd] of Object.entries(game.odds)) {
 
 // Task 4 (Bonus):
 const scorers = {};
-for (const player of game.scored.values()) {
+for (const player of game.scored) {
   // if (scorers.hasOwnProperty(player)) {
   //   scorers[player] += 1;
   // } else {
@@ -260,11 +260,11 @@ for (const [min, event] of gameEvents) {
     delayed_departure
 
   Should produce this output (5 separate console.log outputs):
-    underscoreCase ✅
-    firstName ✅✅
-    someVariable ✅✅✅
-    calculateAge ✅✅✅✅
-    delayedDeparture ✅✅✅✅✅
+    underscoreCase      ✅
+    firstName           ✅✅
+    someVariable        ✅✅✅
+    calculateAge        ✅✅✅✅
+    delayedDeparture    ✅✅✅✅✅
 */
 
 // /*
