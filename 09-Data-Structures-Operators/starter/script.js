@@ -60,7 +60,7 @@ const restaurant = {
 
 ///////////////////////////////////////
 // Destructuring Arrays (ES6 Feature)
-/*
+// /*
 
 const arr = [2, 3, 4];
 
@@ -70,7 +70,7 @@ const arr = [2, 3, 4];
 // const c = arr[2];
 
 // Destructuring Array ([] on the left = destructuring. right side not affected)
-const [x, y, z] = arr; 
+const [x, y, z] = arr;
 console.log(x, y, z);
 console.log(arr);
 
@@ -109,11 +109,11 @@ console.log(i, j, k); // i = 2, j = 5, k = 6
 const [p = 1, q = 1, r = 1] = [8, 9];
 console.log(p, q, r); // p = 8, q = 9, r = 1
 
-*/
+// */
 
 ///////////////////////////////////////
 // Destructuring Objects (ES6 Feature)
-/*
+// /*
 
 const { name, openingHours, categories } = restaurant;
 console.log(name, openingHours, categories);
@@ -159,14 +159,14 @@ restaurant.orderDelivery({
   starterIndex: 3,
 });
 
-*/
+// */
 
 ///////////////////////////////////////
 // The Spread Operator (...)
 // Iterables: arrays, strings, maps, sets. NOT objects (Spread Operator works on all Iterables)
 // can only use Spread Operator when building an array or passing values into function
 // (unpacks an array without manually iterating through it)
-/*
+// /*
 
 const arr2 = [7, 8, 9];
 
@@ -214,11 +214,11 @@ restaurantCopy.name = 'Ristorante Roma';
 console.log(restaurantCopy.name); // Ristorante Roma
 console.log(restaurant.name); // Classico Italiano
 
-*/
+// */
 
 ///////////////////////////////////////
 // Rest Patterns & Parameters
-/*
+// /*
 
 // 1) Destructuring
 
@@ -226,8 +226,8 @@ console.log(restaurant.name); // Classico Italiano
 const anotherArr = [1, 2, ...[3, 4]];
 
 // REST PATTERN, beacuse of LEFT side of '='
-const [a, b, ...others] = [1, 2, 3, 4, 5];
-console.log(a, b, others); // a = 1,  b = 2, others = [3, 4, 5]
+const [num1, num2, ...others] = [1, 2, 3, 4, 5];
+console.log(num1, num2, others); // a = 1,  b = 2, others = [3, 4, 5]
 
 const [pizza, , risotto, ...otherFood] = [
   ...restaurant.mainMenu,
@@ -256,17 +256,17 @@ add(2, 3);
 add(5, 3, 7, 2);
 add(8, 2, 5, 3, 2, 1, 4);
 
-const x = [23, 5, 7];
-add(...x); //Spread unpacks array
+const exampleArr = [23, 5, 7];
+add(...exampleArr); //Spread unpacks array
 
 restaurant.orderPizza('chicken', 'bacon', 'spinach', 'peppers');
 restaurant.orderPizza('pepperoni'); //otherIngredients argument in function will be an empty array
 
-*/
+// */
 
 ///////////////////////////////////////
 // Short Circuiting (&& and ||)
-/*
+// /*
 
 // Use ANY data type, return ANY data type, short-circuiting
 console.log('--------- OR ---------');
@@ -306,11 +306,11 @@ console.log(guests2);
 const guests3 = restaurant.numGuests ?? 10;
 console.log(guests3);
 
-*/
+// */
 
 ///////////////////////////////////////
 // Logical Assignment Operators
-/*
+// /*
 
 const rest1 = {
   name: 'Capri',
@@ -359,36 +359,36 @@ rest2.owner &&= '<ANONYMOUS>';
 console.log(rest1); // no owner property (correct)
 console.log(rest2); // owner: <ANONYMOUS> (correct)
 
-*/
+// */
 
 ///////////////////////////////////////
 // for-of Loop
-/*
+// /*
 
-const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+const fullMenu = [...restaurant.starterMenu, ...restaurant.mainMenu];
 
 // looping arrays with for of
-for (const item of menu) console.log(item);
+for (const item of fullMenu) console.log(item);
 
-console.log('----- menu.entries() -----');
+console.log('----- fullMenu.entries() -----');
 
 // item = array of index of current item index and item itself
-for (const item of menu.entries()) {
+for (const item of fullMenu.entries()) {
   console.log(`${item[0] + 1}: ${item[1]}`);
 }
 
 console.log('----- Destructered for-of -----');
 
-// Destructuring array of menu.entries() to idx = index, el = element (same as above, just better)
-for (const [idx, el] of menu.entries()) {
+// Destructuring array of fullMenu.entries() to idx = index, el = element (same as above, just better)
+for (const [idx, el] of fullMenu.entries()) {
   console.log(`${idx + 1}: ${el}`);
 }
 
-*/
+// */
 
 ///////////////////////////////////////
 // Enhanced Object Literals
-/*
+// /*
 
 // we can now compute object property names
 const weekdays = ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
@@ -442,11 +442,11 @@ console.log(...degrees, ...certs);
 me.greet();
 me.greetES6();
 
-*/
+// */
 
 ///////////////////////////////////////
 // Optional Chaining (?.)
-/*
+// /*
 
 // try to get Monday openingHours for restaurant object
 // console.log(restaurant.openingHours.mon); //undefined, beacuse it does not exist
@@ -486,11 +486,11 @@ const users = [
 ];
 
 console.log(users[0]?.name ?? 'Users array empty');
-*/
+// */
 
 ///////////////////////////////////////
 // Looping Objects: Object Keys, Values, and Entries
-/*
+// /*
 
 // Property NAMES
 const properties = Object.keys(restaurant.openingHours);
@@ -511,16 +511,15 @@ console.log('Values', values); // array containing openingHours values (they are
 const entries = Object.entries(restaurant.openingHours);
 console.log('Object Entries', entries); // array containing entire obj [[key, {value}], ... , [key, {value}]] (value is an object in this case)
 
-
 // because objects are NOT iterable we first use Object.entries() to get array of arrays
 for (const [key, { open, close }] of entries) {
   console.log(`On ${key} we open at ${open} and close at ${close}.`);
 }
-*/
+// */
 
 ///////////////////////////////////////
 // Sets (collection of UNIQUE values)
-/*
+// /*
 
 // Sets are iterables, but elements are unique (no duplicates), and order of elements is irrelevant
 const ordersSet = new Set([
@@ -541,11 +540,11 @@ console.log(ordersSet.has('Pizza')); // 'has' method returns true
 console.log(ordersSet.has('Bread')); // 'has' method returns false
 
 // add method
-ordersSet.add('Garlic Bread'); 
+ordersSet.add('Garlic Bread');
 ordersSet.add('Garlic Bread'); // duplicate so does not add
 
 // delete method
-ordersSet.delete('Risotto'); 
+ordersSet.delete('Risotto');
 
 console.log(ordersSet); // {'Pasta', 'Pizza', 'Garlic Bread'}
 
@@ -565,11 +564,11 @@ console.log(staffUnique); // so, staffUnique becomes a unique array of staff
 // counting how many different letters are in a string
 console.log(new Set('emmanuel').size); // 6 uniqe letters
 console.log(new Set('Emmanuel').size); // 7 uniqe letters ('E' != 'e')
-*/
+// */
 
 ///////////////////////////////////////
 // Maps: Fundamentals
-/*
+// /*
 
 // data is stored in key, value pairs. (keys can have any type)
 const rest = new Map();
@@ -609,22 +608,22 @@ console.log(rest);
 // rest.clear();
 
 // arrays/objects as map keys
-const arr = [1, 2];
-rest.set(arr, 'Test');
+const arrKey = [1, 2];
+rest.set(arrKey, 'Test');
 console.log(rest);
 
 // retrieving array as key
-console.log(rest.get(arr));
+console.log(rest.get(arrKey));
 
 // DOM elements as key
 rest.set(document.querySelector('h1'), 'Heading');
 console.log(rest);
 
-*/
+// */
 
 ///////////////////////////////////////
 // Maps: Iteration
-/*
+// /*
 
 // another way of populating maps is using an array of arrays [[key, value]]
 const question = new Map([
@@ -668,11 +667,11 @@ console.log([...question]);
 console.log('Map Entries', [...question.entries()]); //this is the same as line 668
 console.log('Map Keys', [...question.keys()]);
 console.log('Map Values', [...question.values()]);
-*/
+// */
 
 ///////////////////////////////////////
 // Working With Stings: Part 1
-/*
+// /*
 
 const airline = 'TAP Air Portugal';
 const plane = 'A320';
@@ -714,14 +713,14 @@ checkMiddleSeat('11B');
 checkMiddleSeat('23C');
 checkMiddleSeat('3E');
 
-// behind the scenes 
+// behind the scenes
 // (JS uses 'boxing' to convert primitive Strings to Objects so we can use methods, then converted back to Strings when returned)
 console.log(new String('emmanel')); // expand opbject to view all methods
-*/
+// */
 
 ///////////////////////////////////////
 // Working With Stings: Part 2
-/*
+// /*
 
 // Lower & Upper Case
 console.log(airline.toLowerCase()); // tap air portugal
@@ -786,11 +785,11 @@ const checkBaggage = function (items) {
 checkBaggage('I have a laptop, some Food and a pocket Knife.');
 checkBaggage('Socks and camera.');
 checkBaggage('Got some snacks and a gun for pretection.');
-*/
+// */
 
 ///////////////////////////////////////
 // Working With Stings: Part 3
-/*
+// /*
 
 // Split method
 console.log('a+very+nice+string'.split('+')); // ['a', 'very', 'nice', 'string']
@@ -851,11 +850,11 @@ const planesInLine = function (n) {
 
 planesInLine(5);
 
-*/
+// */
 
 ///////////////////////////////////////
 // String Methods Practice
-/*
+// /*
 
 // Data needed for exercise
 const flights =
@@ -884,4 +883,4 @@ for (const flight of flightsArr) {
   console.log(alignedOutput);
 }
 
-*/
+// */

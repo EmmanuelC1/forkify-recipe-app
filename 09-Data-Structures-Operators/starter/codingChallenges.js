@@ -80,7 +80,7 @@ const game = {
       Then, call the function again with players from game.scored
 */
 
-/*
+// /*
 // Task 6: function ('printGoals') that receives an arbitrary number of player names (not an array). Prints each player and goals scored
 const printGoals = function (...players) {
   if (players.length !== 0) {
@@ -115,7 +115,7 @@ printGoals(...game.scored);
 // Task 7: log which team is more likely to win, without using an if/else statement or the ternary operator. (smaller odds = likely winner)
 team1 < team2 && console.log('Team 1 is more likely to win.'); //when condition is true (&&) will continue and execute console.log()
 team1 > team2 && console.log('Team 2 is more likely to win.');
-*/
+// */
 
 ///////////////////////////////////////
 // Coding Challenge #2
@@ -148,7 +148,7 @@ team1 > team2 && console.log('Team 2 is more likely to win.');
     }
 */
 
-/*
+// /*
 // Task: 1
 for (const [idx, player] of game.scored.entries()) {
   // games.scored.entries() gives us [[index, value]]
@@ -182,7 +182,7 @@ for (const player of game.scored.values()) {
   scorers[player] ? scorers[player]++ : (scorers[player] = 1); // using ternary operator
 }
 console.log(scorers);
-*/
+// */
 
 ///////////////////////////////////////
 // Coding Challenge #3
@@ -207,7 +207,7 @@ console.log(scorers);
     [FIRST HALF] 17: ⚽ GOAL
 */
 
-/*
+// /*
 const gameEvents = new Map([
   [17, '⚽ GOAL'],
   [36, '🔁 Substitution'],
@@ -240,7 +240,7 @@ for (const [min, event] of gameEvents) {
   const half = min <= 45 ? 'FIRST' : 'SECOND';
   console.log(`[${half} HALF] ${min}: ${event}`);
 }
-*/
+// */
 
 ///////////////////////////////////////
 // Coding Challenge #4
@@ -250,12 +250,13 @@ for (const [min, event] of gameEvents) {
 
   The input will come from a textarea inserted into the DOM (see code below to
     insert the elements), and conversion will happen when the button is pressed.
+    (input will only be 2 words like a_b).
 
   Test data (pasted to textarea, including spaces):
     underscore_case
       first_name
     Some_Variable
-      calculate_AGE
+       calculate_AGE
     delayed_departure
 
   Should produce this output (5 separate console.log outputs):
@@ -266,23 +267,29 @@ for (const [min, event] of gameEvents) {
     delayedDeparture ✅✅✅✅✅
 */
 
+// /*
 document.body.append(document.createElement('textarea'));
 document.body.append(document.createElement('button'));
 
 const textArea = document.querySelector('textarea');
 const btn = document.querySelector('button');
 
+// Default Values (so I dont have to input manually everytime)
+btn.innerHTML = 'Submit';
+textArea.value = 'underscore_case\n first_name\nSome_Variable\n  calculate_AGE\ndelayed_departure'; //prettier-ignore
+
 const convertCamelCase = function (names) {
   for (const [i, n] of names.entries()) {
-    const lower = n.toLowerCase().split('_');
-    const camelCase = lower[0] + lower[1][0].toUpperCase() + lower[1].slice(1) + ' '; //prettier-ignore
-    const output = camelCase.padEnd(camelCase.length + i + 1,'✅'.repeat(i + 1)); //prettier-ignore
+    const [first, second] = n.split('_');
+    const camelCase = first + second[0].toUpperCase() + second.slice(1) + ' '; //prettier-ignore
+    const output = camelCase.padEnd(20) + '✅'.repeat(i+1); //prettier-ignore
     console.log(output);
   }
 };
 
 btn.addEventListener('click', () => {
-  //store each input name in array separately (excluding spaces or \n)
-  const input = [...textArea.value.split(' ').join('').split('\n')];
+  //store each input name in array separately (excluding spaces or \n, all lowercase)
+  const input = [...textArea.value.toLowerCase().split(' ').join('').split('\n'),]; //prettier-ignore
   convertCamelCase(input);
 });
+// */
