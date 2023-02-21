@@ -80,8 +80,7 @@ const game = {
       Then, call the function again with players from game.scored
 */
 
-// /*
-
+/*
 // Task 6: function ('printGoals') that receives an arbitrary number of player names (not an array). Prints each player and goals scored
 const printGoals = function (...players) {
   if (players.length !== 0) {
@@ -116,8 +115,7 @@ printGoals(...game.scored);
 // Task 7: log which team is more likely to win, without using an if/else statement or the ternary operator. (smaller odds = likely winner)
 team1 < team2 && console.log('Team 1 is more likely to win.'); //when condition is true (&&) will continue and execute console.log()
 team1 > team2 && console.log('Team 2 is more likely to win.');
-
-// */
+*/
 
 ///////////////////////////////////////
 // Coding Challenge #2
@@ -150,6 +148,7 @@ team1 > team2 && console.log('Team 2 is more likely to win.');
     }
 */
 
+/*
 // Task: 1
 for (const [idx, player] of game.scored.entries()) {
   // games.scored.entries() gives us [[index, value]]
@@ -183,3 +182,107 @@ for (const player of game.scored.values()) {
   scorers[player] ? scorers[player]++ : (scorers[player] = 1); // using ternary operator
 }
 console.log(scorers);
+*/
+
+///////////////////////////////////////
+// Coding Challenge #3
+/*
+  Let's continue with our football betting app! This time, we have a map called
+    'gameEvents' (see below) with a log of the events that happened during the
+    game. The values are the events themselves, and the keys are the minutes in which
+    each event happened (a football game has 90 minutes plus some extra time).
+
+  Your tasks:
+  1. Create an array 'events' of the different game events that happened (no
+    duplicates)
+
+  2. After the game has finished, is was found that the yellow card from minute 64
+    was unfair. So remove this event from the game events log.
+
+  3. Compute and log the following string to the console: "An event happened, on
+    average, every 9 minutes" (keep in mind that a game has 90 minutes)
+
+  4. Loop over 'gameEvents' and log each element to the console, marking
+    whether it's in the first half or second half (after 45 min) of the game, like this:
+    [FIRST HALF] 17: ⚽ GOAL
+*/
+
+/*
+const gameEvents = new Map([
+  [17, '⚽ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽ GOAL'],
+  [80, '⚽ GOAL'],
+  [92, '🔶 Yellow card'],
+]);
+
+// Task 1:
+const events = [...new Set(gameEvents.values())];
+console.log(events);
+
+// Task 2:
+gameEvents.delete(64);
+console.log(gameEvents);
+
+// Task 3:
+const lastMinute = [...gameEvents.keys()].pop(); // spread all gameEvent keys into an array and pop last key (92)
+const avgEvent = lastMinute / gameEvents.size; // 92 / 10
+console.log(`An event happened, on average every ${avgEvent} minutes.`);
+
+// Task 4:
+for (const [min, event] of gameEvents) {
+  const half = min <= 45 ? 'FIRST' : 'SECOND';
+  console.log(`[${half} HALF] ${min}: ${event}`);
+}
+*/
+
+///////////////////////////////////////
+// Coding Challenge #4
+/*
+  Write a program that receives a list of variable names written in underscore_case
+    and convert them to camelCase.
+
+  The input will come from a textarea inserted into the DOM (see code below to
+    insert the elements), and conversion will happen when the button is pressed.
+
+  Test data (pasted to textarea, including spaces):
+    underscore_case
+      first_name
+    Some_Variable
+      calculate_AGE
+    delayed_departure
+
+  Should produce this output (5 separate console.log outputs):
+    underscoreCase ✅
+    firstName ✅✅
+    someVariable ✅✅✅
+    calculateAge ✅✅✅✅
+    delayedDeparture ✅✅✅✅✅
+*/
+
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+const textArea = document.querySelector('textarea');
+const btn = document.querySelector('button');
+
+const convertCamelCase = function (names) {
+  for (const [i, n] of names.entries()) {
+    const lower = n.toLowerCase().split('_');
+    const camelCase = lower[0] + lower[1][0].toUpperCase() + lower[1].slice(1) + ' '; //prettier-ignore
+    const output = camelCase.padEnd(camelCase.length + i + 1,'✅'.repeat(i + 1)); //prettier-ignore
+    console.log(output);
+  }
+};
+
+btn.addEventListener('click', () => {
+  //store each input name in array separately (excluding spaces or \n)
+  const input = [...textArea.value.split(' ').join('').split('\n')];
+  convertCamelCase(input);
+});
