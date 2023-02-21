@@ -1,9 +1,5 @@
 'use strict';
 
-// Data needed for a later exercise
-const flights =
-  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
-
 // Data needed for first part of the section
 const restaurant = {
   name: 'Classico Italiano',
@@ -676,3 +672,216 @@ console.log('Map Values', [...question.values()]);
 
 ///////////////////////////////////////
 // Working With Stings: Part 1
+/*
+
+const airline = 'TAP Air Portugal';
+const plane = 'A320';
+
+// character of a string at a certain position
+console.log(plane[0]); // A
+console.log('B737'[0]); // B
+
+// length
+console.log(airline.length); // 16
+console.log('B737'.length); // 4
+
+// indexOf, lastIndexOf
+console.log(airline.indexOf('r')); // 6
+console.log(airline.lastIndexOf('r')); // 10
+console.log(airline.indexOf('Portugal')); // 8 (case sensitive)
+console.log(airline.indexOf('portugal')); // -1 (case sensitive)
+
+// Slice
+console.log(airline.slice(4)); // Air Portugal (begin pos is 4, returns new substring. strings are primitive (immutable))
+console.log(airline.slice(4, 7)); // Air (begin = 4, end = before index 7)
+
+console.log(airline.slice(0, airline.indexOf(' '))); // TAP (extract first word)
+console.log(airline.slice(airline.lastIndexOf(' ') + 1)); // Portugal (extract last word +1 to remove space)
+
+console.log(airline.slice(-2)); // al (start 2 positions from the end)
+console.log(airline.slice(1, -1)); // AP Air Portuga (starts at pos 1 and ends at the last character)
+
+// Example
+const checkMiddleSeat = function (seat) {
+  // B and E are middle seats
+  const seatNo = seat.slice(-1);
+  if (seatNo === 'B' || seatNo === 'E')
+    console.log(`Seat ${seat} is a middle seat.`);
+  else console.log(`Seat ${seat} is NOT a middle seat.`);
+};
+
+checkMiddleSeat('11B');
+checkMiddleSeat('23C');
+checkMiddleSeat('3E');
+
+// behind the scenes 
+// (JS uses 'boxing' to convert primitive Strings to Objects so we can use methods, then converted back to Strings when returned)
+console.log(new String('emmanel')); // expand opbject to view all methods
+*/
+
+///////////////////////////////////////
+// Working With Stings: Part 2
+/*
+
+// Lower & Upper Case
+console.log(airline.toLowerCase()); // tap air portugal
+console.log('emmanuel'.toUpperCase()); // EMMANUEL
+
+// Fix capitalization in name
+const fixCapitalization = function (passenger) {
+  const passengerLower = passenger.toLowerCase();
+  const passengerCorrect = passengerLower[0].toUpperCase() + passengerLower.slice(1); //prettier-ignore
+  console.log(`${passenger} was changed to ${passengerCorrect}.`);
+};
+fixCapitalization('eMmAnUeL');
+
+// Compare email
+const email = 'hello@emmanuel.io';
+const loginEmail = ' Hello@Emmanuel.Io \n'; // enter key (\n)
+
+// const lowerEmail = loginEmail.toLowerCase();
+// const trimmedEmail = lowerEmail.trim(); // gets rid of empty space and \n
+// console.log(trimmedEmail); //hello@emmanuel.io
+
+const normalizedEmail = loginEmail.toLowerCase().trim();
+console.log(normalizedEmail); //hello@emmanuel.io
+
+console.log(email === normalizedEmail); // true
+
+// Replacing
+const priceGB = '288,97£';
+const priceUS = priceGB.replace('£', '$').replace(',', '.');
+console.log(priceUS); // 288.97$
+
+const announcement =
+  'All passengers come to boarding door 23. Boarding door 23!';
+console.log(announcement.replaceAll('door', 'gate')); // replaces ALL 'door' occurences
+
+// regular expression to replace all
+console.log(announcement.replaceAll(/door/g, 'gate')); // /string/g (write between slashes instead of quotes w/ g flag; global)
+
+// Booleans
+const newPlane = 'Airbus A320neo';
+console.log(newPlane.includes('A320')); // true
+console.log(newPlane.includes('Boeing')); // false
+
+console.log(newPlane.startsWith('Air')); // true
+console.log(newPlane.endsWith('A3')); // false
+
+if (newPlane.startsWith('Airbus') && newPlane.endsWith('neo')) {
+  console.log('plane is part of the NEW Airbus family');
+}
+
+// practice example
+const checkBaggage = function (items) {
+  const baggage = items.toLowerCase(); // Knife != knife, so we turn everything lowercase
+
+  if (baggage.includes('knife') || baggage.includes('gun')) {
+    console.log('You are NOT allowed on board.');
+  } else {
+    console.log('Welcome aboard');
+  }
+};
+
+checkBaggage('I have a laptop, some Food and a pocket Knife.');
+checkBaggage('Socks and camera.');
+checkBaggage('Got some snacks and a gun for pretection.');
+*/
+
+///////////////////////////////////////
+// Working With Stings: Part 3
+/*
+
+// Split method
+console.log('a+very+nice+string'.split('+')); // ['a', 'very', 'nice', 'string']
+console.log('Emmanuel Castillo'.split(' ')); // ['Emmanuel', 'Castillo']
+
+const [firstName, lastName] = 'Emmanuel Castillo'.split(' ');
+console.log(firstName, lastName); // Emmanuel Castillo
+
+// Join method
+const newName = ['Mr.', firstName, lastName.toUpperCase()].join(' '); // join with empty space in between
+console.log(newName);
+
+// example
+const capitalizeName = function (name) {
+  const names = name.split(' '); // get array of string split by ' '
+  const namesUpper = [];
+
+  // first char uppercase, add the rest and push to new array
+  for (const n of names) {
+    // namesUpper.push(n[0].toUpperCase() + n.slice(1));
+    namesUpper.push(n.replace(n[0], n[0].toUpperCase()));
+  }
+  console.log(namesUpper.join(' ')); // join array by ' ' and log
+};
+
+capitalizeName('emmanuel castillo');
+capitalizeName('jessica ann smith davis');
+
+// Padding string method
+const message = 'Go to gate 23!';
+console.log(message.padStart(25, '+')); // +++++++++++Go to gate 23! (length of string is 25)
+console.log(message.padStart(20, '+')); // ++++++Go to gate 23! (length of string is 20)
+
+console.log(message.padEnd(20, '+')); // Go to gate 23!++++++ (length 20)
+console.log(message.padStart(20, '+').padEnd(30, '+')); // ++++++Go to gate 23!++++++++++ (length 30)
+
+// example
+const maskCreditCard = function (number) {
+  // const str = number + ''; // (same as below)
+  const str = String(number);
+  const last4 = str.slice(-4);
+
+  return last4.padStart(str.length, '*');
+};
+
+console.log(maskCreditCard(4344160156749898));
+console.log(maskCreditCard(98671601));
+console.log(maskCreditCard('9051876590324563'));
+
+// Repeat method
+const msg2 = 'Bad weather... All Departures Delayed... ';
+console.log(msg2.repeat(5));
+
+// example
+const planesInLine = function (n) {
+  console.log(`There are ${n} planes in line ${'🛩 '.repeat(n)}`);
+};
+
+planesInLine(5);
+
+*/
+
+///////////////////////////////////////
+// String Methods Practice
+/*
+
+// Data needed for exercise
+const flights =
+  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+
+//  🔴 Delayed Departure from FAO to TXL (11h25)
+//              Arrived from BRU to FAO (11h45)
+//   🔴 Delayed Arrival from HEL to FAO (12h05)
+//            Departure from FAO to LIS (12h30)
+
+const flightsArr = flights.split('+');
+console.log(flightsArr);
+
+const getFlightCode = str => str.slice(0, 3).toUpperCase();
+
+for (const flight of flightsArr) {
+  const [msg, from, to, time] = flight.split(';');
+  //prettier-ignore
+  let output = `${msg.replaceAll('_', ' ')} from ${getFlightCode(from)} to ${getFlightCode(to)} (${time.replace(':','h')})`;
+
+  if (msg.includes('Delayed')) {
+    output = output.padStart(output.length + 2, '🔴');
+  }
+
+  const alignedOutput = output.padStart(50);
+  console.log(alignedOutput);
+}
+
+*/
