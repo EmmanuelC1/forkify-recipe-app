@@ -3,6 +3,7 @@
 ///////////////////////////////////////
 // Default Parameters
 /*
+
 const bookings = [];
 
 //prettier-ignore
@@ -32,7 +33,9 @@ createBooking('LH123', undefined, 1000); // flightNo = 'LH123', numPassenger = 1
 
 ///////////////////////////////////////
 // How Passing Arguments Works: Value vs Reference
+// JS does NOT have pass in by reference
 /*
+
 const flight = 'LH234';
 const emmanuel = {
   name: 'Emmanuel Castillo',
@@ -61,10 +64,120 @@ const newPassport = function (person) {
 
 newPassport(emmanuel); // change passport number
 checkIn(flight, emmanuel); // 'Wrong Passport Number!'
-
-// JS does NOT have pass in by reference
 */
 
 ///////////////////////////////////////
 // First-Class & Higher-Order Functions
 // in notes.js
+
+///////////////////////////////////////
+// Functions Accepting Callback Functions
+// JS uses callbacks all the time
+/*
+
+// returns str all lowercase with no spaces
+const oneWord = str => str.replaceAll(' ', '').toLowerCase();
+
+// return joined array with firstWord uppercase and the rest the same
+const upperFirstWord = function (str) {
+  const [first, ...others] = str.split(' ');
+  return [first.toUpperCase(), ...others].join(' ');
+};
+
+// Higher-Order Function
+const transformer = function (str, fn) {
+  console.log(`Original string: ${str}`);
+  console.log(`Transformed string: ${fn(str)}`);
+
+  console.log(`Transformed by: ${fn.name}`); //fn.name: 'upperFirstWord' || 'oneWord'
+};
+
+transformer('JavaScript is the best!', upperFirstWord); //callback function: upperFirstWord
+transformer('JavaScript is the best!', oneWord); //callback function: oneWord
+
+const highFive = () => console.log('✋🏼');
+document.body.addEventListener('click', highFive); //high-order: 'addEvenListener', callback: 'highFive'
+
+// forEach method
+['Emmanuel', 'Martha', 'Adam'].forEach(highFive); //callback: 'highFive'
+*/
+
+///////////////////////////////////////
+// Functions Returning Functions
+/*
+
+const greet = function (greeting) {
+  return function (name) {
+    //closures allow us to use 'greeting' variable here
+    console.log(`${greeting} ${name}`);
+  };
+};
+
+const greeterHey = greet('Hey'); //greeterHey becomes anonymous function inside greet() because it returns a function that we store
+greeterHey('Emmanuel');
+
+// we can do it in one go (Functional Programming)
+greet('Hello')('Emmanuel');
+
+// Rewriting above functions as Arrow Functions
+const greetArrow = greeting => name => console.log(`${greeting} ${name}`);
+
+const greeterArrowHey = greetArrow('Hi');
+greeterArrowHey('Emmanuel');
+greetArrow('HI')('Emmanuel');
+*/
+
+///////////////////////////////////////
+// The Call and Apply Methods
+/*
+
+const lufthansa = {
+  airline: 'Lufthansa',
+  iataCode: 'LH',
+  bookings: [],
+
+  // Enhanced Object Literal (no need to write 'function')
+  book(flightNum, name) {
+    //prettier-ignore
+    console.log(`${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`);
+    this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name }); //pushing an object into booking array
+  },
+};
+
+lufthansa.book(239, 'Emmanuel Castillo');
+lufthansa.book(635, 'John Smith');
+// console.log(lufthansa);
+
+const euroWings = {
+  airline: 'EuroWings',
+  iataCode: 'EW',
+  bookings: [],
+};
+
+const book = lufthansa.book;
+// book(23, 'Sarah Williams'); //does not work 'this' = undefined
+
+// Call Method (we can specify what object 'this' points to (first parameter))
+book.call(euroWings, 23, 'Sarah Williams');
+book.call(lufthansa, 239, 'John Doe');
+console.log(euroWings);
+console.log(lufthansa);
+
+// we can now keep using the same book() function
+const swiss = {
+  airline: 'Swiss Air Lines',
+  iataCode: 'LX',
+  bookings: [],
+};
+
+book.call(swiss, 583, 'Mariah Torres');
+
+// Apply Method (specifies 'this' keyword as well, but takes in array of arguments instead)
+const flightData = [583, 'Juan Doe'];
+book.apply(swiss, flightData); //not used as much anymore because of call method (and spread operator)
+
+book.call(swiss, ...flightData);
+
+console.log(swiss);
+
+*/
