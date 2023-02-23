@@ -36,7 +36,7 @@
                 // Higher-order function: addEventListener
                 // Callback function: greet, usually the function that gets passed in
 
-            –– Function thay retursn a new function:
+            –– Function that returns a new function:
                 function count() {
                     let counter = 0;
                     return function() {
@@ -48,4 +48,26 @@
                 // Returned function: (anonymous function inside)
 
 
+    Closures
+        • A closure makes a function remember all the variables that existed at the function's birthplace
+            - closure makes 'booker()' remember 'passengerCount' inside 'secureBooking()' from script.js starting 
+                at line 263
+
+        • Any function always has access to the variable enviroment (VE) of the execution context (EC) in which the function
+            was created. Even after that EC is gone.
+            - 'booker()' was created in 'secureBooking()' execution context (EC), so therefore, the 'booker()' function
+                will get access to this variable environment (VE) which contains 'passengerCount'
+
+        • The connection that allows 'booker()' to access 'secureBooking()' VE is called Closure.
+            - Closure: VE attached to the function, exactly as it was at the time and place the function was created.
+            - A closure makes sure that a function doesn't lose connection to variables that existed at the function's
+                birthplace.
+
+        • When 'booker()' gets called, JS will see that 'passengerCount' is not in its VE and then look inside the Closure
+            before trying the scopr chain. (Closure gets priority over scope chain)
+                - This ensure that 'booker()' uses the right 'passengerCount' in the case that there is another variable
+                    named the same in the global scope.
+        
+        –– We do NOT create closures manually. JS does this completely automatically. We can't even access closed-over 
+            variables explicitly. A closure is NOT a tangible JS object.
 */

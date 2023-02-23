@@ -241,3 +241,43 @@ const addVAT2 = addTax2(0.23);
 console.log(addVAT2(100));
 console.log(addVAT2(23));
 */
+
+///////////////////////////////////////
+// Immediately Invoked Function Expressions (IIFE)
+// Function that is only executed once, and never again.
+/*
+
+// we wrap function expression in () and call it () right after.
+(function () {
+  console.log('This will never run again!');
+})();
+
+// Arrow Function version
+(() => console.log('This will ALSO never run again!'))(); // wrap function in () and call it right after using ()
+
+// This works because we turn the value into an expression and call it, without ever storing it in a variable to call it again
+// All data inside IIFE functions are considered private or encapsulated.
+*/
+
+///////////////////////////////////////
+// Closures
+// notes on closures in notes.js
+/*
+
+const secureBooking = function () {
+  let passengerCount = 0;
+
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} passengers`);
+  };
+};
+
+const booker = secureBooking(); // booker becomes function (anonymous function inside secureBooking())
+booker(); // 1 passengers
+booker(); // 2 passengers
+booker(); // 3 passengers
+
+// We can take a look at the internal scope property (basically the Variable Environment of 'booker')
+console.dir(booker);
+*/
