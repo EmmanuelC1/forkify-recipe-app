@@ -160,8 +160,8 @@ const book = lufthansa.book;
 // Call Method (we can specify what object 'this' points to (first parameter))
 book.call(euroWings, 23, 'Sarah Williams');
 book.call(lufthansa, 239, 'John Doe');
-console.log(euroWings);
-console.log(lufthansa);
+// console.log(euroWings);
+// console.log(lufthansa);
 
 // we can now keep using the same book() function
 const swiss = {
@@ -178,6 +178,66 @@ book.apply(swiss, flightData); //not used as much anymore because of call method
 
 book.call(swiss, ...flightData);
 
+// console.log(swiss);
+*/
+
+///////////////////////////////////////
+// The Bind Method
+// Bind does not immediately call the function, instead it returns a new function where 'this' is bound
+/*
+
+const bookEW = book.bind(euroWings); // binds 'this' to euroWings and stores function into 'bookEW'
+const bookLH = book.bind(lufthansa); // binds 'this' to lufthansa
+const bookLX = book.bind(swiss); // binds 'this' to swiss
+bookEW(23, 'Steven Williams');
+
+// We can create a function for a specific airline AND flight (partial application)
+const bookEW23 = book.bind(euroWings, 23); // binds 'this' to euroWings flight EW23
+bookEW23('Emmanuel Castillo'); // books for euroWings flight 23 (EW23)
+bookEW23('Mariah Torres');
+
+console.log(lufthansa);
+console.log(euroWings);
 console.log(swiss);
 
+// Objects with Event Listeners
+// add property and method to just 'lufthansa'
+lufthansa.planes = 300;
+lufthansa.buyPlane = function () {
+  // 'this' = button element beacuse handler func is attached to Event Handler func and this always points to element
+  // on which that handler is attached to (this case, <button class = 'buy'>)
+  // console.log(this);
+
+  this.planes++;
+  console.log(this.planes); // NaN, because this does not point to obj, it points to button element
+};
+
+// Solution to above problem: Bind 'this' to lufthansa object, using bind() (since it returns function and does not call like call() would)
+document.querySelector('.buy').addEventListener('click', lufthansa.buyPlane.bind(lufthansa)); //prettier-ignore
+// Now 'this' = lufthansa, and buyPlane should properly work
+
+// Partial Application
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+
+// another tax function with 'this' = null (we dont need it), and rate = .23
+const addVAT = addTax.bind(null, 0.23);
+// same as writing const addVAT = (value) => value + value * .23;
+
+console.log(addVAT(100));
+console.log(addVAT(23));
+
+// practice: turn (partial application examples) to function returning function
+const addTax2 = function (rate) {
+  return function (value) {
+    return value + value * rate;
+  };
+};
+
+// Arrow Function solution:
+// const addTax2 = rate => value => value + value * rate;
+
+const addVAT2 = addTax2(0.23);
+console.log(addVAT2(100));
+console.log(addVAT2(23));
 */
