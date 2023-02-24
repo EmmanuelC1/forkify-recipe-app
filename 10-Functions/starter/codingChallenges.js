@@ -37,7 +37,7 @@
         • Data 1: [5, 2, 3] 
         • Data 2: [1, 5, 3, 9, 6, 1]
 */
-/*
+// /*
 
 const answerPollBtn = document.querySelector('.poll');
 
@@ -89,7 +89,7 @@ const poll = {
 
 // Task 2:
 answerPollBtn.addEventListener('click', poll.registerNewAnswer.bind(poll));
-*/
+// */
 
 ///////////////////////////////////////
 // Coding Challenge #2

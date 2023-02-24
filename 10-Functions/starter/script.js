@@ -2,7 +2,7 @@
 
 ///////////////////////////////////////
 // Default Parameters
-/*
+// /*
 
 const bookings = [];
 
@@ -29,12 +29,12 @@ createBooking('LH123', 5);
 
 // Skipping parameters (with undefined)
 createBooking('LH123', undefined, 1000); // flightNo = 'LH123', numPassenger = 1, price = 1000
-*/
+// */
 
 ///////////////////////////////////////
 // How Passing Arguments Works: Value vs Reference
 // JS does NOT have pass in by reference
-/*
+// /*
 
 const flight = 'LH234';
 const emmanuel = {
@@ -64,7 +64,7 @@ const newPassport = function (person) {
 
 newPassport(emmanuel); // change passport number
 checkIn(flight, emmanuel); // 'Wrong Passport Number!'
-*/
+// */
 
 ///////////////////////////////////////
 // First-Class & Higher-Order Functions
@@ -73,7 +73,7 @@ checkIn(flight, emmanuel); // 'Wrong Passport Number!'
 ///////////////////////////////////////
 // Functions Accepting Callback Functions
 // JS uses callbacks all the time
-/*
+// /*
 
 // returns str all lowercase with no spaces
 const oneWord = str => str.replaceAll(' ', '').toLowerCase();
@@ -100,11 +100,11 @@ document.body.addEventListener('click', highFive); //high-order: 'addEvenListene
 
 // forEach method
 ['Emmanuel', 'Martha', 'Adam'].forEach(highFive); //callback: 'highFive'
-*/
+// */
 
 ///////////////////////////////////////
 // Functions Returning Functions
-/*
+// /*
 
 const greet = function (greeting) {
   return function (name) {
@@ -125,11 +125,11 @@ const greetArrow = greeting => name => console.log(`${greeting} ${name}`);
 const greeterArrowHey = greetArrow('Hi');
 greeterArrowHey('Emmanuel');
 greetArrow('HI')('Emmanuel');
-*/
+// */
 
 ///////////////////////////////////////
 // The Call and Apply Methods
-/*
+// /*
 
 const lufthansa = {
   airline: 'Lufthansa',
@@ -157,7 +157,7 @@ const euroWings = {
 const book = lufthansa.book;
 // book(23, 'Sarah Williams'); //does not work 'this' = undefined
 
-// Call Method (we can specify what object 'this' points to (first parameter))
+// Call Method (we can specify what object 'this' points to (first argument))
 book.call(euroWings, 23, 'Sarah Williams');
 book.call(lufthansa, 239, 'John Doe');
 // console.log(euroWings);
@@ -179,12 +179,12 @@ book.apply(swiss, flightData); //not used as much anymore because of call method
 book.call(swiss, ...flightData);
 
 // console.log(swiss);
-*/
+// */
 
 ///////////////////////////////////////
 // The Bind Method
 // Bind does not immediately call the function, instead it returns a new function where 'this' is bound
-/*
+// /*
 
 const bookEW = book.bind(euroWings); // binds 'this' to euroWings and stores function into 'bookEW'
 const bookLH = book.bind(lufthansa); // binds 'this' to lufthansa
@@ -240,12 +240,12 @@ const addTax2 = function (rate) {
 const addVAT2 = addTax2(0.23);
 console.log(addVAT2(100));
 console.log(addVAT2(23));
-*/
+// */
 
 ///////////////////////////////////////
 // Immediately Invoked Function Expressions (IIFE)
 // Function that is only executed once, and never again.
-/*
+// /*
 
 // we wrap function expression in () and call it () right after.
 (function () {
@@ -257,12 +257,12 @@ console.log(addVAT2(23));
 
 // This works because we turn the value into an expression and call it, without ever storing it in a variable to call it again
 // All data inside IIFE functions are considered private or encapsulated.
-*/
+// */
 
 ///////////////////////////////////////
 // Closures
 // notes on closures in notes.js
-/*
+// /*
 
 const secureBooking = function () {
   let passengerCount = 0;
@@ -280,11 +280,11 @@ booker(); // 3 passengers
 
 // We can take a look at the internal scope property (basically the Variable Environment of 'booker')
 console.dir(booker);
-*/
+// */
 
 ///////////////////////////////////////
 // More Closures Examples
-/*
+// /*
 
 // Example: 1
 let f;
@@ -327,4 +327,4 @@ const boardPassengers = function (numPassengers, waitTime) {
 // Prove that closures have priority over scope chain (callback function will use 'perGroup' from closure before global scope chain)
 const perGroup = 1000;
 boardPassengers(180, 3);
-*/
+// */
