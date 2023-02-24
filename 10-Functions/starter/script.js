@@ -281,3 +281,50 @@ booker(); // 3 passengers
 // We can take a look at the internal scope property (basically the Variable Environment of 'booker')
 console.dir(booker);
 */
+
+///////////////////////////////////////
+// More Closures Examples
+/*
+
+// Example: 1
+let f;
+const g = function () {
+  const a = 23;
+  f = function () {
+    console.log(a * 2);
+  };
+};
+
+const h = function () {
+  const b = 777;
+  f = function () {
+    console.log(b * 2);
+  };
+};
+
+g();
+f(); // 46
+console.dir(f);
+
+// Re-assigning f function
+h();
+f(); // 1554
+console.dir(f);
+
+// Example: 2
+const boardPassengers = function (numPassengers, waitTime) {
+  const perGroup = numPassengers / 3;
+
+  // this callback function has access to 'numPassengers' and 'perGroup' because of closures
+  setTimeout(function () {
+    console.log(`We are now boarding all ${numPassengers} passengers`);
+    console.log(`There are 3 groups, each with ${perGroup} passengers`);
+  }, waitTime * 1000); //1000 milliseconds
+
+  console.log(`Will start boarding in ${waitTime} seconds`);
+};
+
+// Prove that closures have priority over scope chain (callback function will use 'perGroup' from closure before global scope chain)
+const perGroup = 1000;
+boardPassengers(180, 3);
+*/
