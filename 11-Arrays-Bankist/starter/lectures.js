@@ -118,3 +118,28 @@ movements.forEach(function (mov, i, arr) {
 
 // You CANNOT use 'break', 'continue' statements in forEach loop. for of does
 */
+
+////////////////////////////////////
+// ForEach with Maps and Sets
+/*
+
+// Map
+const currencies = new Map([
+  ['USD', 'United States dollar'],
+  ['EUR', 'Euro'],
+  ['GBP', 'Pound sterling'],
+]);
+
+currencies.forEach(function (value, key, map) {
+  console.log(`${key}: ${value}`);
+});
+
+// Set
+const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
+
+currenciesUnique.forEach(function (value, _, set) {
+  //Sets do NOT have keys or index, so the second parameter is not needed. (we can use '_')
+  // in JS common practice '_' is considered a 'throwaway' variable
+  console.log(`${value}`);
+});
+*/
