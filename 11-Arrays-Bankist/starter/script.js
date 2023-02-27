@@ -62,18 +62,17 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 const displayMovements = function (movements) {
-  // remove default conatiner movements
+  // remove default container movements
   containerMovements.innerHTML = '';
 
-  //append a movement row in movements div for each movement in account
+  // append a movement row in movements div (container) for each movement in account
   movements.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
+    //prettier-ignore
     const html = `
     <div class="movements__row">
-      <div class="movements__type movements__type--${type}">${
-      i + 1
-    } ${type}</div>
+      <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
       <div class="movements__value">${mov}</div>
     </div>`;
 
