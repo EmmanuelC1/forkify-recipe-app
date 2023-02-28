@@ -61,6 +61,7 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+// Displays Transactions for acct that is signed in
 const displayMovements = function (movements) {
   // remove default container movements
   containerMovements.innerHTML = '';
@@ -79,8 +80,21 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-
+//FIXME remove later (function call)
 displayMovements(account1.movements);
+
+// Creates username using first inital of each name and adding new 'username' property to acct object passed in
+const createUsernames = function (accts) {
+  accts.forEach(function (acct) {
+    acct.username = acct.owner // set 'username' property to...
+      .toLowerCase() // turn owner (name) all lowercase
+      .split(' ') // split each name in array
+      .map(name => name[0]) // map each name in array (first, middle, last) and only return the first char of each
+      .join(''); // join initals together
+  });
+};
+createUsernames(accounts);
+accounts.forEach(acct => console.log(acct)); //FIXME remove later
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////

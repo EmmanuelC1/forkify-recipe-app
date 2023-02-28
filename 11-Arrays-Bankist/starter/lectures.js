@@ -143,3 +143,62 @@ currenciesUnique.forEach(function (value, _, set) {
   console.log(`${value}`);
 });
 */
+
+////////////////////////////////////
+// Data Transformations: Map, Filter, Reduce
+/*
+  In JavaScript, there are 3 big important array methods that we use all the time to perform Data Transformation.
+    These are methods that we use  to create new arrays based on trandsforming data from other arrays.
+
+  • Map
+    - Map returns a NEW array containing the results of applying an operation on all original array elements.
+      - Ex. map methods takes an array, loops over that array, and in each iteration it applies a callback function that we 
+        specify in our code to the current array element. So in this example, suppose the callback multiplies each array
+        element by 2 and puts it into a NEW array. We say that it 'maps' the values of the original array to a new array
+        and that's why this method is called map.
+
+  • Filter
+    - Filter returns a NEW array containing the array elements that passed a specified test condition.  
+      - Ex. In this example, we only want array elements greater than 2 in the givedn array. The filter method will then 
+        loop through each element and check if the condition is satisfied (current > 2). If it is, it will get added to the
+        NEW array, otherwise it will ignore the elements that aren't greater than 2. Returns the new filtered array.
+
+  • Reduce
+    - Reduce boils (reduces) all array elements down to one single value. 
+      - Ex. Adding all elements together. The reduce method will loop through all array elements and add each element to
+        an accumulator variable that will keep track of the sum between all elements in the given array. The reduced value,
+        the accumulator variable, will be returned. We say, that the array was reduced to this one single value.
+*/
+
+////////////////////////////////////
+// Map Method
+/*
+//FIXME remove to avoid re-initialization
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const euroToUsd = 1.1; // Euro to USD conversion
+
+// using modern Functional Programming Paradigm (using callbacks, this case arrow function, but can be function decl as below)
+const movementsUSD = movements.map(mov => mov * euroToUsd);
+
+// const movementsUSD = movements.map(function (mov) {
+//   return mov * euroToUsd;
+// });
+
+console.log(movements);
+console.log(movementsUSD); // new array of movements converted from Euros to USD
+
+// Doing the same as above but using for of loop (diff paradigm, manually creating new array and updating through loop)
+const movementsUSDfor = [];
+for (const mov of movements) {
+  movementsUSDfor.push(mov * euroToUsd);
+}
+console.log(movementsUSDfor);
+
+const movementDescriptions = movements.map((mov, i) => {
+  const transType = mov > 0 ? 'deposited' : 'withdrew';
+  // remember to return instead of console.log since it is creating and adding to new array at each iteration
+  return `Movement ${i + 1}: You ${transType} ${Math.abs(mov)}`;
+});
+console.log(movementDescriptions);
+*/
