@@ -94,7 +94,7 @@ const createUsernames = function (accts) {
   });
 };
 createUsernames(accounts);
-accounts.forEach(acct => console.log(acct)); //FIXME remove later
+// accounts.forEach(acct => console.log(acct)); //FIXME remove later (logs each acct object)
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////

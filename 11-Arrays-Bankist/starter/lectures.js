@@ -185,20 +185,47 @@ const movementsUSD = movements.map(mov => mov * euroToUsd);
 //   return mov * euroToUsd;
 // });
 
-console.log(movements);
-console.log(movementsUSD); // new array of movements converted from Euros to USD
+console.log('Movements:', movements);
+console.log('MovementsUSD:', movementsUSD); // new array of movements converted from Euros to USD
 
 // Doing the same as above but using for of loop (diff paradigm, manually creating new array and updating through loop)
 const movementsUSDfor = [];
 for (const mov of movements) {
   movementsUSDfor.push(mov * euroToUsd);
 }
-console.log(movementsUSDfor);
+console.log('MovementsUSD using for loop:', movementsUSDfor);
 
 const movementDescriptions = movements.map((mov, i) => {
   const transType = mov > 0 ? 'deposited' : 'withdrew';
   // remember to return instead of console.log since it is creating and adding to new array at each iteration
   return `Movement ${i + 1}: You ${transType} ${Math.abs(mov)}`;
 });
-console.log(movementDescriptions);
+console.log('Movement Descriptions:', movementDescriptions);
+*/
+
+////////////////////////////////////
+// Filter Method
+/*
+//FIXME remove to avoid re-initialization
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// using modern Functional Programming Paradigm (using callbacks, this case arrow function, but can be function decl as below)
+const deposits = movements.filter(mov => mov > 0);
+
+// const deposits = movements.filter(function (mov) {
+//   if (mov > 0) return mov;
+// });
+
+// Doing the same as above but using for of loop (diff paradigm, manually creating new array and updating through loop)
+const depositsFor = [];
+for (const mov of movements) {
+  if (mov > 0) depositsFor.push(mov);
+}
+
+// Filter all the withdrawals from movements
+const withdrawals = movements.filter(mov => mov < 0);
+
+console.log('Deposits:', deposits);
+console.log('Deposits using for loop:', depositsFor);
+console.log('Withdrawals:', withdrawals);
 */
