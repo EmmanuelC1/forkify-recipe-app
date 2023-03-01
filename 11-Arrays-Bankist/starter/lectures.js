@@ -229,3 +229,28 @@ console.log('Deposits:', deposits);
 console.log('Deposits using for loop:', depositsFor);
 console.log('Withdrawals:', withdrawals);
 */
+
+////////////////////////////////////
+// Reduce Method
+/*
+//FIXME remove to avoid re-initialization
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// First parameter in Reduce method is accumulator, then current element, index, and last is array itself
+const balance = movements.reduce(function (sum, curr, i) {
+  console.log(`Iterations ${i}: Sum = ${sum}`);
+  return sum + curr; // add all elements to sum and store sum in 'balance' in the end
+}, 0); // initial value of 'sum' (accumulator)
+
+// Arrow Function
+// const balance = movements.reduce((sum, curr) => sum + curr, 0); // 0 = initial sum value
+
+console.log('Balance:', balance); // 3840 sum of all movements array
+
+// for loop example (same as above)
+let balanceFor = 0;
+for (const mov of movements) {
+  balanceFor += mov;
+}
+console.log('Balance using for loop:', balanceFor);
+*/

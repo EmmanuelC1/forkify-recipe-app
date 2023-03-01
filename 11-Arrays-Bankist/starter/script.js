@@ -63,6 +63,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 // Displays Transactions for acct that is signed in
 const displayMovements = function (movements) {
+  //TODO add null check for movements
   // remove default container movements
   containerMovements.innerHTML = '';
 
@@ -83,8 +84,18 @@ const displayMovements = function (movements) {
 //FIXME remove later (function call)
 displayMovements(account1.movements);
 
+// Calculates balance for a given account with movements arr, and updated the Balance label
+const calcDisplayBalance = function (movements) {
+  //TODO add null check for movements
+  const balance = movements.reduce((sum, mov) => sum + mov, 0);
+  labelBalance.textContent = `${balance}£`;
+};
+//FIXME remove later (function call)
+calcDisplayBalance(account1.movements);
+
 // Creates username using first inital of each name and adding new 'username' property to acct object passed in
 const createUsernames = function (accts) {
+  //TODO add null check for accts
   accts.forEach(function (acct) {
     acct.username = acct.owner // set 'username' property to...
       .toLowerCase() // turn owner (name) all lowercase
@@ -93,8 +104,9 @@ const createUsernames = function (accts) {
       .join(''); // join initals together
   });
 };
+//FIXME remove later (logs each acct object)
 createUsernames(accounts);
-// accounts.forEach(acct => console.log(acct)); //FIXME remove later (logs each acct object)
+// accounts.forEach(acct => console.log(acct));
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
