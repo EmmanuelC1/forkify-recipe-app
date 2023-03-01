@@ -253,4 +253,11 @@ for (const mov of movements) {
   balanceFor += mov;
 }
 console.log('Balance using for loop:', balanceFor);
+
+// Reduce to MAX Value:
+const maxValue = movements.reduce(
+  (acc, curr) => (acc = curr > acc ? curr : acc),
+  movements[0] // set initial value of 'acc' to first element
+);
+console.log('Max Value:', maxValue);
 */
