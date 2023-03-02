@@ -264,7 +264,7 @@ console.log('Max Value:', maxValue);
 
 ////////////////////////////////////
 // Chaining Methods (Map, Filter, and Reduce)
-
+/*
 //FIXME remove to avoid re-initialization
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 const euroToUsd = 1.1;
@@ -276,3 +276,4 @@ const totalDepositsUSD = movements
   .reduce((acc, mov) => acc + mov, 0); // calc total
 
 console.log('totalDepositsUSD:', totalDepositsUSD);
+*/
