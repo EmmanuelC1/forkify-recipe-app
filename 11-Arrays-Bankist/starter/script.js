@@ -130,3 +130,5 @@ const createUsernames = function (accts) {
 //FIXME remove later (logs each acct object)
 createUsernames(accounts);
 // accounts.forEach(acct => console.log(acct));
+
+// Event Handlers
