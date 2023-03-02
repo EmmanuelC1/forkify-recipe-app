@@ -75,23 +75,46 @@ const displayMovements = function (movements) {
     const html = `
     <div class="movements__row">
       <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
-      <div class="movements__value">${mov}</div>
+      <div class="movements__value">€ ${mov}</div>
     </div>`;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-//FIXME remove later (function call)
+//FIXME change to user that is logged in
 displayMovements(account1.movements);
 
 // Calculates balance for a given account with movements arr, and updated the Balance label
 const calcDisplayBalance = function (movements) {
   //TODO add null check for movements
   const balance = movements.reduce((sum, mov) => sum + mov, 0);
-  labelBalance.textContent = `${balance}£`;
+  labelBalance.textContent = `€ ${balance}`;
 };
-//FIXME remove later (function call)
+//FIXME change to user that is logged in
 calcDisplayBalance(account1.movements);
+
+const calcDisplaySummary = function (movements) {
+  //TODO add null check for movements
+  const inSummary = movements
+    .filter(mov => mov > 0) // filter all deposits
+    .reduce((acc, mov) => acc + mov, 0); // add all deposits, return total
+
+  const outSummary = movements
+    .filter(mov => mov < 0) // filter all withdrawals
+    .reduce((acc, mov) => acc + mov, 0); // add all withdrawals, return total
+
+  const interestSummary = movements
+    .filter(mov => mov > 0) // filter all deposits
+    .map(deposit => (deposit * 1.2) / 100) // calc interest on each deposit
+    .filter(interest => interest >= 1) // bank only pays interest if it is at least 1 EUR
+    .reduce((acc, interest) => acc + interest, 0); // add all interest, return total
+
+  labelSumIn.textContent = `€${inSummary}`;
+  labelSumOut.textContent = `€${Math.abs(outSummary)}`;
+  labelSumInterest.textContent = `€${interestSummary}`;
+};
+//FIXME change to user that is logged in
+calcDisplaySummary(account1.movements);
 
 // Creates username using first inital of each name and adding new 'username' property to acct object passed in
 const createUsernames = function (accts) {
@@ -107,17 +130,3 @@ const createUsernames = function (accts) {
 //FIXME remove later (logs each acct object)
 createUsernames(accounts);
 // accounts.forEach(acct => console.log(acct));
-
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// LECTURES
-
-// const currencies = new Map([
-//   ['USD', 'United States dollar'],
-//   ['EUR', 'Euro'],
-//   ['GBP', 'Pound sterling'],
-// ]);
-
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-
-/////////////////////////////////////////////////

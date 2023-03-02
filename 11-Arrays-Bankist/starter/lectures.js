@@ -261,3 +261,18 @@ const maxValue = movements.reduce(
 );
 console.log('Max Value:', maxValue);
 */
+
+////////////////////////////////////
+// Chaining Methods (Map, Filter, and Reduce)
+
+//FIXME remove to avoid re-initialization
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const euroToUsd = 1.1;
+
+// get the total (sum) of deposits of all movements in USD (we can keep chaining methods as long as method returns new array)
+const totalDepositsUSD = movements
+  .filter(mov => mov > 0) // filter all deposits
+  .map(mov => mov * euroToUsd) // convert to USD
+  .reduce((acc, mov) => acc + mov, 0); // calc total
+
+console.log('totalDepositsUSD:', totalDepositsUSD);
