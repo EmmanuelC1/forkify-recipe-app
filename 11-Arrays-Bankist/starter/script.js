@@ -81,8 +81,6 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-//FIXME change to user that is logged in
-displayMovements(account1.movements);
 
 // Calculates balance for a given account with movements arr, and updated the Balance label
 const calcDisplayBalance = function (movements) {
@@ -90,10 +88,8 @@ const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((sum, mov) => sum + mov, 0);
   labelBalance.textContent = `€ ${balance}`;
 };
-//FIXME change to user that is logged in
-calcDisplayBalance(account1.movements);
 
-const calcDisplaySummary = function (movements) {
+const calcDisplaySummary = function (movements, interestRate) {
   //TODO add null check for movements
   const inSummary = movements
     .filter(mov => mov > 0) // filter all deposits
@@ -105,16 +101,14 @@ const calcDisplaySummary = function (movements) {
 
   const interestSummary = movements
     .filter(mov => mov > 0) // filter all deposits
-    .map(deposit => (deposit * 1.2) / 100) // calc interest on each deposit
+    .map(deposit => (deposit * interestRate) / 100) // calc interest on each deposit
     .filter(interest => interest >= 1) // bank only pays interest if it is at least 1 EUR
     .reduce((acc, interest) => acc + interest, 0); // add all interest, return total
 
   labelSumIn.textContent = `€${inSummary}`;
   labelSumOut.textContent = `€${Math.abs(outSummary)}`;
-  labelSumInterest.textContent = `€${interestSummary}`;
+  labelSumInterest.textContent = `€${interestSummary.toFixed(2)}`;
 };
-//FIXME change to user that is logged in
-calcDisplaySummary(account1.movements);
 
 // Creates username using first inital of each name and adding new 'username' property to acct object passed in
 const createUsernames = function (accts) {
@@ -127,8 +121,33 @@ const createUsernames = function (accts) {
       .join(''); // join initals together
   });
 };
-//FIXME remove later (logs each acct object)
 createUsernames(accounts);
-// accounts.forEach(acct => console.log(acct));
 
 // Event Handlers
+btnLogin.addEventListener('click', function (e) {
+  e.preventDefault(); // Prevents form from submitting & reloading page
+
+  // Retrieve account object, undefined if not found
+  const account = accounts.find(acc => acc.username === inputLoginUsername.value); //prettier-ignore
+
+  // if account login info does not match, return without displaying
+  if (
+    account === undefined ||
+    account.username !== inputLoginUsername.value ||
+    account.pin !== Number(inputLoginPin.value)
+  ) {
+    containerApp.style.opacity = 0;
+    return;
+  }
+
+  // if login info matches, display all info
+  if (
+    account.username === inputLoginUsername.value &&
+    account.pin === Number(inputLoginPin.value)
+  ) {
+    containerApp.style.opacity = 1;
+    displayMovements(account.movements);
+    calcDisplayBalance(account.movements);
+    calcDisplaySummary(account.movements, account.interestRate);
+  }
+});
