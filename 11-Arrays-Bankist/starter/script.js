@@ -1,7 +1,6 @@
 'use strict';
 
 /////////////////////////////////////////////////
-/////////////////////////////////////////////////
 // BANKIST APP
 
 // Data
@@ -63,9 +62,11 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 // Displays Transactions for acct that is signed in
 const displayMovements = function (movements) {
-  //TODO add null check for movements
-  // remove default container movements
+  // remove default container movements (hard coded movements in HTML file)
   containerMovements.innerHTML = '';
+
+  // Handle empty movements arr
+  if (movements.length === 0) return;
 
   // append a movement row in movements div (container) for each movement in account
   movements.forEach(function (mov, i) {
@@ -84,13 +85,13 @@ const displayMovements = function (movements) {
 
 // Calculates balance for a given account with movements arr, and updated the Balance label
 const calcDisplayBalance = function (movements) {
-  //TODO add null check for movements
+  //TODO handle empty movements
   const balance = movements.reduce((sum, mov) => sum + mov, 0);
   labelBalance.textContent = `€ ${balance}`;
 };
 
 const calcDisplaySummary = function (movements, interestRate) {
-  //TODO add null check for movements
+  //TODO handle empty movements
   const inSummary = movements
     .filter(mov => mov > 0) // filter all deposits
     .reduce((acc, mov) => acc + mov, 0); // add all deposits, return total
@@ -112,7 +113,7 @@ const calcDisplaySummary = function (movements, interestRate) {
 
 // Creates username using first inital of each name and adding new 'username' property to acct object passed in
 const createUsernames = function (accts) {
-  //TODO add null check for accts
+  //TODO handle empty accts
   accts.forEach(function (acct) {
     acct.username = acct.owner // set 'username' property to...
       .toLowerCase() // turn owner (name) all lowercase
@@ -130,22 +131,37 @@ btnLogin.addEventListener('click', function (e) {
   // Retrieve account object, undefined if not found
   const account = accounts.find(acc => acc.username === inputLoginUsername.value); //prettier-ignore
 
-  // if account login info does not match, return without displaying
-  if (
-    account === undefined ||
-    account.username !== inputLoginUsername.value ||
-    account.pin !== Number(inputLoginPin.value)
-  ) {
+  // UNSUCCESFUL LOGIN (using optional chaining '?' to handle 'undefined' account obj)
+  if (account?.pin !== Number(inputLoginPin.value)) {
+    // Remove container opacity
     containerApp.style.opacity = 0;
-    return;
-  }
 
-  // if login info matches, display all info
-  if (
-    account.username === inputLoginUsername.value &&
-    account.pin === Number(inputLoginPin.value)
-  ) {
+    // Change welcome label back to default
+    labelWelcome.textContent = 'Login to get started';
+
+    // Clear input fields & take focus off (cursor no longer is active on inputs once submitted)
+    inputLoginUsername.value = inputLoginPin.value = ''; // works because assignment operator works right to left
+    inputLoginUsername.blur();
+    inputLoginPin.blur(); // blur method takes focus off of cursor
+
+    // Display error message
+    alert('Wrong username or password');
+
+    return;
+  } else {
+    // SUCCESSFUL LOGIN
+    // Add welcome message (first name only)
+    labelWelcome.textContent = `Welcome back, ${account.owner.split(' ')[0]}`;
+
+    // Clear input fields & take focus off (cursor no longer is active once submitted)
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginUsername.blur();
+    inputLoginPin.blur();
+
+    // Display container (opacity)
     containerApp.style.opacity = 1;
+
+    // Display account info
     displayMovements(account.movements);
     calcDisplayBalance(account.movements);
     calcDisplaySummary(account.movements, account.interestRate);
