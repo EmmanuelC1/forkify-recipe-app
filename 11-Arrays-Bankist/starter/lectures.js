@@ -328,3 +328,36 @@ for (const acct of accts) {
 }
 console.log(accountFor);
 */
+
+////////////////////////////////////
+// Some & Every Method
+/*
+//FIXME remove to avoid re-initialization
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+console.log('Movements:', movements);
+console.log('includes(-130):', movements.includes(-130)); // true
+
+// 'includes' only test EQUALITIES, but 'some' and 'every' can test for CONDITIONS
+
+// SOME: CONDITION (if there is ANY deposit)
+const anyDeposits = movements.some(mov => mov > 0);
+console.log('anyDeposits (using some)', anyDeposits); // true
+
+// EVERY: CONDITION (if all movements are ALL deposits)
+const allDeposits = movements.every(mov => mov > 0);
+console.log('allDeposits in Movements (using every)', allDeposits); // false
+
+const movements2 = [430, 1000, 700, 50, 90];
+const allDeposits2 = movements2.every(mov => mov > 0);
+console.log('Movments2:', movements2);
+console.log('allDeposits2 in Movements2 (using every)', allDeposits2); // true
+
+// Separate Callbacks
+const deposit = mov => mov > 0;
+
+// We can just call the new 'deposit' arrow function inside the array methods
+console.log('Separate callback for deposits (some):', movements.some(deposit));
+console.log('Separate callback for deposits (every)', movements.every(deposit));
+console.log('Separate callback for deposits (filter)',movements.filter(deposit)); //prettier-ignore
+*/
