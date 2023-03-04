@@ -193,11 +193,6 @@ btnTransfer.addEventListener('click', function (e) {
   );
   const transferAmount = Number(inputTransferAmount.value);
 
-  // Reset input fields
-  inputTransferTo.value = inputTransferAmount.value = '';
-  inputTransferTo.blur();
-  inputTransferAmount.blur();
-
   if (
     transferAmount > 0 && // amount is not negative or 0
     transferToAcc && // transferToAcc is not undefined
@@ -214,6 +209,36 @@ btnTransfer.addEventListener('click', function (e) {
 
   // Update UI
   updateUI(accLoggedIn);
+
+  // Reset input fields
+  inputTransferTo.value = inputTransferAmount.value = '';
+  inputTransferTo.blur();
+  inputTransferAmount.blur();
+});
+
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const loanAmount = Number(inputLoanAmount.value);
+
+  // Loans only get approved if there is at least one deposit that is at least 10% of the requested loan amount
+  const isApproved = accLoggedIn.movements.some(mov => mov >= loanAmount * 0.1); // some returns true/false
+
+  if (loanAmount > 0 && isApproved) {
+    // Loan Approved
+    // Add loan to account
+    accLoggedIn.movements.push(loanAmount);
+
+    // Update UI
+    updateUI(accLoggedIn);
+  } else {
+    // Loan Not Approved
+    alert('Bankist could not approve your requested loan.');
+  }
+
+  // Reset input fields
+  inputLoanAmount.value = '';
+  inputLoanAmount.blur();
 });
 
 btnClose.addEventListener('click', function (e) {
