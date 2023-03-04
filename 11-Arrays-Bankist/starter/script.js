@@ -33,6 +33,7 @@ const account4 = {
 };
 
 const accounts = [account1, account2, account3, account4];
+let accLoggedIn = {}; // stores logged in account object
 
 // Elements
 const labelWelcome = document.querySelector('.welcome');
@@ -86,23 +87,23 @@ const displayMovements = function (movements) {
 // Calculates balance for a given account with movements arr, and updated the Balance label
 const calcDisplayBalance = function (movements) {
   //TODO handle empty movements
-  const balance = movements.reduce((sum, mov) => sum + mov, 0);
-  labelBalance.textContent = `€ ${balance}`;
+  accLoggedIn.balance = movements.reduce((sum, mov) => sum + mov, 0);
+  labelBalance.textContent = `€ ${accLoggedIn.balance}`;
 };
 
-const calcDisplaySummary = function (movements, interestRate) {
+const calcDisplaySummary = function (currAcc) {
   //TODO handle empty movements
-  const inSummary = movements
+  const inSummary = currAcc.movements
     .filter(mov => mov > 0) // filter all deposits
     .reduce((acc, mov) => acc + mov, 0); // add all deposits, return total
 
-  const outSummary = movements
+  const outSummary = currAcc.movements
     .filter(mov => mov < 0) // filter all withdrawals
     .reduce((acc, mov) => acc + mov, 0); // add all withdrawals, return total
 
-  const interestSummary = movements
+  const interestSummary = currAcc.movements
     .filter(mov => mov > 0) // filter all deposits
-    .map(deposit => (deposit * interestRate) / 100) // calc interest on each deposit
+    .map(deposit => (deposit * currAcc.interestRate) / 100) // calc interest on each deposit
     .filter(interest => interest >= 1) // bank only pays interest if it is at least 1 EUR
     .reduce((acc, interest) => acc + interest, 0); // add all interest, return total
 
@@ -124,15 +125,22 @@ const createUsernames = function (accts) {
 };
 createUsernames(accounts);
 
+const updateUI = function (currAcc) {
+  // Display all updated info
+  displayMovements(currAcc.movements);
+  calcDisplayBalance(currAcc.movements);
+  calcDisplaySummary(currAcc);
+};
+
 // Event Handlers
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault(); // Prevents form from submitting & reloading page
 
   // Retrieve account object, undefined if not found
-  const account = accounts.find(acc => acc.username === inputLoginUsername.value); //prettier-ignore
+  accLoggedIn = accounts.find(acc => acc.username === inputLoginUsername.value); //prettier-ignore
 
   // UNSUCCESFUL LOGIN (using optional chaining '?' to handle 'undefined' account obj)
-  if (account?.pin !== Number(inputLoginPin.value)) {
+  if (accLoggedIn?.pin !== Number(inputLoginPin.value)) {
     // Remove container opacity
     containerApp.style.opacity = 0;
 
@@ -151,7 +159,9 @@ btnLogin.addEventListener('click', function (e) {
   } else {
     // SUCCESSFUL LOGIN
     // Add welcome message (first name only)
-    labelWelcome.textContent = `Welcome back, ${account.owner.split(' ')[0]}`;
+    labelWelcome.textContent = `Welcome back, ${
+      accLoggedIn.owner.split(' ')[0]
+    }`;
 
     // Clear input fields & take focus off (cursor no longer is active once submitted)
     inputLoginUsername.value = inputLoginPin.value = '';
@@ -162,8 +172,40 @@ btnLogin.addEventListener('click', function (e) {
     containerApp.style.opacity = 1;
 
     // Display account info
-    displayMovements(account.movements);
-    calcDisplayBalance(account.movements);
-    calcDisplaySummary(account.movements, account.interestRate);
+    displayMovements(accLoggedIn.movements);
+    calcDisplayBalance(accLoggedIn.movements);
+    calcDisplaySummary(accLoggedIn);
   }
+});
+
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault(); // prevent form from submitting and reloading page
+
+  // Retrieve input field values, find account object
+  const transferToAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+  const transferAmount = Number(inputTransferAmount.value);
+
+  // Reset input fields
+  inputTransferTo.value = inputTransferAmount.value = '';
+  inputTransferTo.blur();
+  inputTransferAmount.blur();
+
+  if (
+    transferAmount > 0 && // amount is not negative or 0
+    transferToAcc && // transferToAcc is not undefined
+    accLoggedIn.balance >= transferAmount && // has enough funds to transfer amount
+    transferToAcc?.username !== accLoggedIn.username // use does not transfer to himself
+  ) {
+    // Complete transfer
+    accLoggedIn.movements.push(-transferAmount);
+    transferToAcc.movements.push(transferAmount);
+  } else {
+    // Error transferring
+    alert('Cannot complete transfer. Please make sure all information is correct.'); //prettier-ignore
+  }
+
+  // Update UI (all info)
+  updateUI(accLoggedIn);
 });
