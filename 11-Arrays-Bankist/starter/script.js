@@ -132,6 +132,17 @@ const updateUI = function (currAcc) {
   calcDisplaySummary(currAcc);
 };
 
+const hideUI = function () {
+  // Remove conatiner opacity
+  containerApp.style.opacity = 0;
+
+  // Change Welcome message back to default
+  labelWelcome.textContent = 'Login to get started';
+
+  // Reset 'accLoggedIn' object
+  accLoggedIn = {};
+};
+
 // Event Handlers
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault(); // Prevents form from submitting & reloading page
@@ -141,11 +152,8 @@ btnLogin.addEventListener('click', function (e) {
 
   // UNSUCCESFUL LOGIN (using optional chaining '?' to handle 'undefined' account obj)
   if (accLoggedIn?.pin !== Number(inputLoginPin.value)) {
-    // Remove container opacity
-    containerApp.style.opacity = 0;
-
-    // Change welcome label back to default
-    labelWelcome.textContent = 'Login to get started';
+    // Reset UI to login state
+    hideUI();
 
     // Clear input fields & take focus off (cursor no longer is active on inputs once submitted)
     inputLoginUsername.value = inputLoginPin.value = ''; // works because assignment operator works right to left
@@ -153,7 +161,7 @@ btnLogin.addEventListener('click', function (e) {
     inputLoginPin.blur(); // blur method takes focus off of cursor
 
     // Display error message
-    alert('Wrong username or password');
+    alert('Wrong username or pin');
 
     return;
   } else {
@@ -171,10 +179,8 @@ btnLogin.addEventListener('click', function (e) {
     // Display container (opacity)
     containerApp.style.opacity = 1;
 
-    // Display account info
-    displayMovements(accLoggedIn.movements);
-    calcDisplayBalance(accLoggedIn.movements);
-    calcDisplaySummary(accLoggedIn);
+    // Update UI
+    updateUI(accLoggedIn);
   }
 });
 
@@ -195,8 +201,8 @@ btnTransfer.addEventListener('click', function (e) {
   if (
     transferAmount > 0 && // amount is not negative or 0
     transferToAcc && // transferToAcc is not undefined
-    accLoggedIn.balance >= transferAmount && // has enough funds to transfer amount
-    transferToAcc?.username !== accLoggedIn.username // use does not transfer to himself
+    accLoggedIn.balance >= transferAmount && // has enough funds to transfer
+    transferToAcc?.username !== accLoggedIn.username // user does not transfer to himself
   ) {
     // Complete transfer
     accLoggedIn.movements.push(-transferAmount);
@@ -206,6 +212,42 @@ btnTransfer.addEventListener('click', function (e) {
     alert('Cannot complete transfer. Please make sure all information is correct.'); //prettier-ignore
   }
 
-  // Update UI (all info)
+  // Update UI
   updateUI(accLoggedIn);
+});
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  // Get input values
+  const confirmUsername = inputCloseUsername.value;
+  const confirmPin = Number(inputClosePin.value);
+
+  if (
+    confirmUsername === accLoggedIn.username && // user can only close their account, not someone else's
+    confirmPin === accLoggedIn.pin
+  ) {
+    // Close Account
+    // find index of current account in 'accounts' array, returns -1 if not found
+    const accIndex = accounts.findIndex(
+      acc => acc.username === accLoggedIn.username
+    );
+
+    // remove account from 'accounts' array at 'accIndex'
+    accounts.splice(accIndex, 1);
+
+    // Logout user, and reset UI to login state
+    hideUI();
+
+    // alert user of successful account closure
+    alert('Success! Your account was succesfully closed and deleted.');
+  } else {
+    // Error closing account
+    alert('Error closing account. Wrong username or pin');
+  }
+
+  // Reset input fields
+  inputCloseUsername.value = inputClosePin.value = '';
+  inputCloseUsername.blur();
+  inputClosePin.blur();
 });
