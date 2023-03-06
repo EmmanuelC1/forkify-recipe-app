@@ -86,13 +86,11 @@ const displayMovements = function (movements) {
 
 // Calculates balance for a given account with movements arr, and updated the Balance label
 const calcDisplayBalance = function (movements) {
-  //TODO handle empty movements
   accLoggedIn.balance = movements.reduce((sum, mov) => sum + mov, 0);
   labelBalance.textContent = `€ ${accLoggedIn.balance}`;
 };
 
 const calcDisplaySummary = function (currAcc) {
-  //TODO handle empty movements
   const inSummary = currAcc.movements
     .filter(mov => mov > 0) // filter all deposits
     .reduce((acc, mov) => acc + mov, 0); // add all deposits, return total
@@ -114,7 +112,6 @@ const calcDisplaySummary = function (currAcc) {
 
 // Creates username using first inital of each name and adding new 'username' property to acct object passed in
 const createUsernames = function (accts) {
-  //TODO handle empty accts
   accts.forEach(function (acct) {
     acct.username = acct.owner // set 'username' property to...
       .toLowerCase() // turn owner (name) all lowercase

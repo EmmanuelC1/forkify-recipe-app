@@ -361,3 +361,38 @@ console.log('Separate callback for deposits (some):', movements.some(deposit));
 console.log('Separate callback for deposits (every)', movements.every(deposit));
 console.log('Separate callback for deposits (filter)',movements.filter(deposit)); //prettier-ignore
 */
+
+////////////////////////////////////
+// Flat & Flat Map Methods (ES2019)
+/*
+// Flat Method – does NOT mutate, returns new array
+const exampleArr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(exampleArr.flat()); // remove nested array, and put everything in one array
+
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat()); // Only flattens one level deep (one level of nesting)
+console.log(arrDeep.flat(2)); // Goes 2 levels deep in nesting, so we get the result we want
+
+const accountsMovements = accts.map(acc => acc.movements);
+console.log(accountsMovements); // [[acct1.movements], [acct2.movements], ...]
+
+const allMovements = accountsMovements.flat();
+console.log(allMovements); // array with all movements (no nesting)
+
+const overallBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance); // 17840; calculates overall balance between all accounts
+
+// Chaining Methods
+const overallBalanceChained = accts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalanceChained);
+
+// Flat Map – only goes 1 level deep! if we need more, we need to use flat method
+// Combines flat() and map() into one, provides better performance than using them separately
+const overallBalanceFlatMap = accts
+  .flatMap(acc => acc.movements) // uses map callback, since flat doesn't need one
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalanceFlatMap);
+*/
