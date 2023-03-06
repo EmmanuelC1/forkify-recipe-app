@@ -396,3 +396,18 @@ const overallBalanceFlatMap = accts
   .reduce((acc, mov) => acc + mov, 0);
 console.log(overallBalanceFlatMap);
 */
+
+////////////////////////////////////
+// Sort (JS built-in sorting method)
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners.sort()); // Sorts alphabetically
+console.log(owners); // Mutates original arr
+
+// Numbers
+//FIXME remove to avoid re-initialization
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+console.log(movements.sort()); // Does not really work, beacuse 'sort()' turns everything into strings, and sorts the strings, not numbers
+
+// Solution
+movements.sort((a, b) => {});
