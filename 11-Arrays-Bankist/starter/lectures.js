@@ -435,3 +435,104 @@ movements.sort((a, b) => {
 // movements.sort((a, b) => b - a); // returning positive value, if b > a (b-a will always be +). returns negative value, if b < a (b - a will always be -)
 console.log(movements); // Sorted descending order
 */
+
+////////////////////////////////////
+// More Ways of Creating and Filling Arrays
+/*
+// Fill method + Empty arrays
+const x = new Array(7);
+console.log(x); // empty array with size of 7
+// x.fill(1); // fills array with all 1
+// x.fill(1, 3); // fills array with 1 starting at index 3
+x.fill(1, 3, 5); // fills array with 1 starting at index 3, ending at index 4 (5 not inclusive)
+console.log(x);
+
+const fillArr = [1, 2, 3, 4, 5, 6, 7];
+fillArr.fill(23, 2, 6); // fills 23 into array at position 2 - 5 (6 not included)
+console.log(fillArr);
+
+// Array.from - not a normal array method. Method usues the Array() constructor
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y); // array with length 7, all elements are set to 1
+
+const z = Array.from({ length: 7 }, (_, i) => i + 1); // used _ as parameter to denote a NOT used parameter
+console.log(z); // array with length 7, elements are set to 1-7
+
+// convert Movement Values from Bankist UI to array using Array.from()
+// querySelectorAll returns a nodeList of all these elements –– so we are converting this nodeList to an Array using Array.from()
+// getting all movements from user once we click on the balance label, otherwise there is no movements displayed
+labelBalance.addEventListener('click', function () {
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'), // gets nodeList of all movements from user
+    el => Number(el.textContent.replace('€', '')) // gets rid of euro sign at each element
+  );
+  console.log(movementsUI);
+
+  // Another conversion solution
+  const movementsUI2 = [...document.querySelectorAll('.movements__value')].map(
+    el => Number(el.textContent.replace('€', ''))
+  );
+  console.log(movementsUI2);
+});
+*/
+
+////////////////////////////////////
+// Which Array Method to Use
+/*
+  What do you want from the array method?
+  
+    • To mutate orignal array?
+      –– Add to original array
+        .push()     –– end
+        .unshift()  –– start
+      –– Remove from original array
+        .pop()      –– end
+        .shift()    –– start
+        .splice()   –– any
+      –– Others
+        .reverse()
+        .sort()
+        .fill()
+
+    • A new array?
+      –– Computed from original
+        .map()      –– loop
+      –– Filtered using condition
+        .filter()
+      –– Portion of original
+        .slice()
+      –– Adding original to other
+        .concat()
+      –– Flatten the orignal (nested array into one)
+        .flat()
+        .flatMap()
+
+    • An array index?
+      –– Based on value
+        .indexOf()
+      –– Based on test condition
+        .findIndex()
+
+    • Retrieve an entire array element?
+      –– Based on test condition
+        .find()
+
+    • Know if array includes a certain element?
+      –– Based on value
+        .includes()
+      –– Based on test condtion
+        .some()
+        .every()
+
+    • Get a new string?
+      –– Based on separator string
+        .join()
+
+    • Transform array to a new value?
+      –– Based on accumulator
+        .reduce()
+
+    • Simply just loop the array?
+      –– Based on callback (no new arr)
+        .forEach()
+*/
