@@ -399,15 +399,39 @@ console.log(overallBalanceFlatMap);
 
 ////////////////////////////////////
 // Sort (JS built-in sorting method)
+/*
 const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners); // starting arr
 console.log(owners.sort()); // Sorts alphabetically
 console.log(owners); // Mutates original arr
 
 // Numbers
 //FIXME remove to avoid re-initialization
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+console.log(movements);
 
-console.log(movements.sort()); // Does not really work, beacuse 'sort()' turns everything into strings, and sorts the strings, not numbers
+// Does NOT work, beacuse 'sort()' turns everything into strings, and sorts the strings, not numbers
+console.log(movements.sort());
 
-// Solution
-movements.sort((a, b) => {});
+// Solution (if callback returns a negative value, a will be sorted before b. Otherwise, returning positive value sorts b before a)
+// return < 0; (A, B) -> keep order
+// return > 0; (B, A) -> switch order
+
+// Ascending
+movements.sort((a, b) => {
+  if (a > b) return 1;
+  if (a < b) return -1;
+});
+// Simplified version
+// movements.sort((a, b) => a - b); // returns positive value, if a > b (a-b will always be +). returns negative value, if a < b (a - b will always be -)
+console.log(movements); // Sorted ascending order
+
+// Descending
+movements.sort((a, b) => {
+  if (a > b) return -1;
+  if (a < b) return 1;
+});
+// Simplified version
+// movements.sort((a, b) => b - a); // returning positive value, if b > a (b-a will always be +). returns negative value, if b < a (b - a will always be -)
+console.log(movements); // Sorted descending order
+*/

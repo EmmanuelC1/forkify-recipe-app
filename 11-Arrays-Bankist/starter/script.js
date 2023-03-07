@@ -34,6 +34,7 @@ const account4 = {
 
 const accounts = [account1, account2, account3, account4];
 let accLoggedIn = {}; // stores logged in account object
+let isSorted = false; // preserves sorted state for btnSort
 
 // Elements
 const labelWelcome = document.querySelector('.welcome');
@@ -62,15 +63,18 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 // Displays Transactions for acct that is signed in
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   // remove default container movements (hard coded movements in HTML file)
   containerMovements.innerHTML = '';
 
   // Handle empty movements arr
   if (movements.length === 0) return;
 
-  // append a movement row in movements div (container) for each movement in account
-  movements.forEach(function (mov, i) {
+  // if sort is true, copy movements arr (using slice) and sort copy. Otherwise, keeps using movements arr as is. Store in 'movs'
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  // append a movement row in movements div (container) for each movement in account (using movs, which has copy of sorted or unsorted arr)
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     //prettier-ignore
@@ -272,4 +276,12 @@ btnClose.addEventListener('click', function (e) {
   inputCloseUsername.value = inputClosePin.value = '';
   inputCloseUsername.blur();
   inputClosePin.blur();
+});
+
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  // Sort movements
+  displayMovements(accLoggedIn.movements, !isSorted);
+  isSorted = !isSorted; // changing boolean to opposite (above just calls the opposite, does not actually change it)
 });
