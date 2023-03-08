@@ -62,7 +62,7 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-// Displays Transactions for acct that is signed in, sort if needed (true)
+// Displays Transactions. Adds HTML movements rows for each movement in a given arr, sort if needed (true)
 const displayMovements = function (movements, sort = false) {
   // remove default container movements (hard coded movements in HTML file)
   containerMovements.innerHTML = '';
@@ -88,13 +88,13 @@ const displayMovements = function (movements, sort = false) {
   });
 };
 
-// Calculates balance for a given account with movements arr, and updated the Balance label
+// Calculates balance for a given movements arr, and updated the Balance label
 const calcDisplayBalance = function (movements) {
   accLoggedIn.balance = movements.reduce((sum, mov) => sum + mov, 0);
   labelBalance.textContent = `€ ${accLoggedIn.balance}`;
 };
 
-//TODO function desc
+// Calculates summary (money in, out and interest) for a given account and updates labels accordingly
 const calcDisplaySummary = function (currAcc) {
   const inSummary = currAcc.movements
     .filter(mov => mov > 0) // filter all deposits
@@ -127,7 +127,7 @@ const createUsernames = function (accts) {
 };
 createUsernames(accounts);
 
-//TODO function desc
+// Calls all display functions to update UI with correct info for current account signed in
 const updateUI = function (currAcc) {
   // Display all updated info
   displayMovements(currAcc.movements);
@@ -135,7 +135,7 @@ const updateUI = function (currAcc) {
   calcDisplaySummary(currAcc);
 };
 
-//TODO function desc
+// Resets UI to default
 const hideUI = function () {
   // Remove conatiner opacity
   containerApp.style.opacity = 0;
