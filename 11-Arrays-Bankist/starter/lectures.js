@@ -477,6 +477,67 @@ labelBalance.addEventListener('click', function () {
 */
 
 ////////////////////////////////////
+// Array Methods Practice
+/*
+
+// 1. Calculate sum of all deposits from all accounts (only deposits, not withdrawals)
+const bankDepositSum = accounts
+  .flatMap(acct => acct.movements)
+  .filter(mov => mov > 0)
+  .reduce((sum, deposit) => sum + deposit, 0);
+console.log('Overall Deposits in Bank:', bankDepositSum);
+
+// 2. Count how many deposits there have been in the bank with at least $1000
+// using filter
+// const numDepositsOf1000 = accounts
+//   .flatMap(acct => acct.movements)
+//   .filter(mov => mov >= 1000).length;
+
+// using reduce
+const numDepositsOf1000 = accounts
+  .flatMap(acct => acct.movements)
+  .reduce((count, cur) => (cur >= 1000 ? ++count : count), 0); // count++ does NOT work because we need it to change before
+console.log('Number of Deposits of $1000:', numDepositsOf1000);
+
+// 3. Create a new object using reduce, containing sum of deposits and withdrawals
+const { deposits, withdrawals } = accounts
+  .flatMap(acct => acct.movements)
+  .reduce(
+    (sums, cur) => {
+      // cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur); // diff solution below
+      sums[cur > 0 ? 'deposits' : 'withdrawals'] += cur;
+      return sums;
+    },
+    {
+      deposits: 0,
+      withdrawals: 0,
+    }
+  );
+console.log(deposits, withdrawals);
+
+// 4. Create a simple function to convert a string to Title Case
+// this is a nice title -> This Is a Nice Title
+const convertTitleCase = function (title) {
+  const capitalize = str => str[0].toUpperCase() + str.slice(1);
+
+  const exceptions = ['a', 'an', 'and', 'the', 'but', 'or', 'on', 'in', 'with'];
+
+  const titleCase = title
+    .toLowerCase()
+    .split(' ')
+    .map(word => (exceptions.includes(word) ? word : capitalize(word)))
+    .join(' ');
+
+  // makes sure first word is always capitalized, otherwise 3rd test will not work since it starts with and (exception word)
+  return capitalize(titleCase);
+};
+
+console.log(convertTitleCase('this is a nice title'));
+console.log(convertTitleCase('this is a LONG title but not too long'));
+console.log(convertTitleCase('and here is another title with an EXAMPLE'));
+*/
+
+////////////////////////////////////
 // Which Array Method to Use
 /*
   What do you want from the array method?
