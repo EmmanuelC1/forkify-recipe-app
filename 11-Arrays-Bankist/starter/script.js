@@ -62,7 +62,7 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-// Displays Transactions for acct that is signed in
+// Displays Transactions for acct that is signed in, sort if needed (true)
 const displayMovements = function (movements, sort = false) {
   // remove default container movements (hard coded movements in HTML file)
   containerMovements.innerHTML = '';
@@ -94,6 +94,7 @@ const calcDisplayBalance = function (movements) {
   labelBalance.textContent = `€ ${accLoggedIn.balance}`;
 };
 
+//TODO function desc
 const calcDisplaySummary = function (currAcc) {
   const inSummary = currAcc.movements
     .filter(mov => mov > 0) // filter all deposits
@@ -126,6 +127,7 @@ const createUsernames = function (accts) {
 };
 createUsernames(accounts);
 
+//TODO function desc
 const updateUI = function (currAcc) {
   // Display all updated info
   displayMovements(currAcc.movements);
@@ -133,6 +135,7 @@ const updateUI = function (currAcc) {
   calcDisplaySummary(currAcc);
 };
 
+//TODO function desc
 const hideUI = function () {
   // Remove conatiner opacity
   containerApp.style.opacity = 0;

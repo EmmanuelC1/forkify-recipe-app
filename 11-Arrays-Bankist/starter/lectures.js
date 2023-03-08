@@ -480,8 +480,8 @@ labelBalance.addEventListener('click', function () {
 // Which Array Method to Use
 /*
   What do you want from the array method?
-  
-    • To mutate orignal array?
+
+    • To mutate original array?
       –– Add to original array
         .push()     –– end
         .unshift()  –– start
@@ -517,15 +517,15 @@ labelBalance.addEventListener('click', function () {
       –– Based on test condition
         .find()
 
-    • Know if array includes a certain element?
+    • Know if array includes a certain element? (returns true/false)
       –– Based on value
         .includes()
       –– Based on test condtion
         .some()
         .every()
 
-    • Get a new string?
-      –– Based on separator string
+    • Get a new string? 
+      –– Based on separator string (returns string with separator, does not mutate arr)
         .join()
 
     • Transform array to a new value?
