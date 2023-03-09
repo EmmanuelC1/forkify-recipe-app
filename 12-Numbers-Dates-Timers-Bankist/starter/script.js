@@ -79,25 +79,36 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+const formatDate = function (date) {
+  const month = `${date.getMonth() + 1}`.padStart(2, 0);
+  const day = `${date.getDate()}`.padStart(2, 0);
+  const year = date.getFullYear();
+
+  return `${month}/${day}/${year}`;
+};
+
 // Displays Transactions. Adds HTML movements rows for each movement in a given arr, sort if needed (true)
-const displayMovements = function (movements, sort = false) {
+const displayMovements = function (acct, sort = false) {
   // remove default container movements (hard coded movements in HTML file)
   containerMovements.innerHTML = '';
 
   // Handle empty movements arr
-  if (movements.length === 0) return;
+  if (acct.movements.length === 0) return;
 
   // if sort is true, copy movements arr (using slice) and sort copy. Otherwise, keeps using movements arr as is. Store in 'movs'
-  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+  const movs = sort
+    ? acct.movements.slice().sort((a, b) => a - b)
+    : acct.movements;
 
   // append a movement row in movements div (container) for each movement in account (using movs, which has copy of sorted or unsorted arr)
   movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
-
+    const movDate = formatDate(new Date(acct.movementsDates[i]));
     //prettier-ignore
     const html = `
     <div class="movements__row">
       <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
+      <div class="movements__date">${movDate}</div>
       <div class="movements__value">€ ${mov.toFixed(2)}</div>
     </div>`;
 
@@ -147,7 +158,7 @@ createUsernames(accounts);
 // Calls all display functions to update UI with correct info for current account signed in
 const updateUI = function (currAcc) {
   // Display all updated info
-  displayMovements(currAcc.movements);
+  displayMovements(currAcc);
   calcDisplayBalance(currAcc.movements);
   calcDisplaySummary(currAcc);
 };
@@ -200,6 +211,13 @@ btnLogin.addEventListener('click', function (e) {
     // Display container (opacity)
     containerApp.style.opacity = 1;
 
+    // Create and display current Date and Time
+    const now = new Date();
+    const date = formatDate(now);
+    const hour = now.getHours();
+    const min = `${now.getMinutes()}`.padStart(2, 0);
+    labelDate.textContent = `${date} ${hour}:${min}`;
+
     // Update UI
     updateUI(accLoggedIn);
   }
@@ -221,8 +239,16 @@ btnTransfer.addEventListener('click', function (e) {
     transferToAcc?.username !== accLoggedIn.username // user does not transfer to himself
   ) {
     // Complete transfer
+    // Add transfer to each account movements' array
     accLoggedIn.movements.push(-transferAmount);
     transferToAcc.movements.push(transferAmount);
+
+    // Current date of transfer
+    const transferDate = new Date().toISOString();
+
+    // Add current date to each account movementsDates' array
+    accLoggedIn.movementsDates.push(transferDate);
+    transferToAcc.movementsDates.push(transferDate);
   } else {
     // Error transferring
     alert('Cannot complete transfer. Please make sure all information is correct.'); //prettier-ignore
@@ -249,6 +275,10 @@ btnLoan.addEventListener('click', function (e) {
     // Loan Approved
     // Add loan to account
     accLoggedIn.movements.push(loanAmount);
+
+    // Add loan date
+    const loanDate = new Date().toISOString();
+    accLoggedIn.movementsDates.push(loanDate);
 
     // Update UI
     updateUI(accLoggedIn);
@@ -302,6 +332,6 @@ btnSort.addEventListener('click', function (e) {
   e.preventDefault();
 
   // Sort movements
-  displayMovements(accLoggedIn.movements, !isSorted);
+  displayMovements(accLoggedIn, !isSorted);
   isSorted = !isSorted; // changing boolean to opposite (above just calls the opposite, does not actually change it)
 });

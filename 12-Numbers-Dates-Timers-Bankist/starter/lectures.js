@@ -180,3 +180,54 @@ console.log(huge + ' is REALLY big!!!'); // '897249870924873502 is REALLY big!!!
 // Division
 console.log(10n / 3n); // 3n –– returns closest BigInt
 */
+
+/////////////////////////////////////////////////
+// Dates
+/*
+// Create a Date
+const now = new Date();
+console.log(now); // current date and time
+
+// console.log(new Date('Thu Mar 09 2023 06:44:03'));
+// console.log(new Date('December 24, 2015'));
+
+console.log(new Date(account1.movementsDates[0]));
+
+// (year, month[0 based], day, hour, min, sec)
+console.log(new Date(2037, 10, 19, 15, 23, 5));
+
+// November 31 does not exist -> JS changes it to December 1
+console.log(new Date(2037, 10, 31)); // Dec 01 2037
+
+// amount of milliseconds passed since the beginning of UNIX time (Jan 1 1970 UTC)
+console.log(new Date(0));
+// 3 days later (3 days * 24 hours * 60 min * 60 sec * 1000 ms)
+console.log(new Date(3 * 24 * 60 * 60 * 1000));
+
+// Date Methods
+const future = new Date(2037, 10, 19, 15, 23);
+console.log(future); // Thu Nov 19 2037 15:23
+
+console.log(future.getFullYear()); // 2037
+console.log(future.getMonth()); // 10 (0 based, so Nov not Oct)
+console.log(future.getDate()); // 19
+console.log(future.getDay()); // 4 (Thu: day of the week)
+console.log(future.getHours()); // 15
+console.log(future.getMinutes()); // 23
+console.log(future.getSeconds()); // 0
+
+// returns formatted string that follows some International Standard
+console.log(future.toISOString()); // 2037-11-19T23:23:00.000Z
+
+// Timestamp: ms that have passed since UNIX time (Jan 1 1970 UTC)
+console.log(future.getTime()); // 2142285780000 - ms passed since UNIX time
+console.log(new Date(2142285780000)); // same date as future
+
+// Current timestamp
+console.log(Date.now());
+
+// Set Methods
+future.setFullYear(2040);
+console.log(future); // Mon Nov 19 2040 15:23:00
+// there is also, setMonth, setDate, etc...
+*/
