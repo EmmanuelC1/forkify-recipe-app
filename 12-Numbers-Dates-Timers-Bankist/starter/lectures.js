@@ -93,3 +93,90 @@ console.log((2.7).toFixed(3)); // '2.700' returns string
 console.log((2.345).toFixed(2)); // '2.35' returns string
 console.log(+(2.345).toFixed(2)); // 2.35, as a number because of type coercion (+)
 */
+
+/////////////////////////////////////////////////
+// Remainder Operator
+/*
+console.log(5 % 2); // 1
+console.log(8 % 3); // 2
+
+// Even or Odd
+console.log(6 % 2); // remainder = 0 -> even
+console.log(7 % 2); // remainder != 0 -> odd
+
+const isEven = n => n % 2 === 0;
+
+console.log(isEven(8)); // true
+console.log(isEven(9)); // false
+
+// practice (set grey color in alternating rows in movements section)
+labelBalance.addEventListener('click', function () {
+  [...document.querySelectorAll('.movements__row')].forEach(function (row, i) {
+    // every 2nd row (0, 2, 4, 6)
+    if (i % 2 === 0) row.style.backgroundColor = 'lightgrey';
+
+    // every 3rd row (0, 3, 6, 9)
+    if (i % 3 === 0) row.style.backgroundColor = 'lavender';
+  });
+});
+*/
+
+/////////////////////////////////////////////////
+// Numeric Separators (only allowed between numbers)
+/*
+// 287,460,000,000
+const solarSystemDiameter = 287_460_000_000; // underscores make large numbers readable, JS ignores them
+console.log(solarSystemDiameter); // 287460000000
+
+const priceCents = 345_99; // 345.99 is more readable now
+console.log(priceCents); // 34599
+
+const transferFee1 = 15_00; // 15.00
+const transferFee2 = 1_500; // 1,500
+
+// But both are actually just 1500
+console.log(transferFee1); // 1500
+console.log(transferFee2); // 1500
+
+// convert strings with numeric separators to numbers (NOT ALLOWED)
+console.log(Number('230_000')); // NaN
+console.log(parseInt('230_000')); // 230, wrong output
+*/
+
+/////////////////////////////////////////////////
+// BigInt
+/*
+// Biggest Number JS can represent as integer because of base 64
+// 53 bits used for storing actual value, the rest to store decimal places and sign (+, -)
+
+console.log(2 ** 53 - 1); // 9007199254740991 -> 9,007,199,254,740,991
+console.log(Number.MAX_SAFE_INTEGER); // 9007199254740991
+
+// in the case we need bigger numbers (ex. database IDs) we use BigInt
+
+// BigInt Numerical Literal (add 'n' to end of number) to store as BigInt
+console.log(546455892739875213875982359832569238472349724n); // 546455892739875213875982359832569238472349724n
+
+// Bigint function (no 'n') to store as BigInt
+console.log(BigInt(546455892739875)); // 546455892739875n
+
+// Operations (work the same)
+console.log(10000n + 10000n); // 20000n
+
+// Mixing BihInt with regular numbers (NOT ALLOWED)
+const huge = 897249870924873502n;
+const num = 23;
+console.log(huge * BigInt(num)); // 20636747031272090546n –– stored as BigInt
+// console.log(huge * num); // Error –– cant mix
+// console.log(Math.sqrt(16n)); // Error –– Math operations dont work with BigInt
+
+// Logical Operations
+console.log(20n > 15); // true
+console.log(20n === 20); // false
+
+// String concatination
+console.log(huge + ' is REALLY big!!!'); // '897249870924873502 is REALLY big!!!'
+
+// Division
+console.log(10n / 3n); // 3n –– returns closest BigInt
+*/
