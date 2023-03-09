@@ -50,8 +50,9 @@ const account2 = {
 };
 
 const accounts = [account1, account2];
+let accLoggedIn = {}; // stores logged in account object
+let isSorted = false; // preserves sorted state for btnSort
 
-/////////////////////////////////////////////////
 // Elements
 const labelWelcome = document.querySelector('.welcome');
 const labelDate = document.querySelector('.date');
@@ -78,176 +79,229 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-/////////////////////////////////////////////////
-// Functions
-
+// Displays Transactions. Adds HTML movements rows for each movement in a given arr, sort if needed (true)
 const displayMovements = function (movements, sort = false) {
+  // remove default container movements (hard coded movements in HTML file)
   containerMovements.innerHTML = '';
 
+  // Handle empty movements arr
+  if (movements.length === 0) return;
+
+  // if sort is true, copy movements arr (using slice) and sort copy. Otherwise, keeps using movements arr as is. Store in 'movs'
   const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
 
+  // append a movement row in movements div (container) for each movement in account (using movs, which has copy of sorted or unsorted arr)
   movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
+    //prettier-ignore
     const html = `
-      <div class="movements__row">
-        <div class="movements__type movements__type--${type}">${
-      i + 1
-    } ${type}</div>
-        <div class="movements__value">${mov}€</div>
-      </div>
-    `;
+    <div class="movements__row">
+      <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
+      <div class="movements__value">€ ${mov.toFixed(2)}</div>
+    </div>`;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
 
-const calcDisplayBalance = function (acc) {
-  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${acc.balance}€`;
+// Calculates balance for a given movements arr, and updated the Balance label
+const calcDisplayBalance = function (movements) {
+  accLoggedIn.balance = movements.reduce((sum, mov) => sum + mov, 0);
+  labelBalance.textContent = `€ ${accLoggedIn.balance.toFixed(2)}`;
 };
 
-const calcDisplaySummary = function (acc) {
-  const incomes = acc.movements
-    .filter(mov => mov > 0)
-    .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes}€`;
+// Calculates summary (money in, out and interest) for a given account and updates labels accordingly
+const calcDisplaySummary = function (currAcc) {
+  const inSummary = currAcc.movements
+    .filter(mov => mov > 0) // filter all deposits
+    .reduce((acc, mov) => acc + mov, 0); // add all deposits, return total
 
-  const out = acc.movements
-    .filter(mov => mov < 0)
-    .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(out)}€`;
+  const outSummary = currAcc.movements
+    .filter(mov => mov < 0) // filter all withdrawals
+    .reduce((acc, mov) => acc + mov, 0); // add all withdrawals, return total
 
-  const interest = acc.movements
-    .filter(mov => mov > 0)
-    .map(deposit => (deposit * acc.interestRate) / 100)
-    .filter((int, i, arr) => {
-      // console.log(arr);
-      return int >= 1;
-    })
-    .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${interest}€`;
+  const interestSummary = currAcc.movements
+    .filter(mov => mov > 0) // filter all deposits
+    .map(deposit => (deposit * currAcc.interestRate) / 100) // calc interest on each deposit
+    .filter(interest => interest >= 1) // bank only pays interest if it is at least 1 EUR
+    .reduce((acc, interest) => acc + interest, 0); // add all interest, return total
+
+  labelSumIn.textContent = `€${inSummary.toFixed(2)}`;
+  labelSumOut.textContent = `€${Math.abs(outSummary).toFixed(2)}`;
+  labelSumInterest.textContent = `€${interestSummary.toFixed(2)}`;
 };
 
-const createUsernames = function (accs) {
-  accs.forEach(function (acc) {
-    acc.username = acc.owner
-      .toLowerCase()
-      .split(' ')
-      .map(name => name[0])
-      .join('');
+// Creates username using first inital of each name and adding new 'username' property to acct object passed in
+const createUsernames = function (accts) {
+  accts.forEach(function (acct) {
+    acct.username = acct.owner // set 'username' property to...
+      .toLowerCase() // turn owner (name) all lowercase
+      .split(' ') // split each name in array
+      .map(name => name[0]) // map each name in array (first, middle, last) and only return the first char of each
+      .join(''); // join initals together
   });
 };
 createUsernames(accounts);
 
-const updateUI = function (acc) {
-  // Display movements
-  displayMovements(acc.movements);
-
-  // Display balance
-  calcDisplayBalance(acc);
-
-  // Display summary
-  calcDisplaySummary(acc);
+// Calls all display functions to update UI with correct info for current account signed in
+const updateUI = function (currAcc) {
+  // Display all updated info
+  displayMovements(currAcc.movements);
+  calcDisplayBalance(currAcc.movements);
+  calcDisplaySummary(currAcc);
 };
 
-///////////////////////////////////////
-// Event handlers
-let currentAccount;
+// Resets UI to default
+const hideUI = function () {
+  // Remove conatiner opacity
+  containerApp.style.opacity = 0;
 
+  // Change Welcome message back to default
+  labelWelcome.textContent = 'Login to get started';
+
+  // Reset 'accLoggedIn' object
+  accLoggedIn = {};
+};
+
+// Event Handlers
 btnLogin.addEventListener('click', function (e) {
-  // Prevent form from submitting
-  e.preventDefault();
+  e.preventDefault(); // Prevents form from submitting & reloading page
 
-  currentAccount = accounts.find(
-    acc => acc.username === inputLoginUsername.value
-  );
-  console.log(currentAccount);
+  // Retrieve account object, undefined if not found
+  accLoggedIn = accounts.find(acc => acc.username === inputLoginUsername.value); //prettier-ignore
 
-  if (currentAccount?.pin === Number(inputLoginPin.value)) {
-    // Display UI and message
+  // UNSUCCESFUL LOGIN (using optional chaining '?' to handle 'undefined' account obj)
+  if (accLoggedIn?.pin !== Number(inputLoginPin.value)) {
+    // Reset UI to login state
+    hideUI();
+
+    // Clear input fields & take focus off (cursor no longer is active on inputs once submitted)
+    inputLoginUsername.value = inputLoginPin.value = ''; // works because assignment operator works right to left
+    inputLoginUsername.blur();
+    inputLoginPin.blur(); // blur method takes focus off of cursor
+
+    // Display error message
+    alert('Wrong username or pin');
+
+    return;
+  } else {
+    // SUCCESSFUL LOGIN
+    // Add welcome message (first name only)
     labelWelcome.textContent = `Welcome back, ${
-      currentAccount.owner.split(' ')[0]
+      accLoggedIn.owner.split(' ')[0]
     }`;
-    containerApp.style.opacity = 100;
 
-    // Clear input fields
+    // Clear input fields & take focus off (cursor no longer is active once submitted)
     inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginUsername.blur();
     inputLoginPin.blur();
 
+    // Display container (opacity)
+    containerApp.style.opacity = 1;
+
     // Update UI
-    updateUI(currentAccount);
+    updateUI(accLoggedIn);
   }
 });
 
 btnTransfer.addEventListener('click', function (e) {
-  e.preventDefault();
-  const amount = Number(inputTransferAmount.value);
-  const receiverAcc = accounts.find(
+  e.preventDefault(); // prevent form from submitting and reloading page
+
+  // Retrieve input field values, find account object
+  const transferToAcc = accounts.find(
     acc => acc.username === inputTransferTo.value
   );
-  inputTransferAmount.value = inputTransferTo.value = '';
+  const transferAmount = Number(inputTransferAmount.value);
 
   if (
-    amount > 0 &&
-    receiverAcc &&
-    currentAccount.balance >= amount &&
-    receiverAcc?.username !== currentAccount.username
+    transferAmount > 0 && // amount is not negative or 0
+    transferToAcc && // transferToAcc is not undefined
+    accLoggedIn.balance >= transferAmount && // has enough funds to transfer
+    transferToAcc?.username !== accLoggedIn.username // user does not transfer to himself
   ) {
-    // Doing the transfer
-    currentAccount.movements.push(-amount);
-    receiverAcc.movements.push(amount);
-
-    // Update UI
-    updateUI(currentAccount);
+    // Complete transfer
+    accLoggedIn.movements.push(-transferAmount);
+    transferToAcc.movements.push(transferAmount);
+  } else {
+    // Error transferring
+    alert('Cannot complete transfer. Please make sure all information is correct.'); //prettier-ignore
   }
+
+  // Update UI
+  updateUI(accLoggedIn);
+
+  // Reset input fields
+  inputTransferTo.value = inputTransferAmount.value = '';
+  inputTransferTo.blur();
+  inputTransferAmount.blur();
 });
 
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = Number(inputLoanAmount.value);
+  const loanAmount = Math.floor(inputLoanAmount.value);
 
-  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    // Add movement
-    currentAccount.movements.push(amount);
+  // Loans only get approved if there is at least one deposit that is at least 10% of the requested loan amount
+  const isApproved = accLoggedIn.movements.some(mov => mov >= loanAmount * 0.1); // some returns true/false
+
+  if (loanAmount > 0 && isApproved) {
+    // Loan Approved
+    // Add loan to account
+    accLoggedIn.movements.push(loanAmount);
 
     // Update UI
-    updateUI(currentAccount);
+    updateUI(accLoggedIn);
+  } else {
+    // Loan Not Approved
+    alert('Bankist could not approve your requested loan.');
   }
+
+  // Reset input fields
   inputLoanAmount.value = '';
+  inputLoanAmount.blur();
 });
 
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
 
+  // Get input values
+  const confirmUsername = inputCloseUsername.value;
+  const confirmPin = Number(inputClosePin.value);
+
   if (
-    inputCloseUsername.value === currentAccount.username &&
-    Number(inputClosePin.value) === currentAccount.pin
+    confirmUsername === accLoggedIn.username && // user can only close their account, not someone else's
+    confirmPin === accLoggedIn.pin
   ) {
-    const index = accounts.findIndex(
-      acc => acc.username === currentAccount.username
+    // Close Account
+    // find index of current account in 'accounts' array, returns -1 if not found
+    const accIndex = accounts.findIndex(
+      acc => acc.username === accLoggedIn.username
     );
-    console.log(index);
-    // .indexOf(23)
 
-    // Delete account
-    accounts.splice(index, 1);
+    // remove account from 'accounts' array at 'accIndex'
+    accounts.splice(accIndex, 1);
 
-    // Hide UI
-    containerApp.style.opacity = 0;
+    // Logout user, and reset UI to login state
+    hideUI();
+
+    // alert user of successful account closure
+    alert('Success! Your account was succesfully closed and deleted.');
+  } else {
+    // Error closing account
+    alert('Error closing account. Wrong username or pin');
   }
 
+  // Reset input fields
   inputCloseUsername.value = inputClosePin.value = '';
+  inputCloseUsername.blur();
+  inputClosePin.blur();
 });
 
-let sorted = false;
 btnSort.addEventListener('click', function (e) {
   e.preventDefault();
-  displayMovements(currentAccount.movements, !sorted);
-  sorted = !sorted;
-});
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// LECTURES
+  // Sort movements
+  displayMovements(accLoggedIn.movements, !isSorted);
+  isSorted = !isSorted; // changing boolean to opposite (above just calls the opposite, does not actually change it)
+});
