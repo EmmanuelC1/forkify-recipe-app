@@ -21,9 +21,9 @@ const account1 = {
     '2020-01-28T09:15:04.904Z',
     '2020-04-01T10:17:24.185Z',
     '2020-05-08T14:11:59.604Z',
-    '2020-05-27T17:01:17.194Z',
-    '2020-07-11T23:36:17.929Z',
-    '2020-07-12T10:51:36.790Z',
+    '2023-03-05T17:01:17.194Z',
+    '2023-03-07T23:36:17.929Z',
+    '2023-03-09T10:51:36.790Z',
   ],
   currency: 'EUR',
   locale: 'pt-PT', // de-DE
@@ -42,8 +42,8 @@ const account2 = {
     '2020-01-25T14:18:46.235Z',
     '2020-02-05T16:33:06.386Z',
     '2020-04-10T14:43:26.374Z',
-    '2020-06-25T18:49:59.371Z',
-    '2020-07-26T12:01:20.894Z',
+    '2023-03-01T18:49:59.371Z',
+    '2023-03-03T12:01:20.894Z',
   ],
   currency: 'USD',
   locale: 'en-US',
@@ -79,12 +79,26 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+// Returns formatted date (MM/DD/YYYY) or if date <= 7 days ago return how many days ago
 const formatDate = function (date) {
-  const month = `${date.getMonth() + 1}`.padStart(2, 0);
-  const day = `${date.getDate()}`.padStart(2, 0);
-  const year = date.getFullYear();
+  // function returns how many days have passed since 'now' (when function is called)
+  const calcDaysPassed = (date1, date2) =>
+    Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
 
-  return `${month}/${day}/${year}`;
+  const daysPassed = calcDaysPassed(new Date(), date);
+
+  // return how many days ago
+  if (daysPassed === 0) return 'Today';
+  else if (daysPassed === 1) return 'Yesterday';
+  else if (daysPassed <= 7) return `${daysPassed} days ago`;
+  else {
+    // return formatted date (MM/DD/YYYY)
+    const month = `${date.getMonth() + 1}`.padStart(2, 0);
+    const day = `${date.getDate()}`.padStart(2, 0);
+    const year = date.getFullYear();
+
+    return `${month}/${day}/${year}`;
+  }
 };
 
 // Displays Transactions. Adds HTML movements rows for each movement in a given arr, sort if needed (true)

@@ -231,3 +231,17 @@ future.setFullYear(2040);
 console.log(future); // Mon Nov 19 2040 15:23:00
 // there is also, setMonth, setDate, etc...
 */
+
+/////////////////////////////////////////////////
+// Operations with Dates
+/*
+const future = new Date(2037, 3, 14);
+console.log(+future); // same as Number(future) because of type coercion with + operator
+
+const calcDaysPassed = (date1, date2) =>
+  Math.abs(date2 - date1) / (1000 * 60 * 60 * 24);
+
+// calc how many days have passed between Apr 14 and Apr 24
+const days1 = calcDaysPassed(future, new Date(2037, 3, 24));
+console.log(days1); // 10 days have passed between both dates
+*/
