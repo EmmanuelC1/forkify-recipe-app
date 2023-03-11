@@ -52,6 +52,15 @@ const account2 = {
 const accounts = [account1, account2];
 let accLoggedIn = {}; // stores logged in account object
 let isSorted = false; // preserves sorted state for btnSort
+const options = {
+  // options object for date and time formatting using Internationalization API
+  month: 'numeric',
+  day: 'numeric',
+  year: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+  hour12: true,
+};
 
 // Elements
 const labelWelcome = document.querySelector('.welcome');
@@ -80,7 +89,7 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 // Returns formatted date (MM/DD/YYYY) or if date <= 7 days ago return how many days ago
-const formatDate = function (date) {
+const formatDate = function (date, locale) {
   // function returns how many days have passed since 'now' (when function is called)
   const calcDaysPassed = (date1, date2) =>
     Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
@@ -92,12 +101,8 @@ const formatDate = function (date) {
   else if (daysPassed === 1) return 'Yesterday';
   else if (daysPassed <= 7) return `${daysPassed} days ago`;
   else {
-    // return formatted date (MM/DD/YYYY)
-    const month = `${date.getMonth() + 1}`.padStart(2, 0);
-    const day = `${date.getDate()}`.padStart(2, 0);
-    const year = date.getFullYear();
-
-    return `${month}/${day}/${year}`;
+    // return Internatinalized formatting based on user locale
+    return new Intl.DateTimeFormat(locale).format(date);
   }
 };
 
@@ -117,7 +122,7 @@ const displayMovements = function (acct, sort = false) {
   // append a movement row in movements div (container) for each movement in account (using movs, which has copy of sorted or unsorted arr)
   movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
-    const movDate = formatDate(new Date(acct.movementsDates[i]));
+    const movDate = formatDate(new Date(acct.movementsDates[i]), acct.locale);
     //prettier-ignore
     const html = `
     <div class="movements__row">
@@ -189,6 +194,12 @@ const hideUI = function () {
   accLoggedIn = {};
 };
 
+//FIXME ALWAYS LOGGED IN FOR DEVELOPMENT
+accLoggedIn = account1;
+updateUI(accLoggedIn);
+containerApp.style.opacity = 1;
+//FIXME ALWAYS LOGGED IN FOR DEVELOPMENT
+
 // Event Handlers
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault(); // Prevents form from submitting & reloading page
@@ -227,10 +238,12 @@ btnLogin.addEventListener('click', function (e) {
 
     // Create and display current Date and Time
     const now = new Date();
-    const date = formatDate(now);
-    const hour = now.getHours();
-    const min = `${now.getMinutes()}`.padStart(2, 0);
-    labelDate.textContent = `${date} ${hour}:${min}`;
+
+    // Internationalize Date based on user locale and Bankist format options
+    labelDate.textContent = new Intl.DateTimeFormat(
+      accLoggedIn.locale,
+      options
+    ).format(now);
 
     // Update UI
     updateUI(accLoggedIn);

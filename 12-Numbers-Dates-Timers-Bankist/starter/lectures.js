@@ -230,6 +230,12 @@ console.log(Date.now());
 future.setFullYear(2040);
 console.log(future); // Mon Nov 19 2040 15:23:00
 // there is also, setMonth, setDate, etc...
+
+// return formatted date (MM/DD/YYYY)
+const month = `${now.getMonth() + 1}`.padStart(2, 0);
+const day = `${now.getDate()}`.padStart(2, 0);
+const year = now.getFullYear();
+console.log(`${month}/${day}/${year}`);
 */
 
 /////////////////////////////////////////////////
@@ -244,4 +250,61 @@ const calcDaysPassed = (date1, date2) =>
 // calc how many days have passed between Apr 14 and Apr 24
 const days1 = calcDaysPassed(future, new Date(2037, 3, 24));
 console.log(days1); // 10 days have passed between both dates
+*/
+
+/////////////////////////////////////////////////
+// Internationalization for Dates
+/*
+const now = new Date();
+const locale = 'en-US'; // English-US
+const locale2 = 'pt-PT'; // Portuguese-Portugal
+const locale3 = 'de-DE'; // Deutch-Germany
+const locale4 = 'ar-SY'; // Arabic-Syria
+const localeFromBrowser = navigator.language;
+
+const options2 = {
+  month: 'long',
+  day: '2-digit',
+  year: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+  hour12: true,
+  weekday: 'long',
+};
+
+const formattedDate = new Intl.DateTimeFormat(locale, options2).format(now);
+console.log(formattedDate);
+
+// Internationalization for Numbers
+const num = 3884764.23;
+
+const numOptions = {
+  style: 'unit', // needs unit
+  unit: 'mile-per-hour',
+  // unit: 'celsius',
+
+  // style: 'percent', // unit gets ignored
+
+  // style: 'currency', // needs currency unit
+  // currency: 'EUR',
+  // useGrouping: true, // use separators?
+};
+
+console.log('Number to be formatted:', num); // 3884764.23
+console.log('US:', new Intl.NumberFormat(locale).format(num)); // US: 3,884,764.23
+console.log('Portugal:', new Intl.NumberFormat(locale2).format(num)); // Portugal: 3 884 764,23
+console.log('Germany:', new Intl.NumberFormat(locale3).format(num)); // Germany: 3.884.764,23
+console.log('Syria:', new Intl.NumberFormat(locale4).format(num)); // Syria: ٣٬٨٨٤٬٧٦٤٫٢٣
+console.log(
+  `Language from browser (${localeFromBrowser}):`,
+  new Intl.NumberFormat(localeFromBrowser).format(num)
+); // Language from browser (en-US): 3,884,764.23
+
+// Number with Options
+console.log('Number with unit option (mph):', num);
+console.log('US:', new Intl.NumberFormat(locale, numOptions).format(num)); // 3,884,764.23 mph
+//prettier-ignore
+console.log('Portugal:',new Intl.NumberFormat(locale2, numOptions).format(num)); // Portugal: 3 884 764,23 mi/h
+console.log('Germany:', new Intl.NumberFormat(locale3, numOptions).format(num)); // Germany: 3.884.764,23 mi/h
+console.log('Syria:', new Intl.NumberFormat(locale4, numOptions).format(num)); // Syria: ٣٬٨٨٤٬٧٦٤٫٢٣ ميل/س
 */
