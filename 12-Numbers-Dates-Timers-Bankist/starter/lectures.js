@@ -163,7 +163,7 @@ console.log(BigInt(546455892739875)); // 546455892739875n
 // Operations (work the same)
 console.log(10000n + 10000n); // 20000n
 
-// Mixing BihInt with regular numbers (NOT ALLOWED)
+// Mixing BigInt with regular numbers (NOT ALLOWED)
 const huge = 897249870924873502n;
 const num = 23;
 console.log(huge * BigInt(num)); // 20636747031272090546n –– stored as BigInt
