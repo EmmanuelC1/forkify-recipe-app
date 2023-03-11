@@ -155,7 +155,9 @@ function displayMovements(acct, sort = false) {
 
 // Calculates balance for a given movements arr, and updated the Balance label
 const calcDisplayBalance = function (acct) {
+  // Create balance property on account obj with the balance calculated by all the movements of that account
   acct.balance = acct.movements.reduce((sum, mov) => sum + mov, 0);
+  // update label
   labelBalance.textContent = formatCurrency(
     acct.balance,
     acct.locale,
@@ -167,7 +169,7 @@ const calcDisplayBalance = function (acct) {
 const calcDisplaySummary = function (acct) {
   const inSummary = acct.movements
     .filter(mov => mov > 0) // filter all deposits
-    .reduce((acct, mov) => acct + mov, 0); // add all deposits, return total
+    .reduce((sum, mov) => sum + mov, 0); // add all deposits, return total
 
   // update label
   labelSumIn.textContent = formatCurrency(
@@ -178,7 +180,7 @@ const calcDisplaySummary = function (acct) {
 
   const outSummary = acct.movements
     .filter(mov => mov < 0) // filter all withdrawals
-    .reduce((acct, mov) => acct + mov, 0); // add all withdrawals, return total
+    .reduce((sum, mov) => sum + mov, 0); // add all withdrawals, return total
 
   // update label
   labelSumOut.textContent = formatCurrency(
@@ -191,7 +193,7 @@ const calcDisplaySummary = function (acct) {
     .filter(mov => mov > 0) // filter all deposits
     .map(deposit => (deposit * acct.interestRate) / 100) // calc interest on each deposit
     .filter(interest => interest >= 1) // bank only pays interest if it is at least 1 EUR
-    .reduce((acct, interest) => acct + interest, 0); // add all interest, return total
+    .reduce((sum, interest) => sum + interest, 0); // add all interest, return total
 
   // update label
   labelSumInterest.textContent = formatCurrency(
