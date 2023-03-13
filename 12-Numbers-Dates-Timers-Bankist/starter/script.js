@@ -342,16 +342,18 @@ btnLoan.addEventListener('click', function (e) {
   ); // some returns true/false
 
   if (loanAmount > 0 && isApproved) {
-    // Loan Approved
-    // Add loan to account
-    acctLoggedIn.movements.push(loanAmount);
+    // Loan Approved (happens after 2.5 secs)
+    setTimeout(function () {
+      // Add loan to account
+      acctLoggedIn.movements.push(loanAmount);
 
-    // Add loan date
-    const loanDate = new Date().toISOString();
-    acctLoggedIn.movementsDates.push(loanDate);
+      // Add loan date
+      const loanDate = new Date().toISOString();
+      acctLoggedIn.movementsDates.push(loanDate);
 
-    // Update UI
-    updateUI(acctLoggedIn);
+      // Update UI
+      updateUI(acctLoggedIn);
+    }, 2500);
   } else {
     // Loan Not Approved
     alert('Bankist could not approve your requested loan.');

@@ -308,3 +308,27 @@ console.log('Portugal:',new Intl.NumberFormat(locale2, numOptions).format(num));
 console.log('Germany:', new Intl.NumberFormat(locale3, numOptions).format(num)); // Germany: 3.884.764,23 mi/h
 console.log('Syria:', new Intl.NumberFormat(locale4, numOptions).format(num)); // Syria: ٣٬٨٨٤٬٧٦٤٫٢٣ ميل/س
 */
+
+/////////////////////////////////////////////////
+// Timers: setTimeout and setInterval
+/*
+// setTimeout –– runs just once after a defined time
+const ingredients = ['bacon', 'spinach'];
+const pizzaTimer = setTimeout(
+  (ing1, ing2) => console.log(`Here is your Pizza 🍕 with ${ing1} and ${ing2}`),
+  3000, // 3000 ms = 3 secs
+  ...ingredients // arguments passed in callback
+);
+
+// setTimeout does NOT pause execution (async)
+console.log('Waiting...');
+
+// stop timer
+if (ingredients.includes('spinach')) clearTimeout(pizzaTimer);
+
+// setInterval –– keeps running forever until we stop it
+setInterval(() => {
+  const now = new Date();
+  console.log(now);
+}, 1000);
+*/
