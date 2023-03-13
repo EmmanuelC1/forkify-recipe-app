@@ -52,6 +52,7 @@ const account2 = {
 const accounts = [account1, account2];
 let acctLoggedIn = {}; // stores logged in account object
 let isSorted = false; // preserves sorted state for btnSort
+let timer; // stores current logout timer
 const dateTimeOptions = {
   // options object for date and time formatting using Internationalization API
   month: 'numeric',
@@ -235,11 +236,40 @@ const hideUI = function () {
   acctLoggedIn = {};
 };
 
-// //FIXME ALWAYS LOGGED IN FOR DEVELOPMENT
+const startLogOutTimer = function () {
+  // Set time to 5 mins
+  let time = 300;
+
+  const tick = () => {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+
+    // In each call, print remaining time to UI
+    labelTimer.textContent = `${min}:${sec}`;
+
+    // When time reaches 0, stop timer and logout user
+    if (time === 0) {
+      clearInterval(timer);
+      hideUI();
+    }
+
+    // Decrease timer
+    time--;
+  };
+  tick();
+
+  // Call tick() every second
+  const timer = setInterval(tick, 1000);
+
+  // used to clear prev timer
+  return timer;
+};
+
+//FIXME ALWAYS LOGGED IN FOR DEVELOPMENT
 // acctLoggedIn = account1;
 // updateUI(acctLoggedIn);
 // containerApp.style.opacity = 1;
-// //FIXME ALWAYS LOGGED IN FOR DEVELOPMENT
+//FIXME ALWAYS LOGGED IN FOR DEVELOPMENT
 
 // Event Handlers
 btnLogin.addEventListener('click', function (e) {
@@ -286,6 +316,10 @@ btnLogin.addEventListener('click', function (e) {
       dateTimeOptions
     ).format(now);
 
+    // Start logout timer
+    if (timer) clearInterval(timer); // clear prev timer
+    timer = startLogOutTimer(); // starts new timer for new user
+
     // Update UI
     updateUI(acctLoggedIn);
   }
@@ -317,13 +351,17 @@ btnTransfer.addEventListener('click', function (e) {
     // Add current date to each account movementsDates' array
     acctLoggedIn.movementsDates.push(transferDate);
     transferToAcct.movementsDates.push(transferDate);
+
+    // Update UI
+    updateUI(acctLoggedIn);
+
+    // Reset Timer
+    clearInterval(timer);
+    timer = startLogOutTimer();
   } else {
     // Error transferring
     alert('Cannot complete transfer. Please make sure all information is correct.'); //prettier-ignore
   }
-
-  // Update UI
-  updateUI(acctLoggedIn);
 
   // Reset input fields
   inputTransferTo.value = inputTransferAmount.value = '';
@@ -353,6 +391,10 @@ btnLoan.addEventListener('click', function (e) {
 
       // Update UI
       updateUI(acctLoggedIn);
+
+      // Reset Timer
+      clearInterval(timer);
+      timer = startLogOutTimer();
     }, 2500);
   } else {
     // Loan Not Approved
