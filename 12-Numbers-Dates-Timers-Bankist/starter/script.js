@@ -26,7 +26,7 @@ const account1 = {
     '2023-03-09T10:51:36.790Z',
   ],
   currency: 'EUR',
-  locale: 'pt-PT', // de-DE
+  locale: 'pt-PT',
 };
 
 const account2 = {
@@ -265,12 +265,7 @@ const startLogOutTimer = function () {
   return timer;
 };
 
-//FIXME ALWAYS LOGGED IN FOR DEVELOPMENT
-// acctLoggedIn = account1;
-// updateUI(acctLoggedIn);
-// containerApp.style.opacity = 1;
-//FIXME ALWAYS LOGGED IN FOR DEVELOPMENT
-
+///////////////////////////////////////////
 // Event Handlers
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault(); // Prevents form from submitting & reloading page
