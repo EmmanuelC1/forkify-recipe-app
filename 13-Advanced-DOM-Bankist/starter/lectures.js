@@ -101,7 +101,8 @@ logo.classList.contains('insertClassHere'); // not 'includes'
 */
 
 ///////////////////////////////////////
-// Smooth Scrolling (following code should be in 'click' event listener)
+// Smooth Scrolling
+// (following code should be in 'click' event listener)
 /*
 // Get section 1 coordinates
 const s1Coordinates = section1.getBoundingClientRect();
@@ -115,4 +116,29 @@ window.scrollTo({
   top: s1Coordinates.top + window.scrollY, // section 1 from top of page + current scroll position
   behavior: 'smooth', // smooth scrolling
 });
+*/
+
+///////////////////////////////////////
+// Types of Events and Event Handlers
+/*
+const h1 = document.querySelector('h1');
+
+const alertH1 = function (e) {
+  alert('addEventListener: Great! You are reading the heading.');
+
+  // Remove event listener (has to be using named function)
+  h1.removeEventListener('mouseenter', alertH1);
+};
+
+// Another way to listen to events (older version)
+// h1.onmouseenter = alertH1;
+
+// 'mouseenter' similar to hover in CSS (event happens when mouse 'enters' a selected element)
+h1.addEventListener('mouseenter', alertH1);
+ 
+// removes event listener after 3 seconds
+setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
+
+// Another way of Handling Events (NOT to be used)
+// <h1 onclick="alert('HTML alert'"> </h1>  // inline in html file itself 
 */
