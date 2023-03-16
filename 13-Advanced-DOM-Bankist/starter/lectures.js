@@ -116,6 +116,27 @@ window.scrollTo({
   top: s1Coordinates.top + window.scrollY, // section 1 from top of page + current scroll position
   behavior: 'smooth', // smooth scrolling
 });
+
+// Smooth Scrolling for Nav Links (anchor tags)
+// (Good Solution but not the most efficient, most efficient in script.js)
+
+const navLinks = document.querySelectorAll('.nav__link');
+navLinks.forEach(link =>
+  link.addEventListener('click', function (e) {
+    // ignore 'Open Account 'link, does not scroll instead opens modal
+    if (this.getAttribute('href') == '#') return;
+
+    // Prevent link to move to section and showing in URL
+    e.preventDefault();
+
+    const sectionID = this.getAttribute('href');
+
+    // Smooth Scrolling
+    document.querySelector(sectionID).scrollIntoView({
+      behavior: 'smooth',
+    });
+  })
+);
 */
 
 ///////////////////////////////////////
@@ -141,4 +162,40 @@ setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
 
 // Another way of Handling Events (NOT to be used)
 // <h1 onclick="alert('HTML alert'"> </h1>  // inline in html file itself 
+*/
+
+///////////////////////////////////////
+// Event Propagation in Practice
+// (notes in notes.js)
+/*
+// Generate random color rbg(255, 255, 255)
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
+
+console.log(randomColor());
+
+// Event Listeners
+document.querySelector('.nav__link').addEventListener('click', function (e) {
+  console.log('LINK', e.target, e.currentTarget);
+  console.log(e.currentTarget === this);
+  this.style.backgroundColor = randomColor();
+
+  // Stop Propagation (event wont happen in parent elements)
+  // e.stopPropagation(); 
+});
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  console.log('Container', e.target, e.currentTarget);
+  console.log(e.currentTarget === this);
+  this.style.backgroundColor = randomColor();
+});
+
+document.querySelector('.nav').addEventListener('click', function (e) {
+  console.log('Nav Bar', e.target, e.currentTarget);
+  console.log(e.currentTarget === this);
+  this.style.backgroundColor = randomColor();
+});
 */
