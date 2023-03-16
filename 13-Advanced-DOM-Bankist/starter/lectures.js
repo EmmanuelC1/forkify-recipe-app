@@ -99,3 +99,20 @@ logo.classList.contains('insertClassHere'); // not 'includes'
 // DONT use since it overrides all existing classes then only allows one
 // logo.className = 'emmanuel';
 */
+
+///////////////////////////////////////
+// Smooth Scrolling (following code should be in 'click' event listener)
+/*
+// Get section 1 coordinates
+const s1Coordinates = section1.getBoundingClientRect();
+
+// No smooth scrolling behavior
+window.scrollTo(s1Coordinates.left + window.scrollX, s1Coordinates.top + window.scrollY);
+
+// Smooth Scrolling (older version) -> newer version in script.js event listener
+window.scrollTo({
+  left: s1Coordinates.left + window.scrollX, // section 1 from left of page + current scroll position (horizontal scroll)
+  top: s1Coordinates.top + window.scrollY, // section 1 from top of page + current scroll position
+  behavior: 'smooth', // smooth scrolling
+});
+*/
