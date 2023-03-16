@@ -9,8 +9,8 @@ const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const navLinks = document.querySelector('.nav__links');
+const btnLearnMore = document.querySelector('.btn--scroll-to');
+const navLinkContainer = document.querySelector('.nav__links');
 const section1 = document.querySelector('#section--1');
 
 // Modal Window Functions
@@ -40,18 +40,18 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
-// Button Smooth Scrolling
-btnScrollTo.addEventListener('click', function () {
+// Smooth Scrolling (Learn more button)
+btnLearnMore.addEventListener('click', function () {
   // Modern Smooth Scrolling (only supported in modern browsers)
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
 // Page Navigation using Event Delegation (Nav bar links with smooth scrolling)
-navLinks.addEventListener('click', function (e) {
+navLinkContainer.addEventListener('click', function (e) {
   // Prevent link to move page to section and showing in URL
   e.preventDefault();
 
-  // Handle event only if link itself is clicked (not container –– 'nav__links')
+  // Handle event only if links inside container is clicked (not container itself -> 'nav__links')
   if (e.target.classList.contains('nav__link')) {
     // Get section ID from target element that was clicked (stored in href)
     const sectionID = e.target.getAttribute('href');

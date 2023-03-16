@@ -199,3 +199,47 @@ document.querySelector('.nav').addEventListener('click', function (e) {
   this.style.backgroundColor = randomColor();
 });
 */
+
+///////////////////////////////////////
+// DOM Traversing
+// (for this example, we are traversing the DOM relative to h1)
+/*
+const h1 = document.querySelector('h1');
+
+// Going Downwards (child elements)
+console.log(h1.querySelectorAll('.highlight')); // selects both span's with class 'highlight'
+console.log(h1.childNodes); // selects all child 'nodes' from h1, includes text, HTML comments, basically everything (NodeList)
+console.log(h1.children); // selects all child 'elements' from h1, includes only elements so span and br (HTMLCollection)
+
+h1.firstElementChild.style.color = 'white'; // only first element child gets color of white (first span in this case)
+h1.lastElementChild.style.color = 'orangered'; // only last element child gets color of white (second span in this case)
+
+// Going Upwards (parent elements)
+console.log(h1.parentNode); // div.header__title
+console.log(h1.parentElement); // div.header__title (in this case its the same for both because the parent element also happens to be the node)
+
+// parent element that is not a direct parent. Selecting closest '.header' to h1 and using a css variable to set new background color
+h1.closest('.header').style.background = 'var(--gradient-secondary)';
+h1.closest('h1').style.background = 'var(--gradient-primary)'; // selects itself, beacuse its the closest h1
+
+///////////
+// querySelector() finds children no matter how deep in the DOM tree
+// .closest() finds parents no matter how deep in DOM tree 
+//////////
+
+// Going Sideways (sibling elements) can only access direct siblings, previous and the next one.
+console.log(h1.previousElementSibling); // 'null', because its the first element and there is nothing before
+console.log(h1.nextElementSibling); // h4 element, after h1
+
+// selects 'nodes'
+console.log(h1.previousSibling); // #text
+console.log(h1.nextSibling); // #text
+
+// if we need all siblings (and not just prev and next), we move to up to parent element and select all its children form there
+console.log(h1.parentElement.children); // HTMLCollection [h1, h4, button, img]
+
+// lets change style to all siblings except itself (h1)
+[...h1.parentElement.children].forEach(el => {
+  if (el !== h1) el.style.transform = 'scale(0.5)'; // scale all elements 50% smaller except h1
+});
+*/
