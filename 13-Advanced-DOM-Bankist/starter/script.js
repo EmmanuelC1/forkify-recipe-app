@@ -5,13 +5,16 @@
 
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
-
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
 const btnLearnMore = document.querySelector('.btn--scroll-to');
 const navLinkContainer = document.querySelector('.nav__links');
 const section1 = document.querySelector('#section--1');
+
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
 
 // Modal Window Functions
 const openModal = function (e) {
@@ -62,4 +65,26 @@ navLinkContainer.addEventListener('click', function (e) {
     // Smooth Scrolling
     document.querySelector(sectionID).scrollIntoView({ behavior: 'smooth' });
   }
+});
+
+// Tabbed Component (Operations Section)
+tabsContainer.addEventListener('click', function (e) {
+  // Get tab that was clicked from tab container, uses closest() to get closest parent in the case that user clicked on span (number) inside button
+  const clickedEl = e.target.closest('.operations__tab');
+
+  // Ignore clicks on container (not tabs)
+  if (!clickedEl) return;
+
+  // Active tab (removes active class from all tabs, adds it to current tab clicked)
+  tabs.forEach(t => t.classList.remove('operations__tab--active'));
+  clickedEl.classList.add('operations__tab--active');
+
+  // Active Content (removes active class from all contents, adds it to current content selected)
+  tabsContent.forEach(content =>
+    content.classList.remove('operations__content--active')
+  );
+
+  document
+    .querySelector(`.operations__content--${clickedEl.dataset.tab}`) // select content by using data-tab attribute stored in .operations__tab button
+    .classList.add('operations__content--active');
 });
