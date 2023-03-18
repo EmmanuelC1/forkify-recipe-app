@@ -9,6 +9,7 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
 const btnLearnMore = document.querySelector('.btn--scroll-to');
+const nav = document.querySelector('.nav');
 const navLinkContainer = document.querySelector('.nav__links');
 const section1 = document.querySelector('#section--1');
 
@@ -88,3 +89,24 @@ tabsContainer.addEventListener('click', function (e) {
     .querySelector(`.operations__content--${clickedEl.dataset.tab}`) // select content by using data-tab attribute stored in .operations__tab button
     .classList.add('operations__content--active');
 });
+
+// Menu Fade Animation (nav bar)
+const menuFadeHandler = function (e) {
+  // event can still be used in handler function
+  // Ignore fade animation on Logo mouseover (only want nav links)
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link'); // select all siblings of 'link' which are the other nav links
+    const logo = link.closest('.nav').querySelector('img'); // select Bankist logo
+
+    // Change opacity of all siblings and logo to 'this', argument passed into function
+    siblings.forEach(el => {
+      if (el !== link) el.style.opacity = this; // 0.5 || 1
+    });
+    logo.style.opacity = this; // 0.5 || 1
+  }
+};
+
+// Passing 'arguments' to handler functions for Event Listeners (can be accessed using 'this')
+nav.addEventListener('mouseover', menuFadeHandler.bind(0.5));
+nav.addEventListener('mouseout', menuFadeHandler.bind(1));
