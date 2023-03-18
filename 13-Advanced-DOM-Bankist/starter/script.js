@@ -1,8 +1,6 @@
 'use strict';
 
-///////////////////////////////////////
-// Modal window
-
+// Selecting Elements
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
@@ -16,6 +14,8 @@ const section1 = document.querySelector('#section--1');
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
+
+const header = document.querySelector('.header');
 
 // Modal Window Functions
 const openModal = function (e) {
@@ -110,3 +110,21 @@ const menuFadeHandler = function (e) {
 // Passing 'arguments' to handler functions for Event Listeners (can be accessed using 'this')
 nav.addEventListener('mouseover', menuFadeHandler.bind(0.5));
 nav.addEventListener('mouseout', menuFadeHandler.bind(1));
+
+// Sticky Navigation Bar: using Intersection Observer API
+const stickyNav = function (entries) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+const navHeight = nav.getBoundingClientRect().height; // get Nav Height dynamically
+
+const observerOptions = {
+  root: null, // viewport
+  threshold: 0, // when header scrolls completely out of view in viewport
+  rootMargin: `-${navHeight}px`, // 90px margin outside of target element (header) (height of nav bar is 90px)
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, observerOptions);
+headerObserver.observe(header);

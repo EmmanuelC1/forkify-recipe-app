@@ -243,3 +243,38 @@ console.log(h1.parentElement.children); // HTMLCollection [h1, h4, button, img]
   if (el !== h1) el.style.transform = 'scale(0.5)'; // scale all elements 50% smaller except h1
 });
 */
+
+///////////////////////////////////////
+// Sticky Navigation Bar
+// using scrollEvent (bad perfomance because scrolling event is triggered too much)
+/*
+const initialCoords = section1.getBoundingClientRect();
+window.addEventListener('scroll', function () {
+  console.log(window.scrollY);
+
+  if (this.window.scrollY > initialCoords.top) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  }
+});
+*/
+
+///////////////////////////////////////
+// Intersection Observer API for sticky nav
+/*
+const observerCallback = function (entries, observer) {
+  entries.forEach(entry => {
+    console.log(entry);
+  });
+};
+
+const observerOptions = {
+  root: null, // the element that we want our target element to intersect (null is entire viewport)
+  threshold: [0, 0.2], // percentage of intersection at which the observer callback will be called
+  // 0% will trigger callback each time target element moves completely out of the view, and also enters the view (root = null)
+};
+
+const observer = new IntersectionObserver(observerCallback, observerOptions);
+observer.observe(section1); // Observing section1 element
+*/
