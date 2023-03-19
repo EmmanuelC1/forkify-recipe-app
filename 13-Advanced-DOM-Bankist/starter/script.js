@@ -18,6 +18,9 @@ const tabsContainer = document.querySelector('.operations__tab-container');
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContent = document.querySelectorAll('.operations__content');
 
+// Selects all images with the attribute 'data-src'
+const imgTargets = document.querySelectorAll('img[data-src]');
+
 // Modal Window Functions
 const openModal = function (e) {
   // Prevent a tag (link) to reset scroll to top of page
@@ -133,7 +136,6 @@ headerObserver.observe(header);
 // Reveal Sections as User Scrolls
 const revealSection = function (entries, observer) {
   const [entry] = entries;
-  console.log(entry);
   // If section is not intersecting, return and do not remove hidden class
   if (!entry.isIntersecting) return;
 
@@ -150,7 +152,40 @@ const revealSecOptions = {
 };
 
 const sectionObserver = new IntersectionObserver(revealSection);
+
+// observe each section
 allSections.forEach(function (section) {
-  sectionObserver.observe(section); // observe each section
+  sectionObserver.observe(section);
   section.classList.add('section--hidden'); // hide all sections to later reveal by scrolling
 });
+
+// Lazy Loading Images
+const loadingImg = function (entries, observer) {
+  const [entry] = entries;
+  // Do not load img if img is not intersecting
+  if (!entry.isIntersecting) return;
+
+  // Replace src with data-src (low res img with high-res img)
+  entry.target.src = entry.target.dataset.src;
+
+  // remove blur filter when new high-res img is done loading
+  // if we dont use an 'load' event listener, users on low internet connections will see a low-res
+  // img becaues its loading, this ensures blur filter is on until high-res img is fully loaded
+  entry.target.addEventListener('load', () =>
+    entry.target.classList.remove('lazy-img')
+  );
+
+  // Stop observering imgs
+  observer.unobserve(entry.target);
+};
+
+const imgOptions = {
+  root: null,
+  threshold: 0,
+  rootMargin: '200px', // load images before img is in view (do not want users to notice we are lazy loading)
+};
+
+const imgObserver = new IntersectionObserver(loadingImg, imgOptions);
+
+// observe each img
+imgTargets.forEach(img => imgObserver.observe(img));
