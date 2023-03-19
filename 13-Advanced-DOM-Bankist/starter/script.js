@@ -6,16 +6,17 @@ const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
-const btnLearnMore = document.querySelector('.btn--scroll-to');
+const header = document.querySelector('.header');
 const nav = document.querySelector('.nav');
 const navLinkContainer = document.querySelector('.nav__links');
+const btnLearnMore = document.querySelector('.btn--scroll-to');
+
+const allSections = document.querySelectorAll('.section');
 const section1 = document.querySelector('#section--1');
 
-const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
+const tabs = document.querySelectorAll('.operations__tab');
 const tabsContent = document.querySelectorAll('.operations__content');
-
-const header = document.querySelector('.header');
 
 // Modal Window Functions
 const openModal = function (e) {
@@ -128,3 +129,28 @@ const observerOptions = {
 
 const headerObserver = new IntersectionObserver(stickyNav, observerOptions);
 headerObserver.observe(header);
+
+// Reveal Sections as User Scrolls
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+  // If section is not intersecting, return and do not remove hidden class
+  if (!entry.isIntersecting) return;
+
+  // Reveal Section by removing hidden class, entry.target is current section at current scroll position
+  entry.target.classList.remove('section--hidden');
+
+  // stop observing section that was revealed already
+  observer.unobserve(entry.target);
+};
+
+const revealSecOptions = {
+  root: null,
+  threshold: 0.3,
+};
+
+const sectionObserver = new IntersectionObserver(revealSection);
+allSections.forEach(function (section) {
+  sectionObserver.observe(section); // observe each section
+  section.classList.add('section--hidden'); // hide all sections to later reveal by scrolling
+});
