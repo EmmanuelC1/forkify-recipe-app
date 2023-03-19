@@ -21,6 +21,11 @@ const tabsContent = document.querySelectorAll('.operations__content');
 // Selects all images with the attribute 'data-src'
 const imgTargets = document.querySelectorAll('img[data-src]');
 
+const slider = document.querySelector('.slider');
+const slides = document.querySelectorAll('.slide');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+
 // Modal Window Functions
 const openModal = function (e) {
   // Prevent a tag (link) to reset scroll to top of page
@@ -48,12 +53,14 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
+///////////////////////////////////////
 // Smooth Scrolling (Learn more button)
 btnLearnMore.addEventListener('click', function () {
   // Modern Smooth Scrolling (only supported in modern browsers)
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
+////////////////////////////////////
 // Page Navigation using Event Delegation (Nav bar links with smooth scrolling)
 navLinkContainer.addEventListener('click', function (e) {
   // Prevent link to move page to section and showing in URL
@@ -72,6 +79,7 @@ navLinkContainer.addEventListener('click', function (e) {
   }
 });
 
+///////////////////////////////////////
 // Tabbed Component (Operations Section)
 tabsContainer.addEventListener('click', function (e) {
   // Get tab that was clicked from tab container, uses closest() to get closest parent in the case that user clicked on span (number) inside button
@@ -94,6 +102,7 @@ tabsContainer.addEventListener('click', function (e) {
     .classList.add('operations__content--active');
 });
 
+///////////////////////////////////////
 // Menu Fade Animation (nav bar)
 const menuFadeHandler = function (e) {
   // event can still be used in handler function
@@ -115,6 +124,7 @@ const menuFadeHandler = function (e) {
 nav.addEventListener('mouseover', menuFadeHandler.bind(0.5));
 nav.addEventListener('mouseout', menuFadeHandler.bind(1));
 
+///////////////////////////////////////
 // Sticky Navigation Bar: using Intersection Observer API
 const stickyNav = function (entries) {
   const [entry] = entries;
@@ -133,6 +143,7 @@ const observerOptions = {
 const headerObserver = new IntersectionObserver(stickyNav, observerOptions);
 headerObserver.observe(header);
 
+///////////////////////////////////////
 // Reveal Sections as User Scrolls
 const revealSection = function (entries, observer) {
   const [entry] = entries;
@@ -156,9 +167,10 @@ const sectionObserver = new IntersectionObserver(revealSection);
 // observe each section
 allSections.forEach(function (section) {
   sectionObserver.observe(section);
-  section.classList.add('section--hidden'); // hide all sections to later reveal by scrolling
+  // section.classList.add('section--hidden'); // hide all sections to later reveal by scrolling
 });
 
+///////////////////////////////////////
 // Lazy Loading Images
 const loadingImg = function (entries, observer) {
   const [entry] = entries;
@@ -189,3 +201,48 @@ const imgObserver = new IntersectionObserver(loadingImg, imgOptions);
 
 // observe each img
 imgTargets.forEach(img => imgObserver.observe(img));
+
+///////////////////////////////////////
+// Slider Component
+let curSlide = 0; // current slide in view
+let maxSlide = slides.length - 1; // number of slides
+
+// transforms each slide left or right and puts 'slide' into view at position (0%)
+const goToSlide = function (slide) {
+  slides.forEach(
+    (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+  );
+};
+
+// Starting Position of Slider and slides (first slide in view at pos 0%)
+goToSlide(0);
+
+// Moves each slide right, unless it's the last slide, then resets to first slide
+const nextSlide = function () {
+  // If current slide is the last slide, reset curSlide to first (0)
+  if (curSlide === maxSlide) {
+    curSlide = 0;
+  } else {
+    // Else increment current slide
+    curSlide++;
+  }
+  // transform: translateX each slide into view 100 * (i - curSlide)%
+  goToSlide(curSlide);
+};
+
+// Moves each slide left, unless it's the first slide, then resets to last slide
+const prevSlide = function () {
+  // If current slide is the first slide, reset curSlide to last (maxSlide)
+  if (curSlide === 0) {
+    curSlide = maxSlide;
+  } else {
+    // Else decrement current slide
+    curSlide--;
+  }
+  // transform: translateX each slide into view 100 * (i - curSlide)%
+  goToSlide(curSlide);
+};
+
+// Left and Right Slider Button Event Listeners
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', prevSlide);
