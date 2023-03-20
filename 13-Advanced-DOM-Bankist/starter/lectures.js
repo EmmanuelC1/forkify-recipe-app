@@ -278,3 +278,40 @@ const observerOptions = {
 const observer = new IntersectionObserver(observerCallback, observerOptions);
 observer.observe(section1); // Observing section1 element
 */
+
+///////////////////////////////////////
+// Lifecycle DOM Events
+/*
+// DOM Content Loaded ––
+// this event is fired by the document as soon as the HTML is completely parsed, which means that the HTML has been downloaded and
+// converted to the DOM tree. Also, all scripts must be downloaded and executed before the DOM content loaded event can happen.
+// This event does not wait for images and other external resources, just HTML and JavaScriptneeds to be loaded
+
+document.addEventListener('DOMContentLoaded', function (e) {
+  console.log('HTML parsed and DOM tree built!', e);
+});
+
+// Load Event ––
+// this event is fired by the window as soon as not only the HTML is parsed, but also all the images and external resources like CSS files
+// are also loaded. So basically, when the whole page has finished loading.
+
+window.addEventListener('load', function (e) {
+  console.log('Page fully loaded', e);
+});
+
+// Before Unload Event ––
+// this event is created immediately before a user is about to leave a page. For example, after clicking close button in the browser tab.
+// We can use this event listener to ask users if they really want to leave the page.
+
+window.addEventListener('beforeunload', function (e) {
+  e.preventDefault(); // chrome does not need this, but some other browsers do
+
+  console.log(e);
+  e.returnValue = ''; // display leaving confirmation
+});
+*/
+
+///////////////////////////////////////
+// Efficient Script Loading: defer and async
+// Different ways to add script tag to HTML –– provides different ways the JS file is fetched (downloaded and executed)
+// explanetion in notes.js
