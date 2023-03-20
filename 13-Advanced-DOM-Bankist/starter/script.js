@@ -25,6 +25,7 @@ const slider = document.querySelector('.slider');
 const slides = document.querySelectorAll('.slide');
 const btnLeft = document.querySelector('.slider__btn--left');
 const btnRight = document.querySelector('.slider__btn--right');
+const dotsContainer = document.querySelector('.dots');
 
 // Modal Window Functions
 const openModal = function (e) {
@@ -167,7 +168,7 @@ const sectionObserver = new IntersectionObserver(revealSection);
 // observe each section
 allSections.forEach(function (section) {
   sectionObserver.observe(section);
-  // section.classList.add('section--hidden'); // hide all sections to later reveal by scrolling
+  section.classList.add('section--hidden'); // hide all sections to later reveal by scrolling
 });
 
 ///////////////////////////////////////
@@ -207,15 +208,37 @@ imgTargets.forEach(img => imgObserver.observe(img));
 let curSlide = 0; // current slide in view
 let maxSlide = slides.length - 1; // number of slides
 
+// Creates dots for slider
+const createDots = function () {
+  // inserts dot buttons before the end of dot container inside slider container with data-slide set to each slide
+  slides.forEach((_, i) => {
+    dotsContainer.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dots__dot" data-slide="${i}"></button>`
+    );
+  });
+};
+
+// Adds active class to dot representing current slide
+const activateDots = function (slide) {
+  // select all dots and remove active class for all of them
+  dotsContainer
+    .querySelectorAll('.dots__dot')
+    .forEach(dot => dot.classList.remove('dots__dot--active'));
+
+  // select current slide dot and add active class
+  document
+    .querySelector(`.dots__dot[data-slide="${slide}"]`)
+    .classList.add('dots__dot--active');
+};
+
 // transforms each slide left or right and puts 'slide' into view at position (0%)
 const goToSlide = function (slide) {
   slides.forEach(
     (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
   );
+  activateDots(slide);
 };
-
-// Starting Position of Slider and slides (first slide in view at pos 0%)
-goToSlide(0);
 
 // Moves each slide right, unless it's the last slide, then resets to first slide
 const nextSlide = function () {
@@ -243,6 +266,28 @@ const prevSlide = function () {
   goToSlide(curSlide);
 };
 
-// Left and Right Slider Button Event Listeners
+// Initalizae all functions with first slide
+const init = function () {
+  createDots();
+  goToSlide(0); // Starting Position of Slider and slides (first slide in view at pos 0%)
+};
+init();
+
+// Right and Left Slider Button Event Listeners
 btnRight.addEventListener('click', nextSlide);
 btnLeft.addEventListener('click', prevSlide);
+
+// Right and Left Keyboard Arrows Event Listeners
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') nextSlide();
+  if (e.key === 'ArrowLeft') prevSlide();
+});
+
+// Dot Event Listeners (Event Delegation)
+dotsContainer.addEventListener('click', function (e) {
+  // only handle if dots are clicked not container
+  if (e.target.classList.contains('dots__dot')) {
+    const { slide } = e.target.dataset; // get slide # from data-slide attr in button (using desctructuring with same name 'slide')
+    goToSlide(slide);
+  }
+});
