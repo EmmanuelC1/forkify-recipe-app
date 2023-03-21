@@ -72,4 +72,31 @@
             
             • The 4 pillars of OOP are still valid and important in portotypal inheritance. 
                 (Abstraction, Encapsulation, Inheritance, and Polymorphism)
+
+    How Prototypal Inheritance/Delegation Works
+        • Each constructor function has a prototype property which is an object, and inside that object we define methods.
+            - Constructor Function [ Person() ] ––– (.prototype) –––> Prototype [ Person.prototype [ calcAge: function ]]
+        • Person.prototype itself has a reference back to Person, which is the constructor property.
+
+        –– The new Operator
+            1. An empty object is created instantly
+            2. 'this' in constructor function call is set to the new object
+            3. The new object is linked (.__proto__ property) to the constructor function's prototype property (Person.prototype)
+                Methods aren't visible inside object so when we call a method and it cant find it, it uses prototypal inheritance
+                to look at Person.prototype for the method, since it was linked to .__proto__
+            4. The new object is returned from the constructor function call
+
+        • The ability to look up methods and properties is called the prototype chain.
+        • This is how it works with function constructors and ES6 classes, but not using Object.create()
+
+    The Prototype Chain
+        • Series of links between objects linked through prototypes (similar to scope chain)
+        • Since Person.prototype is also an object, it has its own .__proto__ property that is linked to Object.Protoype which was created by
+            the built-in Object() constructor function. This constructor function is called behind the scenes whenwe write an object literal.
+        • Object.prototype is usually the top of the chain which means that its .__proto__ property will point to null.
+
+        • When we create a new Person object and use 'emmanuel.hasOwnProperty('name')' it will first look up '.hasOwnProperty' property in the Person
+            object, then in the Person.prototype, but not find it in either since we never defined that property or method. Then it will go check 
+            Object.prototype, where it will find it and call it. Object.prototype has a lot of built-in methods. 'emmanuel' object simply inherited 
+            this method from its parent prototypes and looked it up using the prototype chain.
 */

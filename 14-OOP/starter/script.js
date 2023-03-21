@@ -59,3 +59,37 @@ console.log(jonas.species);
 // check for properties
 console.log(emmanuel.hasOwnProperty('firstName')); // true
 console.log(emmanuel.hasOwnProperty('species')); // false
+
+/////////////////////////////////////////////////
+// Prototypal Inheritance on Built-In Objects
+
+console.log(emmanuel.__proto__); // Shows Perons.prototype
+console.log(emmanuel.__proto__.__proto__); // Shows Object.prototype (top of prototype chain)
+console.log(emmanuel.__proto__.__proto__.__proto__); // null
+
+console.dir(Person.prototype.constructor); // constructor itself
+
+// Arrays
+const arr = [3, 6, 6, 5, 6, 9, 9]; // same as using 'new Array'
+console.log(arr.__proto__); // shows all array methods inherited
+console.log(arr.__proto__ === Array.prototype); // true
+
+console.log(arr.__proto__.__proto__); // shows Object.prototype (top of prototype chain)
+
+// Creating a new method to the prototype that all arrays can inherit
+// Generally not a good idea, in the case that JS update has a new method with the same name
+Array.prototype.unique = function () {
+  // Method returns all unique elements of an array
+  return [...new Set(this)];
+};
+
+console.log(arr.unique()); // [3, 6, 5, 9]
+
+// more built-in objects
+const h1 = document.querySelector('h1');
+
+// all DOM elements are objects
+console.dir(h1); // shows all properties and methods
+
+// functions are also objects
+console.dir(x => x + 1);
