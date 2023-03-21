@@ -2,7 +2,7 @@
 
 /////////////////////////////////////////////////
 // Constructor Functions and the 'new' Operator
-
+/*
 const Person = function (firstName, birthYear) {
   // Instance Properties
   this.firstName = firstName;
@@ -93,3 +93,4 @@ console.dir(h1); // shows all properties and methods
 
 // functions are also objects
 console.dir(x => x + 1);
+*/
