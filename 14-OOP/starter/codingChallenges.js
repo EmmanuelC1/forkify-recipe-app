@@ -18,7 +18,7 @@
     • Data car 1: 'BMW' going at 120 km/h 
     • Data car 2: 'Mercedes' going at 95 km/h
 */
-
+/*
 // Task 1:
 const Car = function (make, speed) {
   this.make = make;
@@ -47,3 +47,4 @@ bmw.brake();
 mercedes.accelerate();
 mercedes.accelerate();
 mercedes.brake();
+*/

@@ -1,13 +1,13 @@
 /*
     What is Object-Oriented Programming (OOP)?
-        • Object-Oriented Programming (OOP) is a programming based on the concept of objects.
-        • We use objects to model (describe) real-wordl or abstract features.
-        • Objects may contain data (properties) and code (methods). By using objects, we packdata and the 
+        • Object-Oriented Programming (OOP) is a programming paradigm based on the concept of objects.
+        • We use objects to model (describe) real-world or abstract features.
+        • Objects may contain data (properties) and code (methods). By using objects, we pack data and the 
             corresponding behavior into one block.
         • In OOP, objects are self-contained pieces/blocks of code.
         • Objects are building blocks of applications, and interact with one another.
-        • Interactions happen through a public interface (API): methods that the code outside of the object
-             can access and use to communicate with the object.
+        • Interactions happens through a public interface (API): methods that the code outside of the object
+            can access and use to communicate with the object.
 
     Classes and Instances (Traditional OOP)
         • You can think of Classes as a blueprint which we can create new objects based on the rules
@@ -43,7 +43,7 @@
     OOP in JavaScript: Prototypes
         • 'Classical OOP': Classes
             - Class -> Instance
-            - Objects (instances) are 'instantiated' from a class, which functions like a blueprint.
+            - Objects (instances) are 'instantiated' from a class, with functions like a blueprint.
 
         • OOP in JS: Prototypes
             - Prototype <- Object
@@ -51,7 +51,7 @@
             - Prototypal Inheritance/Delegation: the prototype contains methods (behavior) that are accessible to all objects linked to that prototype.
             - Methods are delegated to the linked prototye object.
 
-            - For Example, using array methods, we are using prototypal inheritance. An array is an prototype object, and the method is inherited.
+            - For Example, using array methods, we are using prototypal inheritance. An array is an prototype object, and the methods are inherited.
 
         • 3 Ways of Implementing Prototypal Inheritance in JavaScript
             How do we actually create prototypes? How do we link objects to prototypes? How can we create new objects, without having classes?
@@ -67,18 +67,18 @@
                 - ES6 classes do NOT behave like classes in 'Classical OOP'.
 
             3. Object.create()
-                - The easiest and most straight-forward  wau of linking an objdect to a portotype object.
+                - The easiest and most straight-forward  way of linking an object to a prototype object.
                 - Not as used as the previous two.
             
-            • The 4 pillars of OOP are still valid and important in portotypal inheritance. 
+            • The 4 pillars of OOP are still valid and important in prototypal inheritance. 
                 (Abstraction, Encapsulation, Inheritance, and Polymorphism)
 
     How Prototypal Inheritance/Delegation Works
-        • Each constructor function has a prototype property which is an object, and inside that object we define methods.
+        • Each constructor function has a prototype property, which is an object, and inside that object we define methods.
             - Constructor Function [ Person() ] ––– (.prototype) –––> Prototype [ Person.prototype [ calcAge: function ]]
         • Person.prototype itself has a reference back to Person, which is the constructor property.
 
-        –– The new Operator
+        –– The 'new' Operator
             1. An empty object is created instantly
             2. 'this' in constructor function call is set to the new object
             3. The new object is linked (.__proto__ property) to the constructor function's prototype property (Person.prototype)
@@ -92,7 +92,7 @@
     The Prototype Chain
         • Series of links between objects linked through prototypes (similar to scope chain)
         • Since Person.prototype is also an object, it has its own .__proto__ property that is linked to Object.Protoype which was created by
-            the built-in Object() constructor function. This constructor function is called behind the scenes whenwe write an object literal.
+            the built-in Object() constructor function. This constructor function is called behind the scenes when we write an object literal.
         • Object.prototype is usually the top of the chain which means that its .__proto__ property will point to null.
 
         • When we create a new Person object and use 'emmanuel.hasOwnProperty('name')' it will first look up '.hasOwnProperty' property in the Person

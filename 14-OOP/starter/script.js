@@ -94,3 +94,44 @@ console.dir(h1); // shows all properties and methods
 // functions are also objects
 console.dir(x => x + 1);
 */
+
+/////////////////////////////////////////////////
+// ES6 Classes
+/*
+// Class Expression
+// const PersonClass = class {};
+
+// Class Declaration
+class PersonClass {
+  constructor(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
+
+  // Methods (will be added to .prototype property of the class, not objects themselves)
+  calcAge() {
+    console.log(2023 - this.birthYear);
+  }
+
+  greet() {
+    console.log(`Hey ${this.firstName}`);
+  }
+}
+
+const jessica = new PersonClass('Jessica', 1990);
+console.log(jessica);
+jessica.calcAge();
+
+console.log(jessica.__proto__ === PersonClass.prototype); // true
+
+// Adding method to prototype manually
+// PersonClass.prototype.greet = function () {
+//   console.log(`Hey ${this.firstName}`);
+// };
+
+jessica.greet();
+
+// 1. Classes are NOT hoisted, even class if they are class declarations (cannot use before declaration)
+// 2. Classes are first-class citizens (we can pass them into functions, and return them from functions)
+// 3. Classes are executes in strict mode
+*/
