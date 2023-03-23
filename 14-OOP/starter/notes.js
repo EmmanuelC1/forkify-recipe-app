@@ -99,4 +99,8 @@
             object, then in the Person.prototype, but not find it in either since we never defined that property or method. Then it will go check 
             Object.prototype, where it will find it and call it. Object.prototype has a lot of built-in methods. 'emmanuel' object simply inherited 
             this method from its parent prototypes and looked it up using the prototype chain.
+
+    How Object.create() Works
+        • We can set the prototype of objects manually to any object we want. (We manually set the steven object to the PersonProto prototype in script.js)
+            With 'const steven = Object.create(PersonProto);' we effectively set the .__proto__ property for steven to PersonProto property
 */

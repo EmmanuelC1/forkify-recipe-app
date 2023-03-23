@@ -239,3 +239,35 @@ PersonGetterSetterClass.hey();
 // not available on instances
 // manny.hey(); // error
 */
+
+/////////////////////////////////////////////////
+// Object.create()
+
+const PersonProto = {
+  calcAge() {
+    console.log(2023 - this.birthYear);
+  },
+
+  // not constructor function beacuse we dont use the 'new' Operator
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steven = Object.create(PersonProto);
+console.log(steven); // {}
+console.log(steven.__proto__); // {calcAge}
+
+steven.firstName = 'Steven';
+steven.birthYear = 2002;
+
+console.log(steven); // {name: 'Steven', birthYear: 2002}
+steven.calcAge(); // 21
+
+console.log(steven.__proto__ === PersonProto); // true
+
+const sarah = Object.create(PersonProto);
+sarah.init('Sarah', 1979);
+sarah.calcAge(); // 44
+console.log(sarah); // {name: 'Sarah', birthYear: 1979}
