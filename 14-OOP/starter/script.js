@@ -135,3 +135,107 @@ jessica.greet();
 // 2. Classes are first-class citizens (we can pass them into functions, and return them from functions)
 // 3. Classes are executes in strict mode
 */
+
+/////////////////////////////////////////////////
+// Getters and Setters
+/*
+// Objects
+const account = {
+  owner: 'emmanuel',
+  movements: [200, 530, 120, 300],
+
+  // Getters
+  get latest() {
+    return this.movements.slice(-1).pop();
+  },
+
+  // Setters
+  set latest(mov) {
+    this.movements.push(mov);
+  },
+};
+
+// GETTER dont call the method, use it as a property
+console.log(account.latest); // 300
+
+// SETTER dont call the method, use it as a property
+account.latest = 50;
+console.log(account.movements); // [200, 530, 120, 300, 50]
+
+// Clasess
+class PersonGetterSetterClass {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+
+  // Instance Methods (will be added to .prototype property)
+  calcAge() {
+    console.log(2023 - this.birthYear);
+  }
+
+  greet() {
+    console.log(`Hey ${this.fullName}`);
+  }
+
+  // Setters
+
+  // setting a property that already exists
+  set fullName(name) {
+    // to avoid a naming conflict where JS tries to set 'fullName' property in both constructor and setter
+    // we use a naming convention on the property adding a '_' before property. This creates a new property
+    // so this is a work around, not a solution (we also have to set a getter for this new property)
+    if (name.includes(' ')) this._fullName = name;
+    else console.log(`${name} is not a full name.`);
+  }
+
+  // Getters
+  get fullname() {
+    return this._fullName;
+  }
+
+  get age() {
+    return 2023 - this.birthYear;
+  }
+
+  // Static Method
+  static hey() {
+    console.log('Hey there! 👋');
+    console.log(this); // this = entire class
+  }
+}
+
+const manny = new PersonGetterSetterClass('Emmanuel Castillo', 1997);
+
+const walt = new PersonGetterSetterClass('Walter', 1965);
+
+/////////////////////////////////////////////////
+// Static Methods
+
+// .from method converts any (array like) iterable object to an actual array
+Array.from(document.querySelectorAll('h1')); // returns nodeList
+
+// .from method is attached to the Array constructor, so we could not use the .from methods on an array
+// [1, 2, 3].from(); // will not work since arrays dont inherit this method
+// ".from method is in the Array name space"
+
+// Adding a Static Method to constructor functions (top of the file)
+
+// Person.hey = function () {
+//   console.log('Hey there! 👋');
+//   console.log(this); // this = entire contructor function
+// };
+
+// // calling static method (not inherited)
+// Person.hey();
+
+// NOT inherited by objects
+// emmanuel.hey(); // error
+
+// Adding Static Method to ES6 Classes
+// (above in PersonGetterSetterClass declaration)
+PersonGetterSetterClass.hey();
+
+// not available on instances
+// manny.hey(); // error
+*/
