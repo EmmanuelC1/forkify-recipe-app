@@ -242,7 +242,7 @@ PersonGetterSetterClass.hey();
 
 /////////////////////////////////////////////////
 // Object.create()
-
+/*
 const PersonProto = {
   calcAge() {
     console.log(2023 - this.birthYear);
@@ -271,3 +271,50 @@ const sarah = Object.create(PersonProto);
 sarah.init('Sarah', 1979);
 sarah.calcAge(); // 44
 console.log(sarah); // {name: 'Sarah', birthYear: 1979}
+*/
+
+/////////////////////////////////////////////////
+// Inheritance Between "Classes": Constructor Functions
+/*
+// Person Class using Constructor Function
+const PersonConstructorFunction = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+
+// Add Person method calcAge()
+PersonConstructorFunction.prototype.calcAge = function () {
+  console.log(2023 - this.birthYear);
+};
+
+// Add Person property 'species'
+PersonConstructorFunction.prototype.species = 'Homo Sapiens';
+
+// Student class (constructor function)
+const Student = function (firstName, birthYear, course) {
+  // using call to specify 'this' keyword in PersonConstructorFunction
+  PersonConstructorFunction.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+// Make Student class a child class of PersonConstructorFunction class
+// We have to link prototypes here before we create any more Student methods
+Student.prototype = Object.create(PersonConstructorFunction.prototype);
+
+// Add Student methods introduce()
+Student.prototype.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+// Create new Student Object
+const mike = new Student('Mike', 1999, 'Computer Science');
+
+mike.introduce(); // My name is Mike and I study Computer Science (from student class)
+mike.calcAge(); // 24 (inherited from Person class)
+console.log(mike.species); // Homo Sapiens (inherited from Person class)
+console.log(mike.hasOwnProperty('course')); // true ('hasOwnProperty' method inherited from top of prototype chain Object.prototype)
+
+console.log(mike instanceof Student); // true
+console.log(mike instanceof PersonConstructorFunction); // true
+console.log(mike instanceof Object); // true
+*/
