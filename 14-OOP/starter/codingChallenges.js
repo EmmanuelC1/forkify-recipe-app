@@ -2,7 +2,6 @@
 
 /////////////////////////////////////////////////
 // Coding Challenge #1
-
 /*
   Your tasks: 
   1. Use a constructor function to implement a 'Car'. A car has a 'make' and a 'speed' property. The 'speed' property is the current 
@@ -28,25 +27,27 @@ const Car = function (make, speed) {
 // Task 2:
 Car.prototype.accelerate = function () {
   this.speed += 10;
-  console.log(`Accelarating. ${this.make} is going at ${this.speed} km/h.`);
+  console.log(`${this.make} is going at ${this.speed} km/h.`);
 };
 
 // Task 3:
 Car.prototype.brake = function () {
   this.speed -= 5;
-  console.log(`Braking. ${this.make} is going at ${this.speed} km/h.`);
+  console.log(`${this.make} is going at ${this.speed} km/h.`);
 };
 
 // Task 4:
 const bmw = new Car('BMW', 120);
 const mercedes = new Car('Mercedes', 95);
 
-bmw.accelerate();
-bmw.brake();
+console.log(bmw);
+bmw.accelerate(); // BMW is going at 130 km/h.
+bmw.brake(); //BMW is going at 125 km/h.
 
-mercedes.accelerate();
-mercedes.accelerate();
-mercedes.brake();
+console.log(mercedes);
+mercedes.accelerate(); // Mercedes is going at 105 km/h.
+mercedes.accelerate(); // Mercedes is going at 115 km/h.
+mercedes.brake(); // Mercedes is going at 110 km/h.
 */
 
 /////////////////////////////////////////////////
@@ -110,4 +111,59 @@ ford.brake(); // Ford is going at 140 km/h
 ford.speedUS = 65;
 console.log(ford.speedUS); // 65
 console.log(ford); // {make: 'Ford', speed: 104}
+*/
+
+/////////////////////////////////////////////////
+// Coding Challenge #3
+/*
+  –– Uses code from Coding Challenge #1 
+
+  Your tasks: 
+  1. Use a constructor function to implement an Electric Car (called 'EV') as a child "class" of 'Car'. Besides a make and current 
+    speed, the 'EV' also has the current battery charge in % ('charge' property) 
+
+  2. Implement a 'chargeBattery' method which takes an argument 'chargeTo' and sets the battery charge to 'chargeTo' 
+
+  3. Implement an 'accelerate' method that will increase the car's speed by 20, and decrease the charge by 1%. Then log a message 
+    like this: 'Tesla going at 140 km/h, with a charge of 22%' 
+
+  4. Create an electric car object and experiment with calling 'accelerate', 'brake' and 'chargeBattery' (charge to 90%). Notice what 
+  happens when you 'accelerate'! Hint: Review the definiton of polymorphism 😉 
+
+  Test data: 
+  • Data car 1: 'Tesla' going at 120 km/h, with a charge of 23%
+*/
+/*
+// Task 1
+const EV = function (make, speed, charge) {
+  Car.call(this, make, speed);
+  this.charge = charge;
+};
+
+// Making EV child class of Car
+EV.prototype = Object.create(Car.prototype);
+
+// Task 2
+EV.prototype.chargeBattery = function (chargeTo) {
+  this.charge = chargeTo;
+  console.log(`${this.make}'s battery was charged to ${this.charge}%`);
+};
+
+// Task 3: Method Overriding (Polymorphism)
+EV.prototype.accelerate = function () {
+  this.speed += 20;
+  this.charge--;
+  console.log(
+    `${this.make} is going at ${this.speed} km/h, with a charge of ${this.charge}%`
+  );
+};
+
+// Task 4
+const tesla = new EV('Tesla', 120, 23);
+console.log(tesla);
+
+tesla.accelerate(); // Tesla is going at 140 km/h, with a charge of 22%
+tesla.accelerate(); // Tesla is going at 160 km/h, with a charge of 21%
+tesla.brake(); // Tesla is going at 155 km/h.
+tesla.chargeBattery(90); // Tesla's battery was charged to 90%
 */
