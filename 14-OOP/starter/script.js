@@ -318,3 +318,107 @@ console.log(mike instanceof Student); // true
 console.log(mike instanceof PersonConstructorFunction); // true
 console.log(mike instanceof Object); // true
 */
+
+/////////////////////////////////////////////////
+// Inheritance Between "Classes": ES6 Classes
+/*
+// Person Class (ES6 Classes)
+class PersonCl {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+
+  // Instance Methods
+  calcAge() {
+    console.log(2023 - this.birthYear);
+  }
+
+  greet() {
+    console.log(`Hey ${this.fullName}`);
+  }
+
+  // Setter
+  set fullName(name) {
+    if (name.includes(' ')) this._fullName = name;
+    else console.log(`${name} is not a full name.`);
+  }
+
+  // Getter
+  get age() {
+    return 2023 - this.birthYear;
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
+
+  // Static Method
+  static hey() {
+    console.log('Hey there 👋');
+  }
+}
+
+// Student Class (ES6 Classes)
+// 'extends' keyword links StudentCl prototype to PersonCl prototype (no need to do it manually w/ Object.create() like with constructor functions)
+class StudentCl extends PersonCl {
+  constructor(fullName, birthYear, course) {
+    super(fullName, birthYear); // calls the constructor function of Parent class (ALWAYS needs to be first!)
+    this.course = course;
+  }
+
+  // Instance Methods
+  introduce() {
+    console.log(`My name is ${this.fullName} and I study ${this.course}`);
+  }
+
+  // Override Method (Polymorphism)
+  calcAge() {
+    console.log(`I'm ${2023 - this.birthYear} years old.`);
+  }
+}
+
+const mariah = new StudentCl('Mariah Torres', 1999, 'Cosmetology');
+console.log(mariah);
+mariah.introduce();
+mariah.calcAge();
+*/
+
+/////////////////////////////////////////////////
+// Inheritance Between "Classes": Object.create()
+/*
+// Person prototype object for Person class
+const PersonProto2 = {
+  calcAge() {
+    console.log(2023 - this.birthYear);
+  },
+
+  // serves as a constructor but not a constructor since we dont use 'new' Operator for objects
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+// Student prototype for Student class (empty object for now) but makes PersonProto2 parent of StudentProto
+const StudentProto = Object.create(PersonProto2);
+
+// init Method for StudentProto
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto2.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+// introduce Method for StudentProto
+StudentProto.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}.`);
+};
+
+// Create StudentProto Object inheriting PersonProto
+const stephen = Object.create(StudentProto);
+
+stephen.init('Stephen', 1988, 'Sociology');
+console.log(stephen);
+stephen.introduce(); // My name is Stephen and I study Sociology.
+stephen.calcAge(); // 35 (inherited from PersonProto2)
+*/
