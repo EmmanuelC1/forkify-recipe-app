@@ -425,34 +425,43 @@ stephen.calcAge(); // 35 (inherited from PersonProto2)
 
 /////////////////////////////////////////////////
 // Another Class Example
-/*
+// /*
 class Account {
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
-    this.pin = pin;
-    this.movements = [];
     this.locale = navigator.language;
+
+    // Protected properties ('Fake' Encapsulation) –– add '_'
+    // Still able to be used anywhere, but serves as a common convention in the industry
+    // to show that these properties are 'protected'
+    this._pin = pin;
+    this._movements = [];
 
     console.log(`Thanks for opening an account, ${this.owner}`);
   }
 
   // Methods
+  getMovements() {
+    return this._movements;
+  }
+
   deposit(value) {
-    this.movements.push(value);
+    this._movements.push(value);
   }
 
   withdraw(value) {
-    // this.movements.push(-value);
+    // this._movements.push(-value);
     this.deposit(-value); // we can use other methods like deposit
   }
 
-  approveLoan(value) {
+  // Protected Method (only to be used internally, not publicly)
+  _approveLoan(value) {
     return true;
   }
 
   requestLoan(value) {
-    if (this.approveLoan(value)) {
+    if (this._approveLoan(value)) {
       this.deposit(value);
     }
     console.log(`$${value} loan was approved.`);
@@ -464,11 +473,18 @@ const acct1 = new Account('Emmanuel', 'USD', 1111);
 acct1.deposit(250);
 acct1.withdraw(80);
 acct1.requestLoan(1000);
+console.log(acct1.getMovements());
 
 console.log(acct1);
 
 // We need a way to make some methods and properties to be private and not accessible outside the class
 // for exmaple, 'pin' and handler functions like 'approveLoan'. (Encapsulation in the next lecture, allow us to do that)
-console.log(acct1.pin);
-console.log(acct1.approveLoan(1000));
-*/
+// console.log(acct1.pin);
+// console.log(acct1.approveLoan(1000));
+// */
+
+/////////////////////////////////////////////////
+// Encapsulation: Protected Properties & Methods
+// JavaScript classes do no yet support real data privacy and encapsulation
+
+// (Working with code from 'Another Class Example')
