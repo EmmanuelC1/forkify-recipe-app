@@ -422,3 +422,53 @@ console.log(stephen);
 stephen.introduce(); // My name is Stephen and I study Sociology.
 stephen.calcAge(); // 35 (inherited from PersonProto2)
 */
+
+/////////////////////////////////////////////////
+// Another Class Example
+/*
+class Account {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.pin = pin;
+    this.movements = [];
+    this.locale = navigator.language;
+
+    console.log(`Thanks for opening an account, ${this.owner}`);
+  }
+
+  // Methods
+  deposit(value) {
+    this.movements.push(value);
+  }
+
+  withdraw(value) {
+    // this.movements.push(-value);
+    this.deposit(-value); // we can use other methods like deposit
+  }
+
+  approveLoan(value) {
+    return true;
+  }
+
+  requestLoan(value) {
+    if (this.approveLoan(value)) {
+      this.deposit(value);
+    }
+    console.log(`$${value} loan was approved.`);
+  }
+}
+
+const acct1 = new Account('Emmanuel', 'USD', 1111);
+
+acct1.deposit(250);
+acct1.withdraw(80);
+acct1.requestLoan(1000);
+
+console.log(acct1);
+
+// We need a way to make some methods and properties to be private and not accessible outside the class
+// for exmaple, 'pin' and handler functions like 'approveLoan'. (Encapsulation in the next lecture, allow us to do that)
+console.log(acct1.pin);
+console.log(acct1.approveLoan(1000));
+*/
