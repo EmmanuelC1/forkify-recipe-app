@@ -427,27 +427,35 @@ stephen.calcAge(); // 35 (inherited from PersonProto2)
 // Another Class Example
 // /*
 class Account {
+  // 1. Public Fields (instances not prototype)
+  locale = navigator.language;
+
+  // 2. Private Fields (instances not prototype)
+  #movements = [];
+  #pin;
+
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
-    this.locale = navigator.language;
+    // this.locale = navigator.language;
 
     // Protected properties ('Fake' Encapsulation) –– add '_'
     // Still able to be used anywhere, but serves as a common convention in the industry
     // to show that these properties are 'protected'
-    this._pin = pin;
-    this._movements = [];
+    this.#pin = pin;
+    // this._movements = [];
 
     console.log(`Thanks for opening an account, ${this.owner}`);
   }
 
+  // 3. Public Methods
   // Methods
   getMovements() {
-    return this._movements;
+    return this.#movements;
   }
 
   deposit(value) {
-    this._movements.push(value);
+    this.#movements.push(value);
   }
 
   withdraw(value) {
@@ -455,16 +463,22 @@ class Account {
     this.deposit(-value); // we can use other methods like deposit
   }
 
-  // Protected Method (only to be used internally, not publicly)
-  _approveLoan(value) {
-    return true;
-  }
-
   requestLoan(value) {
-    if (this._approveLoan(value)) {
+    if (this.#approveLoan(value)) {
       this.deposit(value);
     }
     console.log(`$${value} loan was approved.`);
+  }
+
+  // 4. Private Methods
+  // Protected Method (only to be used internally, not publicly)
+  #approveLoan(value) {
+    return true;
+  }
+
+  // Static Methods (not available on all instances, but only on the class itself)
+  static helper() {
+    console.log('Helper function.');
   }
 }
 
@@ -487,4 +501,25 @@ console.log(acct1);
 // Encapsulation: Protected Properties & Methods
 // JavaScript classes do no yet support real data privacy and encapsulation
 
-// (Working with code from 'Another Class Example')
+// (Working with code from 'Another Class Example', adding '_' to properties and methods)
+
+/////////////////////////////////////////////////
+// Encapsulation: Private Class Fields and Methods
+// (adding onto 'Another Class Example' code)
+
+// Different Kinds of Fields and Methods
+
+// 1. Public Fields
+// 2. Private Fields
+// 3. Public Methods
+// 4. Private Methods
+// (there is also the 'static' version)
+
+// console.log(acct1.#movements); // Error because property is private field
+// console.log(acct1.#pin); // Error because property is private field
+// console.log(acct1.#approveLoan(1000)); // Error beacuse private field method
+console.log(acct1.getMovements()); // still works
+
+// Static
+// acct1.helper(); // Error not a function
+Account.helper(); // Works within the class
