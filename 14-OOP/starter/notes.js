@@ -103,4 +103,111 @@
     How Object.create() Works
         • We can set the prototype of objects manually to any object we want. (We manually set the steven object to the PersonProto prototype in script.js)
             With 'const steven = Object.create(PersonProto);' we effectively set the .__proto__ property for steven to PersonProto property
+
+    ES6 Classes Summary
+        • Person is the parent class, while Student is the child class. 
+            - extends keywords automatically sets prototypes, and inheritance between classes
+
+        • Public Fields
+            - similar to property, available on created objects
+            - usually used for properties common between all new created objects, such as university
+
+        • Private Fields
+            - not accessible outside the class
+            - provides encapsulation and data privacy
+
+        • Static Public Field
+            - available only on class
+        
+        • Constructor method
+            - called by 'new' operator. Mandatory in regualr class, might be omitted in a child class.
+
+        • super()
+            - call to parent (super) class. (Necessary with extends). 
+            - needs to be called before accessing 'this'. (needs to be first thing in constructor method, if necessary)
+
+        • Instance Properties (this.property)
+            - available on created object   
+            - used for properties unique to created objects, such as startYear, course
+
+        • Redifining Private Fields (#course)
+            - if there is a property that has to be private, we must define it outside with the '#' and then set it inside 
+                the constructor.
+        
+        • Public Method
+            - available on created objects
+
+        • Private Method
+            - not available outside the class
+            - fake alternative is using '_' convention for properties and methods
+
+        • Getter Method
+            - get a value out of an object
+
+        • Setter Method
+            - sets a value for an object
+            - if you have a setter for an existing property with the same name in the constructor, then you need to create a
+                new property with the '_' in front of it.
+
+        • Static Methods
+            - available only on class. Cannot access instance properties nor methods, only static. (only static numSubjects is accessible)
+            - usually used as helper method for class
+
+        • Create New Object
+            - uses the 'new' keyword to call constructor and create new instance
+
+        –– Classes are just 'syntatic sugar' over constructor functions
+        –– Classes are NOT hoisted
+        –– Classes are 'first-class' citizens
+        –– Class body is always executed in 'strict' mode
+
+    class Student extends Person {
+        // Public Fields
+        university = 'CSUMB';
+
+        // Private Fields
+        #studyHours = 0;
+        #course;
+
+        // Static Public Field
+        static numSumbjects = 10;
+
+        constructor(fullname, birthYear, startYear, course) {
+            super(fullname, birthYear);
+            this.startYear = startYear;
+            this.#course = course;
+        }
+
+        // Public Methods
+        introduce() {
+            console.log(`I study ${this.#course} at ${this.university}`);
+        }
+
+        study(hours) {
+            this.#makeCoffee();
+            this.#studyHours += hours;
+        }
+
+        // Private Method
+        #makeCoffee() {
+            return 'Here is your coffee for you! ☕️';
+        }
+
+        // Getters
+        get testScore() {
+            return this._testScore;
+        }
+
+        // Setters
+        set testScore(score) {
+            this._testScore = score >= 20 ? score : 0;
+        }
+
+        // Static Method
+        static printCurriculum() {
+            console.log(`There are ${this.numSumbjects} subjects.`);
+        }
+    }
+
+    const student = new Student('Emmanuel', 1997, 2023, 'Computer Science');
 */

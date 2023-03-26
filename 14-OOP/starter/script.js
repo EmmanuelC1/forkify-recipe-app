@@ -425,7 +425,7 @@ stephen.calcAge(); // 35 (inherited from PersonProto2)
 
 /////////////////////////////////////////////////
 // Another Class Example
-// /*
+/*
 class Account {
   // 1. Public Fields (instances not prototype)
   locale = navigator.language;
@@ -456,11 +456,17 @@ class Account {
 
   deposit(value) {
     this.#movements.push(value);
+
+    // making method chainable
+    return this;
   }
 
   withdraw(value) {
     // this._movements.push(-value);
     this.deposit(-value); // we can use other methods like deposit
+
+    // making method chainable
+    return this;
   }
 
   requestLoan(value) {
@@ -468,6 +474,9 @@ class Account {
       this.deposit(value);
     }
     console.log(`$${value} loan was approved.`);
+
+    // making method chainable
+    return this;
   }
 
   // 4. Private Methods
@@ -495,7 +504,6 @@ console.log(acct1);
 // for exmaple, 'pin' and handler functions like 'approveLoan'. (Encapsulation in the next lecture, allow us to do that)
 // console.log(acct1.pin);
 // console.log(acct1.approveLoan(1000));
-// */
 
 /////////////////////////////////////////////////
 // Encapsulation: Protected Properties & Methods
@@ -523,3 +531,11 @@ console.log(acct1.getMovements()); // still works
 // Static
 // acct1.helper(); // Error not a function
 Account.helper(); // Works within the class
+
+/////////////////////////////////////////////////
+// Chaining Methods
+
+// We have to returnt the object itself at the end of a method that we want to be chainable.
+acct1.deposit(300).deposit(500).withdraw(35).requestLoan(2500).withdraw(900);
+console.log(acct1.getMovements());
+*/
