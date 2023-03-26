@@ -17,7 +17,7 @@
   • Data car 1: 'BMW' going at 120 km/h 
   • Data car 2: 'Mercedes' going at 95 km/h
 */
-/*
+// /*
 // Task 1:
 const Car = function (make, speed) {
   this.make = make;
@@ -48,7 +48,7 @@ console.log(mercedes);
 mercedes.accelerate(); // Mercedes is going at 105 km/h.
 mercedes.accelerate(); // Mercedes is going at 115 km/h.
 mercedes.brake(); // Mercedes is going at 110 km/h.
-*/
+// */
 
 /////////////////////////////////////////////////
 // Coding Challenge #2
@@ -66,7 +66,7 @@ mercedes.brake(); // Mercedes is going at 110 km/h.
   Test data: 
   • Data car 1: 'Ford' going at 120 km/h
 */
-/*
+// /*
 // Task 1
 class CarCl {
   constructor(make, speed) {
@@ -82,6 +82,9 @@ class CarCl {
   brake() {
     this.speed -= 10;
     console.log(`${this.make} is going at ${this.speed} km/h`);
+
+    // Used for chainging in Coding Challenge #4
+    return this;
   }
 
   // Task 2: Getter
@@ -111,7 +114,7 @@ ford.brake(); // Ford is going at 140 km/h
 ford.speedUS = 65;
 console.log(ford.speedUS); // 65
 console.log(ford); // {make: 'Ford', speed: 104}
-*/
+// */
 
 /////////////////////////////////////////////////
 // Coding Challenge #3
@@ -133,7 +136,7 @@ console.log(ford); // {make: 'Ford', speed: 104}
   Test data: 
   • Data car 1: 'Tesla' going at 120 km/h, with a charge of 23%
 */
-/*
+// /*
 // Task 1
 const EV = function (make, speed, charge) {
   Car.call(this, make, speed);
@@ -166,4 +169,63 @@ tesla.accelerate(); // Tesla is going at 140 km/h, with a charge of 22%
 tesla.accelerate(); // Tesla is going at 160 km/h, with a charge of 21%
 tesla.brake(); // Tesla is going at 155 km/h.
 tesla.chargeBattery(90); // Tesla's battery was charged to 90%
+// */
+
+/////////////////////////////////////////////////
+// Coding Challenge #3
+/*
+  –– Uses code from Coding Challenge #1 
+
+  Your tasks: 
+  1. Re-create Challenge #3, but this time using ES6 classes: create an 'EVCl' child class of the 'CarCl' class 
+
+  2. Make the 'charge' property private 
+
+  3. Implement the ability to chain the 'accelerate' and 'chargeBattery' methods of this class, and also update the 'brake' method in
+   the 'CarCl' class. Then experiment with chaining! 
+
+  Test data: 
+  • Data car 1: 'Rivian' going at 120 km/h, with a charge of 23%
 */
+// /*
+// Task 1
+class EVCl extends CarCl {
+  // Task 2: Private Fields
+  #charge;
+
+  constructor(make, speed, charge) {
+    super(make, speed);
+    this.#charge = charge;
+  }
+
+  chargeBattery(chargeTo) {
+    this.#charge = chargeTo;
+    console.log(`${this.make}'s battery was charged to ${this.#charge}%`);
+
+    // Task 3: chaining methods
+    return this;
+  }
+
+  accelerate() {
+    this.speed += 20;
+    this.#charge--;
+    console.log(
+      `${this.make} is going at ${this.speed} km/h, with a charge of ${
+        this.#charge
+      }%`
+    );
+
+    // Task 3: chaining methods
+    return this;
+  }
+}
+
+const rivian = new EVCl('Rivian', 120, 23);
+
+console.log(rivian); // EVCl {make: 'Rivian', speed: 120, #charge: 23}
+console.log(rivian.speedUS); // 75
+
+// Chaining Methods
+rivian.accelerate().accelerate().accelerate().brake().chargeBattery(90);
+console.log(rivian.speedUS); // 106.25
+// */
