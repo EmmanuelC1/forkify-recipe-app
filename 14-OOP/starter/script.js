@@ -2,7 +2,7 @@
 
 /////////////////////////////////////////////////
 // Constructor Functions and the 'new' Operator
-/*
+// /*
 const Person = function (firstName, birthYear) {
   // Instance Properties
   this.firstName = firstName;
@@ -93,11 +93,11 @@ console.dir(h1); // shows all properties and methods
 
 // functions are also objects
 console.dir(x => x + 1);
-*/
+// */
 
 /////////////////////////////////////////////////
 // ES6 Classes
-/*
+// /*
 // Class Expression
 // const PersonClass = class {};
 
@@ -134,11 +134,11 @@ jessica.greet();
 // 1. Classes are NOT hoisted, even class if they are class declarations (cannot use before declaration)
 // 2. Classes are first-class citizens (we can pass them into functions, and return them from functions)
 // 3. Classes are executes in strict mode
-*/
+// */
 
 /////////////////////////////////////////////////
 // Getters and Setters
-/*
+// /*
 // Objects
 const account = {
   owner: 'emmanuel',
@@ -238,11 +238,11 @@ PersonGetterSetterClass.hey();
 
 // not available on instances
 // manny.hey(); // error
-*/
+// */
 
 /////////////////////////////////////////////////
 // Object.create()
-/*
+// /*
 const PersonProto = {
   calcAge() {
     console.log(2023 - this.birthYear);
@@ -271,11 +271,11 @@ const sarah = Object.create(PersonProto);
 sarah.init('Sarah', 1979);
 sarah.calcAge(); // 44
 console.log(sarah); // {name: 'Sarah', birthYear: 1979}
-*/
+// */
 
 /////////////////////////////////////////////////
 // Inheritance Between "Classes": Constructor Functions
-/*
+// /*
 // Person Class using Constructor Function
 const PersonConstructorFunction = function (firstName, birthYear) {
   this.firstName = firstName;
@@ -317,11 +317,11 @@ console.log(mike.hasOwnProperty('course')); // true ('hasOwnProperty' method inh
 console.log(mike instanceof Student); // true
 console.log(mike instanceof PersonConstructorFunction); // true
 console.log(mike instanceof Object); // true
-*/
+// */
 
 /////////////////////////////////////////////////
 // Inheritance Between "Classes": ES6 Classes
-/*
+// /*
 // Person Class (ES6 Classes)
 class PersonCl {
   constructor(fullName, birthYear) {
@@ -382,11 +382,11 @@ const mariah = new StudentCl('Mariah Torres', 1999, 'Cosmetology');
 console.log(mariah);
 mariah.introduce();
 mariah.calcAge();
-*/
+// */
 
 /////////////////////////////////////////////////
 // Inheritance Between "Classes": Object.create()
-/*
+// /*
 // Person prototype object for Person class
 const PersonProto2 = {
   calcAge() {
@@ -421,11 +421,11 @@ stephen.init('Stephen', 1988, 'Sociology');
 console.log(stephen);
 stephen.introduce(); // My name is Stephen and I study Sociology.
 stephen.calcAge(); // 35 (inherited from PersonProto2)
-*/
+// */
 
 /////////////////////////////////////////////////
 // Another Class Example
-/*
+// /*
 class Account {
   // 1. Public Fields (instances not prototype)
   locale = navigator.language;
@@ -538,4 +538,4 @@ Account.helper(); // Works within the class
 // We have to returnt the object itself at the end of a method that we want to be chainable.
 acct1.deposit(300).deposit(500).withdraw(35).requestLoan(2500).withdraw(900);
 console.log(acct1.getMovements());
-*/
+// */
