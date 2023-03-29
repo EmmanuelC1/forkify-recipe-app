@@ -114,43 +114,58 @@ class App {
 
   // Display Marker on map when user submits workout detail form, also creates workout object
   _newWorkout(e) {
+    // Helper function to check if all inputs are numbers, returns boolean
+    const validateInputs = (...inputs) =>
+      inputs.every(inp => Number.isFinite(inp));
+
+    // Helper function to check if all inputs are positive, returns boolean
+    const allPositive = (...inputs) => inputs.every(inp => inp >= 0);
+
     e.preventDefault(); // Prevent form from reloading page
 
     // Get coordinates where user clicked on map
     const { lat, lng } = this.#mapEvent.latlng;
-    const coords = [lat, lang];
+    const coords = [lat, lng];
 
     // Store input values
     const workoutType = inputType.value;
-    const distance = inputDistance.value;
-    const duration = inputDuration.value;
-    let workoutName;
+    const distance = +inputDistance.value; // turned into number with '+'
+    const duration = +inputDuration.value;
 
-    // Create new objects based on the workout type
+    // If workout running, create Running object
     if (workoutType === 'running') {
-      const cadence = inputCadence.value;
-      workoutName = '🏃‍♂️ Running';
+      const cadence = +inputCadence.value;
+
+      // Check if data is valid
+      if (
+        !validateInputs(distance, duration, cadence) ||
+        !allPositive(distance, duration, cadence)
+      )
+        return alert('Input must be positive numbers.');
 
       //prettier-ignore
       const runningWorkout = new Running(coords, distance, duration, cadence);
     }
+
+    // If workout cycling, create Cycling object
     if (workoutType === 'cycling') {
-      const elevGain = inputElevation.value;
-      workoutName = '🚴‍♂️ Cycling';
+      const elevGain = +inputElevation.value;
+
+      // Check if data is valid
+      if (
+        !validateInputs(distance, duration, elevGain) |
+        !allPositive(distance, duration)
+      )
+        return alert('Input must be positive numbers.');
 
       //prettier-ignore
       const cyclingWorkout = new Cycling(coords, distance, duration, elevGain);
     }
 
-    // Clear input fields
-    inputDistance.value =
-      inputDuration.value =
-      inputCadence.value =
-      inputElevation.value =
-        '';
+    // Add object to workouts array (in Workout class)
 
-    // Adds marker and popup with custom options on map at current coordinates
-    L.marker([lat, lng], { riseOnHover: true })
+    // Render marker and popup with custom options on map at current coordinates
+    L.marker(coords, { riseOnHover: true })
       .addTo(this.#map)
       .bindPopup(
         L.popup({
@@ -159,10 +174,15 @@ class App {
           autoClose: false,
           closeOnClick: false,
           className: `${workoutType}-popup`,
-          content: workoutName,
+          content: 'workoutName',
         })
       )
       .openPopup();
+
+    // Render Workout in sidebar
+
+    // Clear input fields
+    inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = ''; //prettier-ignore
 
     // Hide form
     form.classList.add('hidden');
