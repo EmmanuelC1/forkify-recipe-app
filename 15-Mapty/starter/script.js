@@ -266,6 +266,7 @@ class App {
       </li>`;
     }
 
+    // insert workout after form each time
     form.insertAdjacentHTML('afterend', html);
   }
 
