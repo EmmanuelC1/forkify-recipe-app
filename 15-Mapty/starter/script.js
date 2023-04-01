@@ -12,7 +12,6 @@ class Workout {
   // Public Fields
   date = new Date();
   id = (Date.now() + '').slice(-10); // id is the last 10 numbers of a Date (turned into string)
-  clicks = 0;
 
   constructor(coords, distance, duration) {
     this.coords = coords; // [lat, lng]
@@ -26,10 +25,6 @@ class Workout {
 
     // prettier-ignore
     this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${months[this.date.getMonth()]} ${this.date.getDate()}`;
-  }
-
-  click() {
-    this.clicks++;
   }
 }
 
@@ -69,9 +64,6 @@ class Cycling extends Workout {
   }
 }
 
-////////////////////////////////////////////
-// Application Architecture
-
 class App {
   // Private Class Fields
   #map;
@@ -81,6 +73,7 @@ class App {
 
   constructor() {
     this._getPosition();
+    this._getLocalStorage();
     form.addEventListener('submit', this._newWorkout.bind(this));
     inputType.addEventListener('change', this._toggleElevationField);
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
@@ -118,6 +111,9 @@ class App {
 
     // Handles clicks on map (custom event listener provided through Leaflet library)
     this.#map.on('click', this._showForm.bind(this));
+
+    // Render Marker Popups, after map is fully loaded (workouts stored in local storage)
+    this.#workouts.forEach(workout => this._renderWorkoutMarker(workout));
   }
 
   // Display Workout Details Form
@@ -199,6 +195,9 @@ class App {
 
     // Hide Form and clear input fields
     this._hideForm();
+
+    // Set local storage to all workouts
+    this._setLocalStorage();
   }
 
   // Render workout marker and popup on map with custom options on map at current coordinates
@@ -286,9 +285,35 @@ class App {
       animate: true,
       pan: { duration: 1 },
     });
+  }
 
-    // increment clicks property (using public interface)
-    workout.click();
+  // Make workouts persistent by storing into local storage API (provided by browser)
+  _setLocalStorage() {
+    // takes in Key, Value (string, string)
+    localStorage.setItem('workouts', JSON.stringify(this.#workouts));
+  }
+
+  // Get locally stored workout data (stored as a string)
+  _getLocalStorage() {
+    // Parse data
+    const data = JSON.parse(localStorage.getItem('workouts'));
+
+    if (!data) return;
+
+    // restoring workouts
+    this.#workouts = data;
+
+    // Render each workout on sidebar (not markers since we need map to fully load first)
+    this.#workouts.forEach(workout => this._renderWorkout(workout));
+  }
+
+  // Reset local storage workout data (available in public interface)
+  reset() {
+    // Remove workouts item from local storage
+    localStorage.removeItem('workouts');
+
+    // Reload the current page
+    location.reload();
   }
 }
 
