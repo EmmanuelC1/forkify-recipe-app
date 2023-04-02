@@ -45,4 +45,16 @@
 
         4. Architecture
             • Architecture visualization in file system (Mapty-architecture-final.png)
+
+    Possible Additional Features
+        • Ability to edit a workout
+        • Ability to delete a workout
+        • Ability to delete all workouts
+        • Ability to sort workouts by a certain fiels (e.g. distance)
+        • Re-build Running and Cycling objects coming from Local Storage
+        • More realistic error confirmation messages
+        • Ability to position the map to show all workouts [hard]
+        • Ability ro draw lines ans shapes instead of just points [very hard]
+        • Geocode location from coordinates ("Run in Faro, Portugal") [only after async JS section]
+        • Display weather data for workout time and place [only after sync JS section]
 */
