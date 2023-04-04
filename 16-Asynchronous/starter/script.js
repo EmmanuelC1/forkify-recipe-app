@@ -119,3 +119,53 @@ setTimeout(() => {
   }, 1000);
 }, 1000);
 */
+
+//////////////////////////////////////////////
+// Promises and the Fetch API
+
+// Fetch API (Modern way of making AJAX calls)
+// const request = fetch(`https://restcountries.com/v3.1/name/mexico`);
+// console.log(request); // returns Promise object
+
+//////////////////////////////////////////////
+// Consuming Promises
+
+// const getCountryDataPromises = function (country) {
+//   fetch(`https://restcountries.com/v3.1/name/${country}`)
+//     .then(function (res) {
+//       // Handle Fulfilled Promise from fetch
+//       console.log(res);
+
+//       // json() method is available on all response objects that are coming from fetch (all resolved values)
+//       // it's also an async function, so it will return a new promise
+//       return res.json();
+//     })
+//     .then(function (data) {
+//       // Handle 'res.json()' promise
+//       console.log(data);
+//       renderCountry(data[0]);
+//     });
+// };
+
+// Simplified version of above code (Flat Chain of Promises)
+const getCountryDataPromises = function (country) {
+  // Country 1:
+  fetch(`https://restcountries.com/v3.1/name/${country}`)
+    .then(res => res.json())
+    .then(data => {
+      renderCountry(data[0]); // Render Country 1
+
+      // get neighbor from country
+      const neighbor = data[0].borders?.[0];
+      if (!neighbor) return;
+
+      // Country 2: fetch data from neighbor using country code endpoint and render
+      // we return this promise so that we can use then() method outside this then() function for the first fetch (AJAX call)
+      return fetch(`https://restcountries.com/v3.1/alpha/${neighbor}`);
+    })
+    .then(res => res.json())
+    .then(data => renderCountry(data[0], 'neighbour')); // Render Country 2
+};
+
+getCountryDataPromises('mexico');
+// getCountryDataPromises('portugal');

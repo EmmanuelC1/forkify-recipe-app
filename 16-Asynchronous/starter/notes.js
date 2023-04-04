@@ -38,4 +38,36 @@
 
         • APIs used to use the XML data format (as implied in AJAX name), but nowadays JSON data format has replaced XML
             - JSON is basically a JavaScript object but converted to a string
+
+    What are Promises?
+        • An object that is used as a placeholder for the future result of an asynchronous operation.
+        • A container for an asynchronous delivered value.
+        • A container for a future value (response from AJAX call)
+
+        –– When you buy a lotter ticket, you get a 'promise' that you will receive a prize in the future, IF you get the winning numbers.
+
+        –– Pros of using Promises:
+            • We no longer need to rely on events and callbacks passed into asynchronous functions to handle asynchronous results. Events and callback
+                functions can sometimes cause unpredictable results.
+            • Instead of nesting callbacks, we can 'chain promises' for a sequence of asynchronous operations: escaping callback hell!
+
+    The Promise Lifecycle
+        • Pending
+            - Before the future value is available (async task is still doing its work in the background)
+
+        • Settled
+            - Asynchronous task has finished. There are 2 different states of settled promises (Fulfilled, Rejected)
+            - We are able to handle these different states in our code
+            - A promise is only settled once, so the state will remain unchanged forever and cannot be changed manually.
+
+            • Fulfilled
+                - Success! The value is now available as expected
+
+            • Rejected
+                - An error happened. (e.g. the user is offline and cant connect to the API server)
+
+        • Consume a Promise
+            - When we already have a promise (e.g. promise returned from Fetch API). In order for a promise to exist, it first must be built.
+                Fetch API builds and returns a promise.
+            - Sometimes we also need to build a promise and not just consume it.
 */
