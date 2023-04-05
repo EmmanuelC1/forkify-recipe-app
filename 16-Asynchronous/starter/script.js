@@ -244,10 +244,10 @@ const getCountryDataPromises = function (country) {
 };
 
 // used for development purposes to simulate user losing internet connection
-btn.addEventListener('click', function () {
-  getCountryDataPromises('USA');
-  // getCountryDataPromises('asdf');
-});
+// btn.addEventListener('click', function () {
+//   getCountryDataPromises('USA');
+//   // getCountryDataPromises('asdf');
+// });
 
 // getCountryDataPromises('USA');
-getCountryDataPromises('australia');
+// getCountryDataPromises('australia');
