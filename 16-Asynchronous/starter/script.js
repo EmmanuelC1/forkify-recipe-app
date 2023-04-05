@@ -3,6 +3,7 @@
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
+// Renders HTML for a country
 const renderCountry = function (data, className = '') {
   const html = `
 <article class="country ${className}">
@@ -23,7 +24,13 @@ const renderCountry = function (data, className = '') {
 </article>`;
 
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  countriesContainer.style.opacity = 1;
+  // countriesContainer.style.opacity = 1; // moved to 'finally' block
+};
+
+// Handles error (catch block)
+const renderError = function (msg) {
+  countriesContainer.insertAdjacentText('beforeend', msg);
+  // countriesContainer.style.opacity = 1; // moved to 'finally' block
 };
 
 //////////////////////////////////////////////
@@ -124,6 +131,8 @@ setTimeout(() => {
 // Promises and the Fetch API
 
 // Fetch API (Modern way of making AJAX calls)
+// IMPORTANT: fetch only rejects Promise if there is not internet connection.
+
 // const request = fetch(`https://restcountries.com/v3.1/name/mexico`);
 // console.log(request); // returns Promise object
 
@@ -147,25 +156,98 @@ setTimeout(() => {
 //     });
 // };
 
-// Simplified version of above code (Flat Chain of Promises)
-const getCountryDataPromises = function (country) {
-  // Country 1:
-  fetch(`https://restcountries.com/v3.1/name/${country}`)
-    .then(res => res.json())
-    .then(data => {
-      renderCountry(data[0]); // Render Country 1
+// Same code as above (better simplified with arrow functions)
+// const getCountryDataPromises = function (country) {
+//   // Country 1:
+//   fetch(`https://restcountries.com/v3.1/name/${country}`)
+//     .then(res => {
+//       console.log(res);
 
-      // get neighbor from country
-      const neighbor = data[0].borders?.[0];
-      if (!neighbor) return;
+//       if (!res.ok) {
+//         // Create new custom error if res property 'ok' is false (404 status code)
+//         // throw keyword will immediatley terminate the current function (similar to return)
+//         // if code reaches here, Promise is rejected so it will continue in the 'catch' block with 'err' being this new Error we created
+//         throw new Error(`Country not found (${res.status} ${res.statusText})`);
+//       }
+//       return res.json();
+//     })
+//     .then(data => {
+//       renderCountry(data[0]); // Render Country 1
 
-      // Country 2: fetch data from neighbor using country code endpoint and render
-      // we return this promise so that we can use then() method outside this then() function for the first fetch (AJAX call)
-      return fetch(`https://restcountries.com/v3.1/alpha/${neighbor}`);
-    })
-    .then(res => res.json())
-    .then(data => renderCountry(data[0], 'neighbour')); // Render Country 2
+//       // get neighbor from country
+//       const neighbor = data[0].borders?.[0];
+//       // const neighbor = 'asdf'; // simulate error on neighbor country
+//       if (!neighbor) throw new Error('No neighbor found!');
+
+//       // Country 2: fetch data from neighbor using country code endpoint and render
+//       // we return this promise so that we can use then() method outside this then() function for the first fetch (AJAX call)
+//       return fetch(`https://restcountries.com/v3.1/alpha/${neighbor}`);
+//     })
+//     .then(res => {
+//       console.log(res);
+//       if (!res.ok)
+//         throw new Error(`Country not found (${res.status} ${res.statusText})`);
+
+//       return res.json();
+//     })
+//     .then(data => renderCountry(data[0], 'neighbour')) // Render Country 2
+//     .catch(err => {
+//       // Catches any errors that happen in this whole promise chain (catch also returns new Promise)
+//       // Catches only no internet connection error
+//       console.error(`💥 ${err}`);
+//       renderError(`Something went wrong 💥 ${err.message}. Try again!`);
+//     })
+//     .finally(() => {
+//       // Finally method ALWAYS gets called whether Promise is fulfilled or rejected (last thing that happends with Promise)
+//       // we use this method for something that needs to happen no matter the result of the Promise (e.g. remove loading spinner)
+//       countriesContainer.style.opacity = 1;
+//     });
+// };
+
+// getCountryDataPromises('mexico');
+// getCountryDataPromises('portugal');
+
+// Fetch and throw new Error, returns Promise (Helper function to avoid duplicate code)
+const getJSON = function (url, errorMsg) {
+  return fetch(url).then(res => {
+    // console.log(res);
+
+    if (!res.ok) {
+      // Create new custom error if res property 'ok' is false (404 status code)
+      // throw keyword will immediatley terminate the current function (similar to return)
+      // if code reaches here, Promise is rejected so it will continue in the 'catch' block with 'err' being this new Error we created
+      throw new Error(`${errorMsg}`);
+    }
+    return res.json();
+  });
 };
 
-getCountryDataPromises('mexico');
-// getCountryDataPromises('portugal');
+// Same code as above but even more simplified
+const getCountryDataPromises = function (country) {
+  const countryURL = `https://restcountries.com/v3.1/name/${country}`;
+
+  getJSON(countryURL, 'Country not found')
+    .then(data => {
+      renderCountry(data[0]);
+
+      const neighbor = data[0].borders?.[0];
+      if (!neighbor) throw new Error('No neighboring country found');
+
+      const neighborURL = `https://restcountries.com/v3.1/alpha/${neighbor}`;
+      return getJSON(neighborURL, 'Country not found');
+    })
+    .then(data => renderCountry(data[0], 'neighbour'))
+    .catch(err =>
+      renderError(`Something went wrong 💥 ${err.message}. Try again!`)
+    )
+    .finally(() => (countriesContainer.style.opacity = 1));
+};
+
+// used for development purposes to simulate user losing internet connection
+btn.addEventListener('click', function () {
+  getCountryDataPromises('USA');
+  // getCountryDataPromises('asdf');
+});
+
+// getCountryDataPromises('USA');
+getCountryDataPromises('australia');
