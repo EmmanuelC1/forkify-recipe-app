@@ -70,4 +70,41 @@
             - When we already have a promise (e.g. promise returned from Fetch API). In order for a promise to exist, it first must be built.
                 Fetch API builds and returns a promise.
             - Sometimes we also need to build a promise and not just consume it.
+
+    Asynchronous Behind the Scenes: The Event Loop
+        –– Review of JavaScript Runtime:
+            - JS Runtime is basically a container which includes all the pieces necessary to execute JS code. It includes:
+            
+            - JS Engine: the "heart of the runtime"
+                Heap, where objects are stored, and Call Stack where code is executed. JS had only one thread of execution.
+            
+            - Web APIs 
+                DOM, Timers, Fetch API, and all APIs provided to the engine, but not part of the JS language itself.
+                Where all asynchronous tasks will run (timers, AJAX calls, and any other async tasks)
+            
+            - Callback Queue 
+                (click, timer, data, etc) Data structure that holds all the erady to be executed callback functions (coming from events)
+                
+            - Event Loop
+                Whenever the call stack is empty, the event loop takes callbacks from the callback queue and puts them into the call stack
+                    to be executed. This is the essential piece that makes asynchronous behavior possible in JS. The reason why we can have 
+                    non blocking concurrency model (how a language handles multiple things at once) in JS.
+        
+        •  Great illustration on how the Event Loop and Asynchronous tasks work behind the scenes in video lecture [Asynchronous Behind the Scenes: The Event Loop]
+            Too hard to put it into notes. 
+            
+            Here are the main takeaways:
+                - All asychronous tasks are handled in the Web APIs environment, and not the call stack to avoid blocking the rest of the code to run. For example, 
+                    loading an img (setting src attribute), or waiting to event listener like 'load' on that image. The event listener will NOT automatically get 
+                    placed in the callback queue, it will only get registered along the event in the Web API environment unti the event gets triggered. Only then
+                    it will be placed in the callback queue.
+
+                - The event loop will take the first callback in the callback queue only when the callstack is empty, called an event loop tick. JS does not keep
+                    track of time, for example, let's suppose we have a 5 second timer (async task) but when the callback gets placed into the callback queue 
+                    (after 5 secs), and it is NOT the first one in line. Then the timer will not execute after 5 seconds, it will execute after all other callbacks
+                    in front of it are done. If it is the first callback in the queue, then it will run after 5 secs.
+
+                - Callbacks for Promises do NOT go to the callback queue. Instead they have a separate queue called the 'Microtasks Queue' that has priority over
+                    the callback queue. The event loop will run ALL tasks in the Microtask Queue, before any callbacks in the Callback Queue.
+
 */

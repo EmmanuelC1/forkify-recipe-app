@@ -207,6 +207,10 @@ setTimeout(() => {
 // getCountryDataPromises('mexico');
 // getCountryDataPromises('portugal');
 
+//////////////////////////////////////////////
+// Handling Rejected Promises & Throwing Errors Manually
+/*
+
 // Fetch and throw new Error, returns Promise (Helper function to avoid duplicate code)
 const getJSON = function (url, errorMsg) {
   return fetch(url).then(res => {
@@ -249,5 +253,30 @@ const getCountryDataPromises = function (country) {
 //   // getCountryDataPromises('asdf');
 // });
 
-// getCountryDataPromises('USA');
+getCountryDataPromises('USA');
 // getCountryDataPromises('australia');
+
+*/
+
+//////////////////////////////////////////////
+// The Event Loop in Practice
+/*
+// first thing in call stack, top level code (1)
+console.log('Test start');
+
+// callback added to callback queue (5)
+setTimeout(() => console.log('0 sec timer'), 0);
+
+// has priority over timer beacuse of Microtask Queue (3)
+Promise.resolve('Resolved Promise 1').then(res => console.log(res));
+
+// Microtask has priority over timer (4)
+Promise.resolve('Resolved Promise 2').then(res => {
+  // task that will take some time, showcasing timer will take more than the 0 seconds we set beacuse of this special priority queue
+  for (let i = 0; i < 1_000_000_000; i++) {}
+  console.log(res);
+});
+
+// second thing in call stack, top level code (2)
+console.log('Test end');
+*/
