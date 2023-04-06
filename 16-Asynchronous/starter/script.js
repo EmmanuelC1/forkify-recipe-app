@@ -347,3 +347,71 @@ Promise.reject(new Error('rejected this promise')).catch(err =>
   console.error(err)
 );
 */
+
+//////////////////////////////////////////////
+// Promisifying the Geolocation API
+
+const getPosition = function () {
+  return new Promise((resolve, reject) => {
+    // navigator.geolocation.getCurrentPosition(
+    //   position => resolve(position), // returns current position as resolved value
+    //   err => reject(new Error('Could not get current location'))
+    // );
+
+    // Simplified version
+    // callback for this API automatically gets called, so no need to write them (position also gets passed in automatically)
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+// getPosition()
+//   .then(res => console.log(res))
+//   .catch(err => console.error(err));
+
+// Function from Coding Challenge #1
+const whereAmI = function () {
+  getPosition()
+    .then(res => {
+      const { latitude: lat, longitude: lng } = res.coords;
+
+      return fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+    })
+    .then(res => {
+      // Task 5
+      if (res.status === 403)
+          throw new Error(`Error ${res.status}: Too many requests in succession.`); //prettier-ignore
+      return res.json();
+    })
+    .then(data => {
+      // Task 2
+      const { city, country } = data;
+
+      // Task 3
+      console.log(`You are in ${city}, ${country}`);
+
+      // Task 6
+      return fetch(`https://restcountries.com/v3.1/name/${country}`);
+    })
+    .then(res => {
+      if (!res.ok) throw new Error('Country not found');
+      return res.json();
+    })
+    .then(data => {
+      // Task 7
+      renderCountry(data[0]);
+
+      const neighbor = data[0].borders?.[0];
+      if (!neighbor) throw new Error(`No neighboring countries found.`);
+
+      return fetch(`https://restcountries.com/v3.1/alpha/${neighbor}`);
+    })
+    .then(res => {
+      if (!res.ok) throw new Error('Country not found');
+      return res.json();
+    })
+    .then(data => renderCountry(data[0], 'neighbour'))
+    .catch(err => console.error(err.message)) // Task 4
+    .finally(() => (countriesContainer.style.opacity = 1));
+};
+
+btn.addEventListener('click', whereAmI);
