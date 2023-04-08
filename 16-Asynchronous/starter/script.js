@@ -419,7 +419,7 @@ btn.addEventListener('click', whereAmI);
 
 //////////////////////////////////////////////
 // Consuming Promises with Async/Await
-/*
+// /*
 const getPosition = function () {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -442,10 +442,11 @@ const whereAmI = async function () {
     if (!resGeo.ok) throw new Error('Problem getting location!');
 
     const dataGeo = await resGeo.json();
-    const { country } = dataGeo;
 
     // Country data
-    const res = await fetch(`https://restcountries.com/v3.1/name/${country}`);
+    const res = await fetch(
+      `https://restcountries.com/v3.1/name/${dataGeo.country}`
+    );
     if (!res.ok) throw new Error('Problem getting country!');
 
     const data = await res.json();
@@ -453,18 +454,41 @@ const whereAmI = async function () {
     // Render Country
     renderCountry(data[0]);
     countriesContainer.style.opacity = 1;
+
+    return `You are at ${dataGeo.stnumber} ${dataGeo.staddress}, ${dataGeo.city}, ${dataGeo.state}`;
   } catch (err) {
     console.error(`🔴 ${err}`);
     renderError(`🔴 ${err.message}`);
+
+    // Reject Promise returned from async function (does not return string if there is an error)
+    throw err;
   }
 };
 
-whereAmI();
+console.log('1: Getting location');
 // whereAmI();
-// whereAmI();
-// whereAmI();
-console.log('first');
-*/
+
+//////////////////////////////////////////////
+// Returning Values from Async Functions
+
+// Below we are using new async/await with old then, catch finally (Meh solution)
+// whereAmI()
+//   .then(res => console.log(`2: ${res}`))
+//   .catch(err => console.error(`2: ${err.message}`))
+//   .finally(() => console.log('3: Finished getting location'));
+
+// Using Async Await Solution (IFFE: Immediately Invoked Function Expressions)
+(async function () {
+  try {
+    const res = await whereAmI();
+    console.log(`2: ${res}`);
+  } catch (err) {
+    console.error(`2: ${err.message}`);
+  }
+  console.log('3: Finished getting location');
+})();
+
+// */
 
 //////////////////////////////////////////////
 // Error Handling with try...catch
