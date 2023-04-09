@@ -510,7 +510,8 @@ try {
 */
 
 //////////////////////////////////////////////
-// Running Promises in Parallel
+// Running Promises in Parallel (Promise Combinator: .all)
+/*
 const get3Countries = async function (c1, c2, c3) {
   try {
     // Each AJAX call will wait until the previous one finishes (not efficient solution)
@@ -533,3 +534,67 @@ const get3Countries = async function (c1, c2, c3) {
 };
 
 get3Countries('usa', 'mexico', 'portugal');
+*/
+
+//////////////////////////////////////////////
+// Other Promise Combinators: .race, .allSettled, and .any
+/*
+// Promise.race() [takes in array of promises, returns new Promise]
+
+// Promise returned is settled as soon as one of the input Promises settles
+// (settled = value is available, doesn't matter if Promise is fulfilled or rejected)
+
+(async function () {
+  const res = await Promise.race([
+    getJSON(`https://restcountries.com/v3.1/name/italy`),
+    getJSON(`https://restcountries.com/v3.1/name/spain`),
+    getJSON(`https://restcountries.com/v3.1/name/norway`),
+  ]);
+
+  // returns result of the winning Promise only, not all three. But also a rejected promise can win
+  // console.log(res[0]);
+})();
+
+// User has bad internet connection example, we can use Promise.all to have a Promise automatically reject
+// using a special timeout function after a certain amount of seconds to prevent a fetch request to take too long
+const timeoutPromise = function (seconds) {
+  return new Promise((_, reject) => {
+    setTimeout(() => {
+      reject(new Error('Request too long!'));
+    }, seconds * 1000);
+  });
+};
+
+const res = Promise.race([
+  getJSON(`https://restcountries.com/v3.1/name/sweden`),
+  timeoutPromise(1),
+])
+  .then(res => console.log(res[0]))
+  .catch(err => console.error(err));
+
+// Promise.allSettled [takes in array of promises, returns array of all settled Promises]
+Promise.allSettled([
+  Promise.resolve('1: Success'),
+  Promise.reject('Error: rejected Promise'),
+  Promise.resolve('2: Success'),
+])
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
+
+Promise.all([
+  Promise.resolve('1: Success'),
+  Promise.reject('Error: rejected Promise'),
+  Promise.resolve('2: Success'),
+])
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
+
+// Promise.any [takes in array of promises, returns FIRST fulfilled Promise, ignores rejected promises]
+Promise.any([
+  Promise.resolve('1: Success'),
+  Promise.reject('Error: rejected Promise'),
+  Promise.resolve('2: Success'),
+])
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
+*/
