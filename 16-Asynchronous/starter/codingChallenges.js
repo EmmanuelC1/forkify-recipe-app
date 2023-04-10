@@ -201,7 +201,7 @@ createImage('img/img-1.jpg')
     ['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']. 
     To test, turn off the 'loadNPause' function
 */
-// /*
+/*
 const imgContainer = document.querySelector('.images');
 
 const wait = function (seconds) {
@@ -271,4 +271,4 @@ const loadAll = async function (imgArr) {
 };
 
 loadAll(['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']);
-// */
+*/
