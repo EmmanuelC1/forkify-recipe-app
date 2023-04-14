@@ -109,3 +109,49 @@ export.addToCart = function (product, quantity) {
 // Import
 const { addToCart } = require('./shoppingCart.js');
 */
+
+////////////////////////////////////////////
+// Introduction to NPM
+/*
+// Check version
+npm -v
+
+// Initialize npm - creates and configures package.json
+npm init
+
+// Install a library like Leaflet from previous project (check library documentation)
+npm install leaflet     (can also use 'i' instead of 'install')
+
+// Install Lodash (ES modules format)
+npm i lodash-es
+
+// When moving your project, you need to install all dependencies again since it's not a good idea to include the node_modules
+  folder with your project either on git, or other version control. So running 'npm install' will install all required dependecies
+  for your project to work as it should, given that the package.json file is correct
+
+npm install 
+npm i
+
+*/
+/*
+import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+
+const state = {
+  cart: [
+    { product: 'bread', quantity: 5 },
+    { product: 'pizza', quantity: 5 },
+  ],
+  user: { loggedIn: true },
+};
+
+// Make clone of state object (not deep clone, any changes will change both)
+const stateClone = Object.assign({}, state);
+
+// using deepClone from Lodash
+const stateDeepClone = cloneDeep(state);
+
+// Change original object property
+state.user.loggedIn = false;
+console.log('stateClone', stateClone); // should be true, but changed to false
+console.log('stateDeepClone', stateDeepClone); // stays true, as expected because its a deep clone
+*/
