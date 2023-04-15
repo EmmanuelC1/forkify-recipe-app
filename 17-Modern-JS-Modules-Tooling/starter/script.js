@@ -2,7 +2,7 @@
 
 ////////////////////////////////////////////
 // Exporting and Importing in ES6 Modules
-/*
+// /*
 console.log('Importing Module');
 
 // Importing Module
@@ -27,7 +27,7 @@ add('apples', 4);
 
 // showing live connection with cart array changing values (we originally exported an empty array)
 console.log(cart);
-*/
+// */
 
 ////////////////////////////////////////////
 // Top-Level Await (ES2022)
@@ -133,8 +133,9 @@ npm install
 npm i
 
 */
-/*
-import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+// /*
+// import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+import cloneDeep from 'lodash-es';
 
 const state = {
   cart: [
@@ -154,4 +155,36 @@ const stateDeepClone = cloneDeep(state);
 state.user.loggedIn = false;
 console.log('stateClone', stateClone); // should be true, but changed to false
 console.log('stateDeepClone', stateDeepClone); // stays true, as expected because its a deep clone
+// */
+
+////////////////////////////////////////////
+// Bundling With Parcel and NPM Scripts
+/*
+// Install parcel using npm - devDependencies are tools we need to build application, but not a dependency we actually
+  include in our code. (we use it to develop our project)
+
+npm install parcel --save-dev
+
+// Using npx to use parcel and bundle project in cli. Also starts new local server
+  Creates dist (distribution) folder that will be the folder and code we send to production
+
+npx parcel index.html
+
+// Using NPM Scripts - add script to package.json (automates parcel command above): 
+"start": "parcel index.html"
+
+// Once that script is set, we run the following command in cli to run parcel command above
+npm run start
+
+// Another script in package.json, to bundle code –– when we are done developing and need FINAL bundle
+"build": "parcel build index.html"
+
+npm run build
+
 */
+
+// Code only Parcel understands –– whenever we change one of the modules, it will trigger a rebuild and the new modified
+// bundle will then automatically get injected into the browser without triggering a whole page reload
+if (module.hot) {
+  module.hot.accept();
+}
