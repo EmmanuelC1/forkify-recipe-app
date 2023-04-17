@@ -188,3 +188,34 @@ npm run build
 if (module.hot) {
   module.hot.accept();
 }
+
+////////////////////////////////////////////
+// Configuring Babel and Polyfilling
+
+// this code is not part of the Babel preset 'preset-env', these 'features' are not transpiled (they still work but
+// are not converted into ES5 code) We would have to Polyfill them
+class Person {
+  #greeting = 'Hey';
+
+  constructor(name) {
+    this.name = name;
+    console.log(`${this.#greeting}, ${this.name}`);
+  }
+}
+
+const emmanuel = new Person('Emmanuel');
+
+console.log('Emmanuel' ?? null);
+console.log(cart.find(el => el.quantity >= 2));
+Promise.resolve('TEST').then(res => console.log(res));
+
+// These following imports are usually at the top of the file.
+// Importing library to use polyfilling
+// import 'core-js/stable';
+
+// only polyfill the find array method (reduces bundle file size) Usually not done like this but a possibility
+import 'core-js/stable/array/find';
+import 'core-js/stable/promise';
+
+// Polyfilling async functions
+import 'regenerator-runtime/runtime';
