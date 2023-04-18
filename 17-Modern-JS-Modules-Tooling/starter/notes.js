@@ -116,4 +116,50 @@
                 - Consume promises with async/await for best readability
                 - Whenever possible, run promises in parallel (Promise.all)
                 - Handle errors and promise rejections
+
+
+    Declarative and Functional JavaScript Principles
+        –– Imperative vs. Declarative Code
+            • Imperative
+                - Programmers explain 'HOW to do things'
+                - We explain to the computer every single step it has to follow to achieve a result
+                - Example: Step-by-step recipe of a cake
+
+                    const arr = [2, 4, 6, 8];
+                    const doubled = [];
+                    for(let i = 0; i < arr.length; i++)
+                        doubled[i] = arr[i] * 2;
+
+            • Declarative
+                - Programmer tells 'WHAT to do'
+                - We simply describe the way the computer should achieve the result
+                - The HOW (step-by-step instructions) gets abstracted away
+                - Example: Description of a cake
+
+                    const arr = [2, 4, 6, 8];
+                    const doubled = arr.map(n => n * 2);
+
+        –– Functional Programming Principles
+            • Functional Programming
+                - Declarative programming paradigm
+                - Based on the idea of writing software by combining many pure functions, avoiding side effects and mutating data
+                - Side Effect: Modification (mutation) of any data outside of the function (mutating external variables, logging to conssole,
+                    writing to DOM, etc.)
+                - Pure Function: Function without side effects. Does not depend on external variables. Given the same inputs, always return the
+                    same outputs
+                - Immutability: State (data) is never modified! Instead, state is copied and the copy is mutated and returned. This makes it so
+                    much easier to keep track on how our data flows through our entire application
+                - Examples: React or Redux
+
+            • Functional Programming Techniques
+                - Try to avoid mutations
+                - Use built-in methods that don't produce side effects
+                - Do data transfomations with methods such as .map(), .filter(), .reduce()
+                - Try to avoid side effects in functions: this is of course not always possible
+
+            • Declarative Syntax
+                - Use array and object destructuring
+                - Use the spread operator (...)
+                - Use the ternary (conditional) operator
+                - Use template literals
 */
