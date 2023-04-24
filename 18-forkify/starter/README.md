@@ -40,4 +40,8 @@
 2. Results with pagination
 3. Display recipe
 
-![flowchart (part 1)](./forkify-flowchart-part-1.png)
+![Flow Chart (part 1)](./src/img/projectDiagrams/forkify-flowchart-part-1.png)
+
+# Project Architecture
+
+![Project Architecture](./src/img/projectDiagrams/forkify-architecture-recipe-loading.png)
