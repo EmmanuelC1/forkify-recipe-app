@@ -1,5 +1,5 @@
 import icons from 'url:../../img/icons.svg'; // Parcel 2 uses 'url:' syntax
-import 'fractional';
+import { Fraction } from 'fractional';
 
 class RecipeView {
   #parentElement = document.querySelector('.recipe');
