@@ -1,9 +1,14 @@
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
+import resultsView from './views/resultsView.js';
 
 import 'core-js'; // polyfill
 import 'regenerator-runtime/runtime'; // polyfill async await
+
+if (module.hot) {
+  module.hot.accept();
+}
 
 const controlRecipes = async function () {
   try {
@@ -25,21 +30,21 @@ const controlRecipes = async function () {
 
 const controlSearchResults = async function () {
   try {
+    // Render Loading Spinner
+    resultsView.renderSpinner();
+
     // Get user query
     const query = searchView.getQuery();
     if (!query) return;
-
-    // Render Loading Spinner
-    recipeView.renderSpinner();
 
     // Load Search Results
     await model.loadSearchResults(query);
 
     // Render Search Results
-    console.log(model.state.search);
-    // recipeView.render(...model.state.search.results);
+    resultsView.render(model.state.search.results);
   } catch (err) {
-    recipeView.renderError();
+    console.log(err);
+    // resultsView.renderError();
   }
 };
 
