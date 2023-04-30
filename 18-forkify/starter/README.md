@@ -32,6 +32,10 @@
    - Store bookmark data in the browser using _local storage_
    - On page load, read saved bookmarks from local storage and display
 
+# Project Architecture
+
+![Project Architecture](./src/img/projectDiagrams/forkify-architecture-recipe-loading.png)
+
 # Flowchart - Part 1
 
 ### Features
@@ -42,6 +46,13 @@
 
 ![Flow Chart (part 1)](./src/img/projectDiagrams/forkify-flowchart-part-1.png)
 
-# Project Architecture
+# Flowchart - Part 2
 
-![Project Architecture](./src/img/projectDiagrams/forkify-architecture-recipe-loading.png)
+### Features
+
+4. _Change servings functionality_
+5. _Bookmarking functionality_
+6. Store bookmark data in the browser
+7. On page load, read saved bookmarks
+
+![Flow Chart (part 2)](./src/img/projectDiagrams/forkify-flowchart-part-2.png)
