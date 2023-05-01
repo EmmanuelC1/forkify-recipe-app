@@ -1,7 +1,6 @@
 import 'regenerator-runtime/runtime'; // polyfill async await
 import { API_URL, RES_PER_PAGE } from './config';
 import { getJSON } from './helpers';
-import { Fraction } from 'fractional';
 
 export const state = {
   recipe: {},
