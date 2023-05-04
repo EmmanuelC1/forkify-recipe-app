@@ -56,3 +56,13 @@
 7. On page load, read saved bookmarks
 
 ![Flow Chart (part 2)](./src/img/projectDiagrams/forkify-flowchart-part-2.png)
+
+# Flowchart - Part 3
+
+### Features
+
+8. Own recipe upload
+9. Own recipe automatically bookmarked
+10. User can only see own recipes, not from others
+
+![Flow Chart (part 3)](./src/img/projectDiagrams/forkify-flowchart-part-3.png)
