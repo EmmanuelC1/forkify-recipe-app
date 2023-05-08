@@ -1,6 +1,6 @@
 import 'regenerator-runtime/runtime'; // polyfill async await
 import { API_URL, API_KEY, RES_PER_PAGE } from './config';
-import { getJSON, sendJSON } from './helpers';
+import { AJAX } from './helpers';
 
 export const state = {
   recipe: {},
@@ -24,13 +24,14 @@ const createRecipeObject = function (data) {
     servings: recipe.servings,
     cookingTime: recipe.cooking_time,
     ingredients: recipe.ingredients,
-    ...(recipe.key && { key: recipe.key }), // conditionally add key prop. using && short-circuiting
+    // conditionally add 'key' prop. using && short-circuiting (key will only exist when data is returned from a successful upload of new recipe)
+    ...(recipe.key && { key: recipe.key }),
   };
 };
 
 export const loadRecipe = async function (id) {
   try {
-    const data = await getJSON(`${API_URL}${id}`);
+    const data = await AJAX(`${API_URL}${id}?key=${API_KEY}`);
 
     state.recipe = createRecipeObject(data);
 
@@ -50,7 +51,7 @@ export const loadSearchResults = async function (query) {
     state.search.page = 1;
     state.search.query = query;
 
-    const data = await getJSON(`${API_URL}?search=${query}`);
+    const data = await AJAX(`${API_URL}?search=${query}&key=${API_KEY}`);
 
     state.search.results = data.data.recipes.map(recipe => {
       return {
@@ -58,6 +59,7 @@ export const loadSearchResults = async function (query) {
         title: recipe.title,
         publisher: recipe.publisher,
         image: recipe.image_url,
+        ...(recipe.key && { key: recipe.key }),
       };
     });
 
@@ -129,13 +131,12 @@ export const uploadRecipe = async function (newRecipe) {
     const ingredients = Object.entries(newRecipe)
       .filter(entry => entry[0].startsWith('ingredient') && entry[1] !== '')
       .map(ing => {
-        const ingArr = ing[1].replaceAll(' ', '').split(',');
-        if (ingArr.length !== 3)
-          throw new Error(
-            'Wrong ingredient format! Please use the correct format'
-          );
-        const [quantity, unit, description] = ingArr;
+        const ingArr = ing[1].split(',').map(el => el.trim()); // split ingredients and trim empty space
 
+        if (ingArr.length !== 3)
+          throw new Error('Wrong ingredient format! Please use the correct format'); //prettier-ignore
+
+        const [quantity, unit, description] = ingArr;
         return { quantity: quantity ? +quantity : null, unit, description };
       });
 
@@ -151,7 +152,8 @@ export const uploadRecipe = async function (newRecipe) {
     };
 
     // API Request (POST)
-    const data = await sendJSON(`${API_URL}?key=${API_KEY}`, recipe);
+    const data = await AJAX(`${API_URL}?key=${API_KEY}`, recipe);
+    console.log(data);
 
     // Format uploaded recipe back to match project formatting
     state.recipe = createRecipeObject(data);

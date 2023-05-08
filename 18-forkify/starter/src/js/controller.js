@@ -46,7 +46,7 @@ const controlSearchResults = async function () {
 
     // Get user query
     const query = searchView.getQuery();
-    if (!query) return;
+    if (!query) throw new Error();
 
     // Load Search Results
     await model.loadSearchResults(query);
@@ -57,8 +57,7 @@ const controlSearchResults = async function () {
     // Render INITIAL Pagination buttons
     paginationView.render(model.state.search);
   } catch (err) {
-    console.log(err);
-    // resultsView.renderError();
+    resultsView.renderError();
   }
 };
 
@@ -96,7 +95,7 @@ const controlBookmarks = function () {
 
 const controlAddRecipe = async function (newRecipe) {
   try {
-    // Rener Loading Spinner
+    // Render Loading Spinner
     addRecipeView.renderSpinner();
 
     // Upload new recipe data
@@ -107,6 +106,12 @@ const controlAddRecipe = async function (newRecipe) {
 
     // Upload Success message
     addRecipeView.renderMessage();
+
+    // Update ID in URL (hash) using browser's history API
+    window.history.pushState(null, '', `#${model.state.recipe.id}`);
+
+    // Render bookmarksView
+    bookmarksView.render(model.state.bookmarks);
 
     // Close Upload Modal
     setTimeout(function () {
