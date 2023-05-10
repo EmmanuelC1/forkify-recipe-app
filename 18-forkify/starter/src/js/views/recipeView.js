@@ -33,6 +33,11 @@ class RecipeView extends View {
     });
   }
 
+  /**
+   * Generates a markup string for recipe view
+   * @returns {String} A markup string
+   * @this {Object} RecipeView instance
+   */
   _generateMarkup() {
     //prettier-ignore
     return `
@@ -108,6 +113,12 @@ class RecipeView extends View {
     `;
   }
 
+  /**
+   * Generates markup string for the ingredients portion of the recipe view
+   * @param {Object} ing The ingredients of a recipe (includes quantity, unit, description)
+   * @returns {Srting} A markup string
+   * @this {Object} RecipeView instance
+   */
   _generateIngredientMarkup(ing) {
     //prettier-ignore
     return `

@@ -8,7 +8,7 @@ export default class View {
    * @param {Object | Object[] } data The data to be rendered (e.g. recipe)
    * @param {boolean} [render=true] If false, create markup string instead of rendering to the DOM
    * @returns {undefined | string} A markup is returned if render=false
-   * @this {Object} View instance
+   * @this {Object} Object instance from which this method is called from
    */
   render(data, render = true) {
     if (!data || (Array.isArray(data) && data.length === 0))
@@ -23,6 +23,11 @@ export default class View {
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
+  /**
+   * Updates only the different elements in the DOM without the need to reload the entire page
+   * @param {Object | Object[]} data Data to be updated in the DOM
+   * @this {Object} Object instance from which this method is called from
+   */
   update(data) {
     this._data = data;
     const newMarkup = this._generateMarkup();
@@ -56,6 +61,10 @@ export default class View {
     this._parentElement.innerHTML = '';
   }
 
+  /**
+   * Renders a Loading Spinner in the parent element's view that was set by the calling Object
+   * @this {Object} Object instance from which this method is called from
+   */
   renderSpinner() {
     const markup = `
       <div class="spinner">
@@ -68,6 +77,11 @@ export default class View {
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
+  /**
+   * Renders a message in the parent element's view that was set by the calling Object. If no message is passed in, default message will be rendered
+   * @param {String | undefined} [message = this._message] Message to render
+   * @this {Object} Object instance from which this method is called
+   */
   renderMessage(message = this._message) {
     const markup = `
       <div class="message">
@@ -83,6 +97,11 @@ export default class View {
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
+  /**
+   * Renders a message in the parent element's view that was set by the calling Object. If no message is passed in, default message will be rendered
+   * @param {String | undefined} [message = this._errorMessage] Error message to render
+   * @this {Object} Object instance from which this method is called
+   */
   renderError(message = this._errorMessage) {
     const markup = `
       <div class="error">

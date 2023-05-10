@@ -16,6 +16,12 @@ class PaginationView extends View {
     });
   }
 
+  /**
+   * Generates a markup string for pagination view based on the current page user is currently viewing.
+   * Markup includes button with page number and direction arrow.
+   * @returns {String} A markup string
+   * @this {Object} ResultsView instance
+   */
   _generateMarkup() {
     const curPage = this._data.page;
     const numPages = Math.ceil(
@@ -43,6 +49,14 @@ class PaginationView extends View {
     return '';
   }
 
+  /**
+   * Generates a markup string used for rendering a button for pagination. Includes page number and direction arrow.
+   * @param {Number} curPage Current page number in view
+   * @param {String} prevOrNext Used to render previous or next button's page number and arrow direction (left or right). If 'next' is passed, markup
+   * will be include a button with right arrow and the next page number. If 'prev' is passed, markup will include a button with left arrow and the
+   * previous page number.
+   * @returns A markup string containing a button for pagination
+   */
   _generateMarkupButton(curPage, prevOrNext) {
     //prettier-ignore
     return `

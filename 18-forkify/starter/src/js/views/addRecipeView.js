@@ -15,6 +15,9 @@ class AddRecipeView extends View {
     this._addHandlerHideWindow();
   }
 
+  /**
+   * Toggles the modal window class 'hidden' which hides the overlay and modal itself
+   */
   toggleWindow() {
     this._overlay.classList.toggle('hidden');
     this._window.classList.toggle('hidden');
@@ -44,8 +47,6 @@ class AddRecipeView extends View {
       handler(data);
     });
   }
-
-  _generateMarkup() {}
 }
 
 export default new AddRecipeView();

@@ -6,6 +6,11 @@ class ResultsView extends View {
   _errorMessage = 'No recipes found. Please try again!';
   _message = '';
 
+  /**
+   * Generates a markup string for results view
+   * @returns {String} A markup string
+   * @this {Object} ResultsView instance
+   */
   _generateMarkup() {
     return this._data.map(recipe => previewView.render(recipe, false)).join('');
   }

@@ -10,6 +10,11 @@ class BookmarksView extends View {
     window.addEventListener('load', handler);
   }
 
+  /**
+   * Generates a markup string for bookmarks view for all bookmarked recipes
+   * @returns {String} A markup string
+   * @this {Object} BookmarksView instance
+   */
   _generateMarkup() {
     return this._data
       .map(bookmark => previewView.render(bookmark, false))
