@@ -10,10 +10,6 @@ import addRecipeView from './views/addRecipeView.js';
 import 'core-js'; // polyfill
 import 'regenerator-runtime/runtime'; // polyfill async await
 
-// if (module.hot) {
-//   module.hot.accept();
-// }
-
 const controlRecipes = async function () {
   try {
     const id = window.location.hash.slice(1);
@@ -104,7 +100,7 @@ const controlAddRecipe = async function (newRecipe) {
     // Render new user created recipe
     recipeView.render(model.state.recipe);
 
-    // Upload Success message
+    // Render Success message
     addRecipeView.renderMessage();
 
     // Update ID in URL (hash) using browser's history API

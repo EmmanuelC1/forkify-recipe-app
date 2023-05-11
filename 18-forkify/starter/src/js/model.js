@@ -15,9 +15,10 @@ export const state = {
 };
 
 /**
- * Takes in a data Object recieved from API and re-formats the property names to match those used throughout the application
- * @param {Object} data Data to format into recipe object
- * @returns {Object} A recipe object
+ * Returns new recipe object that formats the property names to match those used throughout the application. Takes in a
+ * data Object recieved from API
+ * @param {Object} data Data object to format into new recipe object
+ * @returns {Object} A formatted recipe object that matches format used in application.
  */
 const createRecipeObject = function (data) {
   const { recipe } = data.data;
@@ -49,8 +50,6 @@ export const loadRecipe = async function (id) {
     if (state.bookmarks.some(bookmark => bookmark.id === id))
       state.recipe.bookmarked = true;
     else state.recipe.bookmarked = false;
-
-    // console.log(state.recipe);
   } catch (err) {
     throw err;
   }
@@ -78,8 +77,6 @@ export const loadSearchResults = async function (query) {
         ...(recipe.key && { key: recipe.key }),
       };
     });
-
-    // console.log(state.search);
   } catch (err) {
     throw err;
   }
@@ -95,6 +92,7 @@ export const loadSearchResults = async function (query) {
 export const getSearchResultsPage = function (page = state.search.page) {
   state.search.page = page;
 
+  // Calculate indices for search results in results arr for specific page
   const start = (page - 1) * state.search.resultsPerPage;
   const end = page * state.search.resultsPerPage;
 
@@ -111,22 +109,21 @@ export const updateServings = function (newServings) {
   state.recipe.servings = newServings;
 };
 
+// Store bookmarks in localStorage
 const persistBookmarks = function () {
   localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks));
 };
 
-// Adds a recipe to bookmarks array in state
+// Adds a recipe to bookmarks array in state and localStorage
 export const addBookmark = function (recipe) {
-  // Add Bookmark
   state.bookmarks.push(recipe);
 
   // Mark current recipe as bookmarked
   if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
-
   persistBookmarks();
 };
 
-// Remove a bookmarked recipe based on recipe ID
+// Remove a bookmarked recipe based on recipe ID from state and update localStorage
 export const removeBookmark = function (id) {
   const index = state.bookmarks.findIndex(el => el.id === id);
 
@@ -135,7 +132,6 @@ export const removeBookmark = function (id) {
 
   // Un-mark current recipe as bookmarked
   if (id === state.recipe.id) state.recipe.bookmarked = false;
-
   persistBookmarks();
 };
 
