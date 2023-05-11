@@ -2,6 +2,7 @@ import 'regenerator-runtime/runtime'; // polyfill async await
 import { API_URL, API_KEY, RES_PER_PAGE } from './config';
 import { AJAX } from './helpers';
 
+// State variable used throughout application
 export const state = {
   recipe: {},
   search: {
@@ -13,6 +14,11 @@ export const state = {
   bookmarks: [],
 };
 
+/**
+ * Takes in a data Object recieved from API and re-formats the property names to match those used throughout the application
+ * @param {Object} data Data to format into recipe object
+ * @returns {Object} A recipe object
+ */
 const createRecipeObject = function (data) {
   const { recipe } = data.data;
   return {
@@ -29,12 +35,17 @@ const createRecipeObject = function (data) {
   };
 };
 
+/**
+ * Fetches a recipe from the API based on the recipe ID. Stores it in state.recipe variable.
+ * @param {String} id Recipe ID to be used in the API fetch call
+ */
 export const loadRecipe = async function (id) {
   try {
     const data = await AJAX(`${API_URL}${id}?key=${API_KEY}`);
 
     state.recipe = createRecipeObject(data);
 
+    // Sets bookmarked property to true if id passed in matches any id in bookmarks array. If not, sets as false
     if (state.bookmarks.some(bookmark => bookmark.id === id))
       state.recipe.bookmarked = true;
     else state.recipe.bookmarked = false;
@@ -45,6 +56,11 @@ export const loadRecipe = async function (id) {
   }
 };
 
+/**
+ * Fetches a list of recipes objects from API based on a search query. Stores list of object recipes in
+ * state.search.results variable.
+ * @param {String} query Query string for to use as API parameter to get list of recipes mathcing the query.
+ */
 export const loadSearchResults = async function (query) {
   try {
     // reset current page
@@ -69,6 +85,13 @@ export const loadSearchResults = async function (query) {
   }
 };
 
+/**
+ * Slices state.search.results array to only include a certain amount of search results for pagination purposes. Amount of recipes
+ * returned is based on application configuration.
+ * @param {Number | undefined} [page=1] Current page in view, used to calculate number of results to return in array. If undefined,
+ * current page = 1
+ * @returns An array with the correct amount of search result recipes that should be in the current page in the view.
+ */
 export const getSearchResultsPage = function (page = state.search.page) {
   state.search.page = page;
 
@@ -78,6 +101,7 @@ export const getSearchResultsPage = function (page = state.search.page) {
   return state.search.results.slice(start, end);
 };
 
+// Updates the serving quantities for each ingredient of the current recipe in view.
 export const updateServings = function (newServings) {
   state.recipe.ingredients.forEach(ing => {
     // newQt = oldQt * newServings / oldServings --> 2 * 8 / 4 = 4
@@ -91,6 +115,7 @@ const persistBookmarks = function () {
   localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks));
 };
 
+// Adds a recipe to bookmarks array in state
 export const addBookmark = function (recipe) {
   // Add Bookmark
   state.bookmarks.push(recipe);
@@ -101,6 +126,7 @@ export const addBookmark = function (recipe) {
   persistBookmarks();
 };
 
+// Remove a bookmarked recipe based on recipe ID
 export const removeBookmark = function (id) {
   const index = state.bookmarks.findIndex(el => el.id === id);
 
@@ -113,6 +139,7 @@ export const removeBookmark = function (id) {
   persistBookmarks();
 };
 
+// Gets bookmarks stored in local storage and stores them in state as soon as application runs.
 const init = function () {
   const storage = localStorage.getItem('bookmarks');
   if (storage) state.bookmarks = JSON.parse(storage);
@@ -125,6 +152,11 @@ const clearBookmarks = function () {
 };
 // clearBookmarks();
 
+/**
+ * Uploads user created recipe to API using API key. Formats ingredients into an array of objects, and also formats entire
+ * recipe object to match formatting API is expecting. Updates state variable.
+ * @param {Object} newRecipe Recipe object that was created from user input
+ */
 export const uploadRecipe = async function (newRecipe) {
   try {
     // Format ingredients input field values
