@@ -106,4 +106,4 @@ forkify is an online recipe application that uses the forkify API and allows use
 
 © Copyright by [Jonas Schmedtmann](https://twitter.com/jonasschmedtman). Use for learning or your portfolio. Don't use to teach. Don't claim as your own.
 
-Project is from the course [_The Complete JavaScript Course 2023: From Zero to Expert!_](https://www.udemy.com/course/the-complete-javascript-course/) by <sub>Jonas Schmedtmann<sub>
+Project is from the course [_The Complete JavaScript Course 2023: From Zero to Expert!_](https://www.udemy.com/course/the-complete-javascript-course/) by Jonas Schmedtmann
