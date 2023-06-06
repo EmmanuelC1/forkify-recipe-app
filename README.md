@@ -2,6 +2,10 @@
 
 forkify is an online recipe application that uses the forkify API and allows users to search for recipes, create their own recipes, bookmark recipes, and update ingredient measurements based on the number of servings.
 
+# Built With
+[![Built With](https://skillicons.dev/icons?i=js,html,css,sass,babel,netlify,vscode)](https://skillicons.dev)
+
+
 # Getting Started
 
 ### Prerequisites
