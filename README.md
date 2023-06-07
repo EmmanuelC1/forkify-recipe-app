@@ -5,6 +5,8 @@ forkify is an online recipe application that uses the forkify API and allows use
 # Built With
 [![Built With](https://skillicons.dev/icons?i=js,html,css,sass,babel,netlify,vscode)](https://skillicons.dev)
 
+Uses Model View Controller (MVC) Architecture
+
 
 # Getting Started
 
